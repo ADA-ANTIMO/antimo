@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E2F5AAE2A277C9F0083610C /* ANMoodSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2F5AAD2A277C9F0083610C /* ANMoodSelector.swift */; };
 		4E41F5CE2A26F0A1003C0A25 /* Activity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5BC2A26F0A1003C0A25 /* Activity+CoreDataClass.swift */; };
 		4E41F5CF2A26F0A1003C0A25 /* Activity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5BD2A26F0A1003C0A25 /* Activity+CoreDataProperties.swift */; };
 		4E41F5D02A26F0A1003C0A25 /* OtherActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5BE2A26F0A1003C0A25 /* OtherActivity+CoreDataClass.swift */; };
@@ -54,6 +55,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E2F5AAD2A277C9F0083610C /* ANMoodSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANMoodSelector.swift; sourceTree = "<group>"; };
 		4E41F5BC2A26F0A1003C0A25 /* Activity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Activity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4E41F5BD2A26F0A1003C0A25 /* Activity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Activity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4E41F5BE2A26F0A1003C0A25 /* OtherActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OtherActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -191,6 +193,7 @@
 				61A98B8F2A26E10E00152C87 /* ANTextField.swift */,
 				61A98B912A26E45200152C87 /* ANTextFieldArea.swift */,
 				61A98B8D2A26399700152C87 /* ANTabView.swift */,
+				4E2F5AAD2A277C9F0083610C /* ANMoodSelector.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				61A98B872A2502B000152C87 /* Font+Extension.swift in Sources */,
 				4E41F5DB2A26F0A1003C0A25 /* GroomingActivity+CoreDataProperties.swift in Sources */,
 				4E41F5D22A26F0A1003C0A25 /* Reminder+CoreDataClass.swift in Sources */,
+				4E2F5AAE2A277C9F0083610C /* ANMoodSelector.swift in Sources */,
 				4E41F5DC2A26F0A1003C0A25 /* Weekday+CoreDataClass.swift in Sources */,
 				61A98B742A25011900152C87 /* ANButton.swift in Sources */,
 				4E41F5D92A26F0A1003C0A25 /* NutritionActivity+CoreDataProperties.swift in Sources */,
