@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E41F5CE2A26F0A1003C0A25 /* Activity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5BC2A26F0A1003C0A25 /* Activity+CoreDataClass.swift */; };
+		4E41F5CF2A26F0A1003C0A25 /* Activity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5BD2A26F0A1003C0A25 /* Activity+CoreDataProperties.swift */; };
+		4E41F5D02A26F0A1003C0A25 /* OtherActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5BE2A26F0A1003C0A25 /* OtherActivity+CoreDataClass.swift */; };
+		4E41F5D12A26F0A1003C0A25 /* OtherActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5BF2A26F0A1003C0A25 /* OtherActivity+CoreDataProperties.swift */; };
+		4E41F5D22A26F0A1003C0A25 /* Reminder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5C02A26F0A1003C0A25 /* Reminder+CoreDataClass.swift */; };
+		4E41F5D32A26F0A1003C0A25 /* Reminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5C12A26F0A1003C0A25 /* Reminder+CoreDataProperties.swift */; };
+		4E41F5D42A26F0A1003C0A25 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5C22A26F0A1003C0A25 /* Tag+CoreDataClass.swift */; };
+		4E41F5D52A26F0A1003C0A25 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5C32A26F0A1003C0A25 /* Tag+CoreDataProperties.swift */; };
+		4E41F5D62A26F0A1003C0A25 /* ExerciseActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5C42A26F0A1003C0A25 /* ExerciseActivity+CoreDataClass.swift */; };
+		4E41F5D72A26F0A1003C0A25 /* ExerciseActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5C52A26F0A1003C0A25 /* ExerciseActivity+CoreDataProperties.swift */; };
+		4E41F5D82A26F0A1003C0A25 /* NutritionActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5C62A26F0A1003C0A25 /* NutritionActivity+CoreDataClass.swift */; };
+		4E41F5D92A26F0A1003C0A25 /* NutritionActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5C72A26F0A1003C0A25 /* NutritionActivity+CoreDataProperties.swift */; };
+		4E41F5DA2A26F0A1003C0A25 /* GroomingActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5C82A26F0A1003C0A25 /* GroomingActivity+CoreDataClass.swift */; };
+		4E41F5DB2A26F0A1003C0A25 /* GroomingActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5C92A26F0A1003C0A25 /* GroomingActivity+CoreDataProperties.swift */; };
+		4E41F5DC2A26F0A1003C0A25 /* Weekday+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CA2A26F0A1003C0A25 /* Weekday+CoreDataClass.swift */; };
+		4E41F5DD2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CB2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift */; };
+		4E41F5DE2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CC2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift */; };
+		4E41F5DF2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CD2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift */; };
 		61A98B582A24FEA000152C87 /* AntimoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B572A24FEA000152C87 /* AntimoApp.swift */; };
 		61A98B5A2A24FEA000152C87 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B592A24FEA000152C87 /* ContentView.swift */; };
 		61A98B5C2A24FEA000152C87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61A98B5B2A24FEA000152C87 /* Assets.xcassets */; };
@@ -28,6 +46,24 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E41F5BC2A26F0A1003C0A25 /* Activity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Activity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5BD2A26F0A1003C0A25 /* Activity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Activity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5BE2A26F0A1003C0A25 /* OtherActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OtherActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5BF2A26F0A1003C0A25 /* OtherActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OtherActivity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5C02A26F0A1003C0A25 /* Reminder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5C12A26F0A1003C0A25 /* Reminder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5C22A26F0A1003C0A25 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5C32A26F0A1003C0A25 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5C42A26F0A1003C0A25 /* ExerciseActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5C52A26F0A1003C0A25 /* ExerciseActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseActivity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5C62A26F0A1003C0A25 /* NutritionActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NutritionActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5C72A26F0A1003C0A25 /* NutritionActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NutritionActivity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5C82A26F0A1003C0A25 /* GroomingActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroomingActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5C92A26F0A1003C0A25 /* GroomingActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroomingActivity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5CA2A26F0A1003C0A25 /* Weekday+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekday+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5CB2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekday+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5CC2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4E41F5CD2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		61A98B542A24FEA000152C87 /* Antimo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Antimo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A98B572A24FEA000152C87 /* AntimoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntimoApp.swift; sourceTree = "<group>"; };
 		61A98B592A24FEA000152C87 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -60,6 +96,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E41F5BB2A26F08F003C0A25 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4E41F5BC2A26F0A1003C0A25 /* Activity+CoreDataClass.swift */,
+				4E41F5BD2A26F0A1003C0A25 /* Activity+CoreDataProperties.swift */,
+				4E41F5BE2A26F0A1003C0A25 /* OtherActivity+CoreDataClass.swift */,
+				4E41F5BF2A26F0A1003C0A25 /* OtherActivity+CoreDataProperties.swift */,
+				4E41F5C02A26F0A1003C0A25 /* Reminder+CoreDataClass.swift */,
+				4E41F5C12A26F0A1003C0A25 /* Reminder+CoreDataProperties.swift */,
+				4E41F5C22A26F0A1003C0A25 /* Tag+CoreDataClass.swift */,
+				4E41F5C32A26F0A1003C0A25 /* Tag+CoreDataProperties.swift */,
+				4E41F5C42A26F0A1003C0A25 /* ExerciseActivity+CoreDataClass.swift */,
+				4E41F5C52A26F0A1003C0A25 /* ExerciseActivity+CoreDataProperties.swift */,
+				4E41F5C62A26F0A1003C0A25 /* NutritionActivity+CoreDataClass.swift */,
+				4E41F5C72A26F0A1003C0A25 /* NutritionActivity+CoreDataProperties.swift */,
+				4E41F5C82A26F0A1003C0A25 /* GroomingActivity+CoreDataClass.swift */,
+				4E41F5C92A26F0A1003C0A25 /* GroomingActivity+CoreDataProperties.swift */,
+				4E41F5CA2A26F0A1003C0A25 /* Weekday+CoreDataClass.swift */,
+				4E41F5CB2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift */,
+				4E41F5CC2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift */,
+				4E41F5CD2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		61A98B4B2A24FEA000152C87 = {
 			isa = PBXGroup;
 			children = (
@@ -79,11 +140,11 @@
 		61A98B562A24FEA000152C87 /* Antimo */ = {
 			isa = PBXGroup;
 			children = (
+				4E41F5BB2A26F08F003C0A25 /* Models */,
 				61A98B6F2A24FFDB00152C87 /* Utilities */,
 				61A98B6E2A24FFC800152C87 /* Extensions */,
 				61A98B6D2A24FFA900152C87 /* ViewModels */,
 				61A98B6C2A24FF9F00152C87 /* Views */,
-				61A98B6B2A24FF8C00152C87 /* Models */,
 				61A98B6A2A24FF8300152C87 /* Components */,
 				61A98B572A24FEA000152C87 /* AntimoApp.swift */,
 				61A98B602A24FEA000152C87 /* Persistence.swift */,
@@ -109,13 +170,6 @@
 				61A98B732A25011900152C87 /* ANButton.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		61A98B6B2A24FF8C00152C87 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		61A98B6C2A24FF9F00152C87 /* Views */ = {
@@ -227,22 +281,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E41F5DD2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift in Sources */,
+				4E41F5DE2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift in Sources */,
 				61A98B832A25026100152C87 /* ReminderViewModel.swift in Sources */,
 				61A98B892A2502BE00152C87 /* Color+Extension.swift in Sources */,
 				61A98B612A24FEA000152C87 /* Persistence.swift in Sources */,
 				61A98B7D2A2501E100152C87 /* ProfileView.swift in Sources */,
+				4E41F5CE2A26F0A1003C0A25 /* Activity+CoreDataClass.swift in Sources */,
 				61A98B762A25016500152C87 /* DashboardView.swift in Sources */,
 				61A98B5A2A24FEA000152C87 /* ContentView.swift in Sources */,
+				4E41F5D12A26F0A1003C0A25 /* OtherActivity+CoreDataProperties.swift in Sources */,
 				61A98B812A25025800152C87 /* DashboardViewModel.swift in Sources */,
+				4E41F5CF2A26F0A1003C0A25 /* Activity+CoreDataProperties.swift in Sources */,
+				4E41F5D72A26F0A1003C0A25 /* ExerciseActivity+CoreDataProperties.swift in Sources */,
 				61A98B7F2A25024600152C87 /* ProfileViewModel.swift in Sources */,
 				61A98B852A25027500152C87 /* SummaryViewModel.swift in Sources */,
+				4E41F5DF2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift in Sources */,
 				61A98B782A25017100152C87 /* ReminderView.swift in Sources */,
+				4E41F5D42A26F0A1003C0A25 /* Tag+CoreDataClass.swift in Sources */,
+				4E41F5D52A26F0A1003C0A25 /* Tag+CoreDataProperties.swift in Sources */,
 				61A98B582A24FEA000152C87 /* AntimoApp.swift in Sources */,
 				61A98B7B2A2501D100152C87 /* SummaryView.swift in Sources */,
 				61A98B8C2A25063100152C87 /* Utilites.swift in Sources */,
 				61A98B642A24FEA000152C87 /* Antimo.xcdatamodeld in Sources */,
+				4E41F5D32A26F0A1003C0A25 /* Reminder+CoreDataProperties.swift in Sources */,
+				4E41F5D82A26F0A1003C0A25 /* NutritionActivity+CoreDataClass.swift in Sources */,
+				4E41F5DA2A26F0A1003C0A25 /* GroomingActivity+CoreDataClass.swift in Sources */,
 				61A98B872A2502B000152C87 /* Font+Extension.swift in Sources */,
+				4E41F5DB2A26F0A1003C0A25 /* GroomingActivity+CoreDataProperties.swift in Sources */,
+				4E41F5D22A26F0A1003C0A25 /* Reminder+CoreDataClass.swift in Sources */,
+				4E41F5DC2A26F0A1003C0A25 /* Weekday+CoreDataClass.swift in Sources */,
 				61A98B742A25011900152C87 /* ANButton.swift in Sources */,
+				4E41F5D92A26F0A1003C0A25 /* NutritionActivity+CoreDataProperties.swift in Sources */,
+				4E41F5D02A26F0A1003C0A25 /* OtherActivity+CoreDataClass.swift in Sources */,
+				4E41F5D62A26F0A1003C0A25 /* ExerciseActivity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,7 +443,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Antimo/Preview Content\"";
-				DEVELOPMENT_TEAM = BBJ66M42MQ;
+				DEVELOPMENT_TEAM = 578BJN6MM7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -379,6 +451,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -400,7 +473,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Antimo/Preview Content\"";
-				DEVELOPMENT_TEAM = BBJ66M42MQ;
+				DEVELOPMENT_TEAM = 578BJN6MM7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -408,6 +481,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
