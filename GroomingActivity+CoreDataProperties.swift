@@ -17,8 +17,8 @@ extension GroomingActivity {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var salon: String?
     @NSManaged public var satisfaction: Int16
+    @NSManaged public var salon: String?
     @NSManaged public var activity: Activity?
 
 }

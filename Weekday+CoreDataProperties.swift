@@ -19,7 +19,7 @@ extension Weekday {
     @NSManaged public var day: Int16
     @NSManaged public var id: UUID?
     @NSManaged public var time: Date?
-    @NSManaged public var reminder: Reminder?
+    @NSManaged public var routine: Routine?
 
 }
 
