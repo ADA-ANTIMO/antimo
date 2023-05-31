@@ -14,6 +14,11 @@
         <relationship name="other" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OtherActivity" inverseName="activity" inverseEntity="OtherActivity"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="activities" inverseEntity="Tag"/>
     </entity>
+    <entity name="Event" representedClassName="Event" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="triggerDate" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reminder" inverseName="event" inverseEntity="Reminder"/>
+    </entity>
     <entity name="ExerciseActivity" representedClassName="ExerciseActivity" syncable="YES">
         <attribute name="duration" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
@@ -41,14 +46,18 @@
         <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="other" inverseEntity="Activity"/>
     </entity>
     <entity name="Reminder" representedClassName="Reminder" syncable="YES">
-        <attribute name="activityType" attributeType="String"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isActive" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
-        <attribute name="triggerDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="type" attributeType="String"/>
-        <relationship name="weekdays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Weekday" inverseName="reminder" inverseEntity="Weekday"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="reminder" inverseEntity="Event"/>
+        <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="reminder" inverseEntity="Routine"/>
+    </entity>
+    <entity name="Routine" representedClassName="Routine" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reminder" inverseName="routine" inverseEntity="Reminder"/>
+        <relationship name="weekdays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Weekday" inverseName="routine" inverseEntity="Weekday"/>
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
@@ -59,6 +68,6 @@
         <attribute name="day" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="time" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reminder" inverseName="weekdays" inverseEntity="Reminder"/>
+        <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="weekdays" inverseEntity="Routine"/>
     </entity>
 </model>
