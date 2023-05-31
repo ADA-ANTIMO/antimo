@@ -25,6 +25,9 @@
 		61A98B872A2502B000152C87 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B862A2502B000152C87 /* Font+Extension.swift */; };
 		61A98B892A2502BE00152C87 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B882A2502BE00152C87 /* Color+Extension.swift */; };
 		61A98B8C2A25063100152C87 /* Utilites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B8B2A25063100152C87 /* Utilites.swift */; };
+		61A98B8E2A26399700152C87 /* ANTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B8D2A26399700152C87 /* ANTabView.swift */; };
+		61A98B902A26E10E00152C87 /* ANTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B8F2A26E10E00152C87 /* ANTextField.swift */; };
+		61A98B922A26E45200152C87 /* ANTextFieldArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B912A26E45200152C87 /* ANTextFieldArea.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +50,9 @@
 		61A98B862A2502B000152C87 /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		61A98B882A2502BE00152C87 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		61A98B8B2A25063100152C87 /* Utilites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilites.swift; sourceTree = "<group>"; };
+		61A98B8D2A26399700152C87 /* ANTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTabView.swift; sourceTree = "<group>"; };
+		61A98B8F2A26E10E00152C87 /* ANTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTextField.swift; sourceTree = "<group>"; };
+		61A98B912A26E45200152C87 /* ANTextFieldArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTextFieldArea.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +113,9 @@
 			isa = PBXGroup;
 			children = (
 				61A98B732A25011900152C87 /* ANButton.swift */,
+				61A98B8F2A26E10E00152C87 /* ANTextField.swift */,
+				61A98B912A26E45200152C87 /* ANTextFieldArea.swift */,
+				61A98B8D2A26399700152C87 /* ANTabView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -233,9 +242,12 @@
 				61A98B7D2A2501E100152C87 /* ProfileView.swift in Sources */,
 				61A98B762A25016500152C87 /* DashboardView.swift in Sources */,
 				61A98B5A2A24FEA000152C87 /* ContentView.swift in Sources */,
+				61A98B902A26E10E00152C87 /* ANTextField.swift in Sources */,
 				61A98B812A25025800152C87 /* DashboardViewModel.swift in Sources */,
 				61A98B7F2A25024600152C87 /* ProfileViewModel.swift in Sources */,
+				61A98B922A26E45200152C87 /* ANTextFieldArea.swift in Sources */,
 				61A98B852A25027500152C87 /* SummaryViewModel.swift in Sources */,
+				61A98B8E2A26399700152C87 /* ANTabView.swift in Sources */,
 				61A98B782A25017100152C87 /* ReminderView.swift in Sources */,
 				61A98B582A24FEA000152C87 /* AntimoApp.swift in Sources */,
 				61A98B7B2A2501D100152C87 /* SummaryView.swift in Sources */,
