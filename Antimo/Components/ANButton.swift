@@ -7,14 +7,83 @@
 
 import SwiftUI
 
-struct ANButton: View {
+enum ButtonType {
+    case Fill, Outline
+}
+
+struct FillButton: View {
+    private let text: String
+    private let action: () -> Void
+    
+    init(_ text: String, action: @escaping () -> Void) {
+        self.text = text
+        self.action = action
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button {
+            action()
+        } label: {
+            Text(text)
+        }
+        .foregroundColor(Color(.white))
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 14)
+        .background(Color("PrimaryColor"))
+        .cornerRadius(8)
     }
 }
 
-struct ANButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ANButton()
+struct OutlineButton: View {
+    private let text: String
+    private let action: () -> Void
+    
+    init(_ text: String, action: @escaping () -> Void) {
+        self.text = text
+        self.action = action
+    }
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Text(text)
+        }
+        .foregroundColor(Color("PrimaryColor"))
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 14)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color("PrimaryColor"), lineWidth: 1)
+        )
+        
+       
     }
 }
+
+struct ANButton: View {
+    private let text: String
+    private let buttonType: ButtonType
+    private let action: () -> Void
+    
+    init(_ text: String, buttonType:ButtonType = .Fill, action: @escaping () -> Void) {
+        self.text = text
+        self.buttonType = buttonType
+        self.action = action
+    }
+    
+    var body: some View {
+        switch buttonType {
+        case .Fill:
+            FillButton(text) {
+                action()
+            }
+        case .Outline:
+            OutlineButton(text) {
+                action()
+            }
+        }
+    }
+}
+
+
