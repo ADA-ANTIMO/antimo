@@ -13,7 +13,7 @@ struct AntimoApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DummyView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
 
         }
