@@ -86,11 +86,4 @@ struct ANButton: View {
     }
 }
 
-struct ANButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ANButton("Buttonku", buttonType: .Outline) {
-            print("Hehehehe")
-        }
-        .padding(.horizontal, 20)
-    }
-}
+

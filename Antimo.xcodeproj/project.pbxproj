@@ -26,6 +26,7 @@
 		4E41F5DD2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CB2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift */; };
 		4E41F5DE2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CC2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift */; };
 		4E41F5DF2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CD2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift */; };
+		4E816E772A27C6D500824D10 /* ANReminderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E816E762A27C6D500824D10 /* ANReminderCard.swift */; };
 		4EEB02DD2A271E6C0093D088 /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02D92A271E6C0093D088 /* Event+CoreDataClass.swift */; };
 		4EEB02DE2A271E6C0093D088 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02DA2A271E6C0093D088 /* Event+CoreDataProperties.swift */; };
 		4EEB02DF2A271E6C0093D088 /* Routine+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02DB2A271E6C0093D088 /* Routine+CoreDataClass.swift */; };
@@ -74,6 +75,7 @@
 		4E41F5CB2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekday+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4E41F5CC2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4E41F5CD2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4E816E762A27C6D500824D10 /* ANReminderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANReminderCard.swift; sourceTree = "<group>"; };
 		4EEB02D92A271E6C0093D088 /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4EEB02DA2A271E6C0093D088 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4EEB02DB2A271E6C0093D088 /* Routine+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Routine+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -194,6 +196,7 @@
 				61A98B912A26E45200152C87 /* ANTextFieldArea.swift */,
 				61A98B8D2A26399700152C87 /* ANTabView.swift */,
 				4E2F5AAD2A277C9F0083610C /* ANMoodSelector.swift */,
+				4E816E762A27C6D500824D10 /* ANReminderCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				61A98B892A2502BE00152C87 /* Color+Extension.swift in Sources */,
 				61A98B612A24FEA000152C87 /* Persistence.swift in Sources */,
 				61A98B7D2A2501E100152C87 /* ProfileView.swift in Sources */,
+				4E816E772A27C6D500824D10 /* ANReminderCard.swift in Sources */,
 				4EEB02DE2A271E6C0093D088 /* Event+CoreDataProperties.swift in Sources */,
 				4E41F5CE2A26F0A1003C0A25 /* Activity+CoreDataClass.swift in Sources */,
 				4EEB02E22A274F260093D088 /* StatefulPreviewWrapper.swift in Sources */,

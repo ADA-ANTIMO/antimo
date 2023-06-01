@@ -46,9 +46,9 @@ struct ANMoodSelector: View {
             
             MoodButton(icon:"face.smiling")
         }
-        .frame(height: 64)
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 12)
+        .padding(.vertical, 8)
         .background(
             Color("PrimaryColorLight")
         )
@@ -62,9 +62,4 @@ struct ANMoodSelector: View {
     }
 }
 
-struct ANMoodSelector_Previews: PreviewProvider {
-    static var previews: some View {
-        ANMoodSelector()
-            .padding(.horizontal, 20)
-    }
-}
+
