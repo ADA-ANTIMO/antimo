@@ -8,38 +8,30 @@
 import SwiftUI
 
 struct DummyView: View {
-    @StateObject var routerManager = NavigationRouter()
+    
     
     var body: some View {
         TabView {
-            DashboardView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("Dashboard", systemImage: "house")
-                }
-                .environmentObject(routerManager)
-            
-            ReminderView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("Reminder", systemImage: "alarm")
-                }
-                .environmentObject(routerManager)
-            
-            SummaryView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("Summary", systemImage: "pill")
-                        .background(Color.blue)
-                }
-                .environmentObject(routerManager)
-            ProfileView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("Profile", systemImage: "person")
-                        .background(Color.blue)
-                }
-                .environmentObject(routerManager)
+            Group {
+                DashboardView()
+                    .tabItem {
+                        Label("Dashboard", systemImage: "house")
+                    }
+                
+                ReminderView()
+                    .tabItem {
+                        Label("Reminder", systemImage: "alarm")
+                    }
+                
+                SummaryView()
+                    .tabItem {
+                        Label("Summary", systemImage: "pill")
+                    }
+                ProfileView()
+                    .tabItem {
+                        Label("Profile", systemImage: "person")
+                    }
+            }
         }
         .preferredColorScheme(.light)
     }
