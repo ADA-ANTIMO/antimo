@@ -26,15 +26,17 @@
 		4E41F5DD2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CB2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift */; };
 		4E41F5DE2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CC2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift */; };
 		4E41F5DF2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CD2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift */; };
-		6138BC532A28A5F30017BE63 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6138BC522A28A5F30017BE63 /* Route.swift */; };
-		6138BC552A28A81F0017BE63 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6138BC542A28A81F0017BE63 /* NavigationRouter.swift */; };
-		6138BC572A28A88A0017BE63 /* DummyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6138BC562A28A88A0017BE63 /* DummyView.swift */; };
 		4E816E772A27C6D500824D10 /* ANReminderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E816E762A27C6D500824D10 /* ANReminderCard.swift */; };
+		4EB9EAC52A29925400777B11 /* ANActivityDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */; };
+		4EB9EAC82A29973900777B11 /* CardStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB9EAC72A29973900777B11 /* CardStyles.swift */; };
 		4EEB02DD2A271E6C0093D088 /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02D92A271E6C0093D088 /* Event+CoreDataClass.swift */; };
 		4EEB02DE2A271E6C0093D088 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02DA2A271E6C0093D088 /* Event+CoreDataProperties.swift */; };
 		4EEB02DF2A271E6C0093D088 /* Routine+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02DB2A271E6C0093D088 /* Routine+CoreDataClass.swift */; };
 		4EEB02E02A271E6C0093D088 /* Routine+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02DC2A271E6C0093D088 /* Routine+CoreDataProperties.swift */; };
 		4EEB02E22A274F260093D088 /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02E12A274F260093D088 /* StatefulPreviewWrapper.swift */; };
+		6138BC532A28A5F30017BE63 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6138BC522A28A5F30017BE63 /* Route.swift */; };
+		6138BC552A28A81F0017BE63 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6138BC542A28A81F0017BE63 /* NavigationRouter.swift */; };
+		6138BC572A28A88A0017BE63 /* DummyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6138BC562A28A88A0017BE63 /* DummyView.swift */; };
 		61A98B582A24FEA000152C87 /* AntimoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B572A24FEA000152C87 /* AntimoApp.swift */; };
 		61A98B5A2A24FEA000152C87 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B592A24FEA000152C87 /* ContentView.swift */; };
 		61A98B5C2A24FEA000152C87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61A98B5B2A24FEA000152C87 /* Assets.xcassets */; };
@@ -78,15 +80,17 @@
 		4E41F5CB2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekday+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4E41F5CC2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4E41F5CD2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		6138BC522A28A5F30017BE63 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
-		6138BC542A28A81F0017BE63 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
-		6138BC562A28A88A0017BE63 /* DummyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyView.swift; sourceTree = "<group>"; };
 		4E816E762A27C6D500824D10 /* ANReminderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANReminderCard.swift; sourceTree = "<group>"; };
+		4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANActivityDetails.swift; sourceTree = "<group>"; };
+		4EB9EAC72A29973900777B11 /* CardStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStyles.swift; sourceTree = "<group>"; };
 		4EEB02D92A271E6C0093D088 /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4EEB02DA2A271E6C0093D088 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4EEB02DB2A271E6C0093D088 /* Routine+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Routine+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4EEB02DC2A271E6C0093D088 /* Routine+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Routine+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4EEB02E12A274F260093D088 /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
+		6138BC522A28A5F30017BE63 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		6138BC542A28A81F0017BE63 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
+		6138BC562A28A88A0017BE63 /* DummyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyView.swift; sourceTree = "<group>"; };
 		61A98B542A24FEA000152C87 /* Antimo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Antimo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A98B572A24FEA000152C87 /* AntimoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntimoApp.swift; sourceTree = "<group>"; };
 		61A98B592A24FEA000152C87 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -151,6 +155,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		4EB9EAC62A29970700777B11 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				4EB9EAC72A29973900777B11 /* CardStyles.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		6138BC582A28B47E0017BE63 /* Routes */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +191,7 @@
 		61A98B562A24FEA000152C87 /* Antimo */ = {
 			isa = PBXGroup;
 			children = (
+				4EB9EAC62A29970700777B11 /* Protocols */,
 				4E41F5BB2A26F08F003C0A25 /* Models */,
 				61A98B6F2A24FFDB00152C87 /* Utilities */,
 				61A98B6E2A24FFC800152C87 /* Extensions */,
@@ -214,6 +227,7 @@
 				61A98B8D2A26399700152C87 /* ANTabView.swift */,
 				4E2F5AAD2A277C9F0083610C /* ANMoodSelector.swift */,
 				4E816E762A27C6D500824D10 /* ANReminderCard.swift */,
+				4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -338,6 +352,7 @@
 				4EEB02DE2A271E6C0093D088 /* Event+CoreDataProperties.swift in Sources */,
 				4E41F5CE2A26F0A1003C0A25 /* Activity+CoreDataClass.swift in Sources */,
 				4EEB02E22A274F260093D088 /* StatefulPreviewWrapper.swift in Sources */,
+				4EB9EAC82A29973900777B11 /* CardStyles.swift in Sources */,
 				61A98B762A25016500152C87 /* DashboardView.swift in Sources */,
 				61A98B5A2A24FEA000152C87 /* ContentView.swift in Sources */,
 				4E41F5D12A26F0A1003C0A25 /* OtherActivity+CoreDataProperties.swift in Sources */,
@@ -364,6 +379,7 @@
 				61A98B642A24FEA000152C87 /* Antimo.xcdatamodeld in Sources */,
 				4E41F5D32A26F0A1003C0A25 /* Reminder+CoreDataProperties.swift in Sources */,
 				4E41F5D82A26F0A1003C0A25 /* NutritionActivity+CoreDataClass.swift in Sources */,
+				4EB9EAC52A29925400777B11 /* ANActivityDetails.swift in Sources */,
 				4E41F5DA2A26F0A1003C0A25 /* GroomingActivity+CoreDataClass.swift in Sources */,
 				61A98B872A2502B000152C87 /* Font+Extension.swift in Sources */,
 				4E41F5DB2A26F0A1003C0A25 /* GroomingActivity+CoreDataProperties.swift in Sources */,
