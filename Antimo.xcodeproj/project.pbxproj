@@ -26,7 +26,11 @@
 		4E41F5DD2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CB2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift */; };
 		4E41F5DE2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CC2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift */; };
 		4E41F5DF2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E41F5CD2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift */; };
+		4E4ADAB72A2B57910069C167 /* ANTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4ADAB62A2B57910069C167 /* ANTag.swift */; };
 		4E816E772A27C6D500824D10 /* ANReminderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E816E762A27C6D500824D10 /* ANReminderCard.swift */; };
+		4EB9EAC52A29925400777B11 /* ANActivityDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */; };
+		4EB9EAC82A29973900777B11 /* CardStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB9EAC72A29973900777B11 /* CardStyles.swift */; };
+		4EB9EACA2A29B7FD00777B11 /* ANActivitySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB9EAC92A29B7FD00777B11 /* ANActivitySelector.swift */; };
 		4EEB02DD2A271E6C0093D088 /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02D92A271E6C0093D088 /* Event+CoreDataClass.swift */; };
 		4EEB02DE2A271E6C0093D088 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02DA2A271E6C0093D088 /* Event+CoreDataProperties.swift */; };
 		4EEB02DF2A271E6C0093D088 /* Routine+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02DB2A271E6C0093D088 /* Routine+CoreDataClass.swift */; };
@@ -81,7 +85,11 @@
 		4E41F5CB2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekday+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4E41F5CC2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4E41F5CD2A26F0A1003C0A25 /* MedicationActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4E4ADAB62A2B57910069C167 /* ANTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTag.swift; sourceTree = "<group>"; };
 		4E816E762A27C6D500824D10 /* ANReminderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANReminderCard.swift; sourceTree = "<group>"; };
+		4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANActivityDetails.swift; sourceTree = "<group>"; };
+		4EB9EAC72A29973900777B11 /* CardStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStyles.swift; sourceTree = "<group>"; };
+		4EB9EAC92A29B7FD00777B11 /* ANActivitySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANActivitySelector.swift; sourceTree = "<group>"; };
 		4EEB02D92A271E6C0093D088 /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4EEB02DA2A271E6C0093D088 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4EEB02DB2A271E6C0093D088 /* Routine+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Routine+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -157,6 +165,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		4EB9EAC62A29970700777B11 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				4EB9EAC72A29973900777B11 /* CardStyles.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		6138BC582A28B47E0017BE63 /* Routes */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +202,7 @@
 		61A98B562A24FEA000152C87 /* Antimo */ = {
 			isa = PBXGroup;
 			children = (
+				4EB9EAC62A29970700777B11 /* Protocols */,
 				4E41F5BB2A26F08F003C0A25 /* Models */,
 				61A98B6F2A24FFDB00152C87 /* Utilities */,
 				61A98B6E2A24FFC800152C87 /* Extensions */,
@@ -222,6 +239,9 @@
 				61A98B8D2A26399700152C87 /* ANTabView.swift */,
 				4E2F5AAD2A277C9F0083610C /* ANMoodSelector.swift */,
 				4E816E762A27C6D500824D10 /* ANReminderCard.swift */,
+				4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */,
+				4EB9EAC92A29B7FD00777B11 /* ANActivitySelector.swift */,
+				4E4ADAB62A2B57910069C167 /* ANTag.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -350,9 +370,11 @@
 				4EEB02DE2A271E6C0093D088 /* Event+CoreDataProperties.swift in Sources */,
 				4E41F5CE2A26F0A1003C0A25 /* Activity+CoreDataClass.swift in Sources */,
 				4EEB02E22A274F260093D088 /* StatefulPreviewWrapper.swift in Sources */,
+				4EB9EAC82A29973900777B11 /* CardStyles.swift in Sources */,
 				61A98B762A25016500152C87 /* DashboardView.swift in Sources */,
 				61A98B5A2A24FEA000152C87 /* ContentView.swift in Sources */,
 				4E41F5D12A26F0A1003C0A25 /* OtherActivity+CoreDataProperties.swift in Sources */,
+				4EB9EACA2A29B7FD00777B11 /* ANActivitySelector.swift in Sources */,
 				61A98B902A26E10E00152C87 /* ANTextField.swift in Sources */,
 				61A98B812A25025800152C87 /* DashboardViewModel.swift in Sources */,
 				4E41F5CF2A26F0A1003C0A25 /* Activity+CoreDataProperties.swift in Sources */,
@@ -376,6 +398,7 @@
 				61A98B642A24FEA000152C87 /* Antimo.xcdatamodeld in Sources */,
 				4E41F5D32A26F0A1003C0A25 /* Reminder+CoreDataProperties.swift in Sources */,
 				4E41F5D82A26F0A1003C0A25 /* NutritionActivity+CoreDataClass.swift in Sources */,
+				4EB9EAC52A29925400777B11 /* ANActivityDetails.swift in Sources */,
 				4E41F5DA2A26F0A1003C0A25 /* GroomingActivity+CoreDataClass.swift in Sources */,
 				61A98B872A2502B000152C87 /* Font+Extension.swift in Sources */,
 				4E41F5DB2A26F0A1003C0A25 /* GroomingActivity+CoreDataProperties.swift in Sources */,
@@ -387,6 +410,7 @@
 				4E41F5D02A26F0A1003C0A25 /* OtherActivity+CoreDataClass.swift in Sources */,
 				4E41F5D62A26F0A1003C0A25 /* ExerciseActivity+CoreDataClass.swift in Sources */,
 				6138BC532A28A5F30017BE63 /* Route.swift in Sources */,
+				4E4ADAB72A2B57910069C167 /* ANTag.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
