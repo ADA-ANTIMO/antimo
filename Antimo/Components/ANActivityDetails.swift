@@ -96,22 +96,24 @@ struct ActivitySalon: View {
 }
 
 struct ANActivityDetails: View {
+    let activity:DummyData
+    
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
-            ActivityMeta(icon: "book", time: "14:00")
+            ActivityMeta(icon: activity.icon, time: activity.time)
             
             // Details
             VStack(alignment: .leading, spacing: 16) {
-                ActivityHeading(activity: "Grooming", title: "It's time to the grooming salon")
+                ActivityHeading(activity: activity.activity, title: activity.activity)
                 
-                ActivitySalon(salonName: "Dog Groomer Alaska", satisfaction: "face.smiling")
+                ActivitySalon(salonName: activity.salonName, satisfaction: activity.satisfaction)
                 
                 // Desc
-                Text("Grooming experience at Dog Groomer Alaska was exceptional. The groomer's expertise, professionalism, and friendly demeanor made us feel confident in their care for our beloved pet. Milo appeared happy and content after the grooming session, and we were satisfied with the results. It was a positive and gratifying experience, ensuring that Milo is well-groomed and looking their best.")
+                Text(activity.desc)
                     .font(.cardContent)
                 
                 // Image
-                Image("dummyImg")
+                Image(activity.image)
                     .resizable()
                     .scaledToFit()
             }
@@ -127,7 +129,7 @@ struct ANActivityDetails: View {
 
 struct ANActivityDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ANActivityDetails()
+        ANActivityDetails(activity: DummyData())
             .padding(.horizontal, 10)
     }
 }

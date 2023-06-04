@@ -45,7 +45,7 @@ struct DashboardListAcitivityView: View {
             NavigationLink(value: Route.addExercise) {
                 Text("Add Exercise")
             }
-
+            
             NavigationLink(value: Route.addNutrition) {
                 Text("Add Nutrition")
             }
@@ -58,31 +58,54 @@ struct DashboardView: View {
     @EnvironmentObject private var routerManager: NavigationRouter
     @StateObject var notificationManager = NotificationsManager()
     
+    @State var activities = [DummyData(), DummyData(), DummyData()]
+    
     var body: some View {
         NavigationStack(path: $routerManager.routes) {
-            ScrollView {
-                NavigationLink(value: Route.addActivities) {
-                    Text("Go to list add activity")
-                }
-                .navigationDestination(for: Route.self) { $0 }
-                
-                Group {
-                    Button("Schedule notification") {
-                        notificationManager.scheduleEventNotification()
+            VStack(spacing: 0) {
+                ANToolbar(title: "Journal") {
+                    NavigationLink(value: Route.addActivities) {
+                        Text("Add Activity")
+                            .font(.toolbar)
+                            .foregroundColor(Color.anNavigation)
                     }
-                    .padding(.all)
-                    .background(Color("PrimaryColor"))
-                    .foregroundColor(.white)
-                    
+                    .navigationDestination(for: Route.self) {
+                        $0
+                    }
                 }
-                .frame(width: UIScreen.main.bounds.width)
+                
+                if activities.isEmpty {
+                    Spacer()
+                    
+                    Text("There are no journals\n available yet, let's make your\n journal soon")
+                        .font(.placeholder)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color.gray)
+                    
+                    Spacer()
+                } else {
+                    ScrollView {
+                        VStack(spacing: 8) {
+                            ForEach(activities, id: \.self) { activity in
+                                Section {
+                                    ANActivityDetails(activity: activity)
+                                } header: {
+                                    HStack {
+                                        Text("Monday, 29 May 2023")
+                                            .font(.date)
+                                        
+                                        Spacer()
+                                    }
+                                }
+                            }
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
             }
         }
-    }
-}
-
-struct DashboardView_Previews: PreviewProvider {
-    static var previews: some View {
-        DashboardView()
     }
 }

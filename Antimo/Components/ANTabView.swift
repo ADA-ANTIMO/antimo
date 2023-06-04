@@ -29,10 +29,10 @@ struct ANTabView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .tabItem {
                         Label {
-                            Text("Dashboard")
+                            Text("Calendar")
                                 .font(.tab)
                         } icon: {
-                            Image(systemName: "house")
+                            Image(systemName: "calendar.badge.clock")
                         }
                     }
                     .tag(1)
@@ -61,7 +61,5 @@ struct ANTabView: View {
                     .tag(3)
             }
             .preferredColorScheme(.light)
-            
-
     }
 }
