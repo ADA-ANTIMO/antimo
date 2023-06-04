@@ -26,10 +26,10 @@ struct FillButton: View {
         } label: {
             Text(text)
         }
-        .foregroundColor(Color(.white))
+        .foregroundColor(Color.white)
         .frame(maxWidth: .infinity)
         .padding(.vertical, 14)
-        .background(Color("PrimaryColor"))
+        .background(Color.anPrimary)
         .cornerRadius(8)
     }
 }
@@ -49,12 +49,12 @@ struct OutlineButton: View {
         } label: {
             Text(text)
         }
-        .foregroundColor(Color("PrimaryColor"))
+        .foregroundColor(Color.anPrimary)
         .frame(maxWidth: .infinity)
         .padding(.vertical, 14)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(Color("PrimaryColor"), lineWidth: 1)
+                .stroke(Color.anPrimary, lineWidth: 1)
         )
         
        
@@ -74,14 +74,16 @@ struct ANButton: View {
     
     var body: some View {
         switch buttonType {
-        case .Fill:
-            FillButton(text) {
-                action()
-            }
-        case .Outline:
-            OutlineButton(text) {
-                action()
-            }
+            case .Fill:
+                FillButton(text) {
+                    action()
+                }
+                .font(.button)
+            case .Outline:
+                OutlineButton(text) {
+                    action()
+                }
+                .font(.button)
         }
     }
 }

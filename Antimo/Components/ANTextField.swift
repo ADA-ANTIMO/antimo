@@ -15,25 +15,18 @@ struct ANTextField: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(label).font(.headline)
+            Text(label).font(.inputLabel)
             
-            ZStack(alignment: .leading) {
-                if text.isEmpty {
-                    Text(placeholder)
-                        .foregroundColor(Color.gray)
-                        .padding(10)
-                }
-                
-                TextField("", text: $text)
-                    .padding(10)
-                    .border(Color.primary, width: 1)
-            }
+            TextField(placeholder, text: $text)
+                .font(.input)
+                .padding(10)
+                .border(Color.anPrimary, width: 1)
         }
     }
 }
 
 struct ANTextField_Previews: PreviewProvider {
     static var previews: some View {
-        ANTextField(text: .constant("exercise"), placeholder: "Your text here", label: "Test")
+        ANTextField(text: .constant("baba"), placeholder: "Your text here", label: "Test")
     }
 }

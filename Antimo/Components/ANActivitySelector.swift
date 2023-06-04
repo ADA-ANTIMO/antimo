@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct SelectorItem: View {
     let icon: String;
     let text: String;
@@ -15,16 +16,19 @@ struct SelectorItem: View {
         VStack(spacing: 4) {
             Image(systemName: icon)
                 .font(.system(size: 20))
+
+                // hack for changing color svg
+                //.overlay(Rectangle().background(.red).blendMode(.overlay))
             
             Text(text)
-                .font(.system(size: 10))
+                .font(.activitySelector)
         }
         
         .frame(width: 60, height: 60)
         .background(
-            Color("PrimaryColor")
+            Color.anPrimary
         )
-        .foregroundColor(.white)
+        .foregroundColor(Color.white)
         .cornerRadius(8)
     }
 }

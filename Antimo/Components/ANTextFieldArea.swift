@@ -15,19 +15,21 @@ struct ANTextFieldArea: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
-                .font(.headline)
+                .font(.inputLabel)
             
             ZStack(alignment: .topLeading) {
                 if text.isEmpty {
                     Text(placeholder)
+                        .font(.input)
                         .foregroundColor(Color.gray)
                         .padding(10)
                         .zIndex(1)
                 }
                 
                 TextEditor(text: $text)
+                    .font(.input)
                     .padding(4)
-                    .border(Color.primary, width: 1)
+                    .border(Color.anPrimary, width: 1)
             }
         }
     }
