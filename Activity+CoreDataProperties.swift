@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 
 extension Activity {
@@ -55,4 +56,19 @@ extension Activity {
 
 extension Activity : Identifiable {
 
+}
+
+extension Activity {
+    var imagePath: String {
+        image ?? ""
+    }
+    
+    var uiImage: UIImage {
+        if !imagePath.isEmpty,
+           let image = FileManager().retrieveImage(with: imagePath) {
+            return image
+        } else {
+            return UIImage(systemName: "photo")!
+        }
+    }
 }
