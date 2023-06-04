@@ -33,11 +33,12 @@ struct ActivityMeta: View {
             }
             .padding(8)
             .background(
-                Color(.white)
+                Color.white
             )
             .cornerRadius(8)
             
             Text(time)
+                .font(.cardTime)
         }
         
     }
@@ -53,6 +54,7 @@ struct ActivityHeading: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack() {
                 Text(activity)
+                    .font(.cardActivity)
                 
                 Spacer()
                 
@@ -72,6 +74,7 @@ struct ActivityHeading: View {
             }
             
             Text(title)
+                .font(.cardTitle)
         }
     }
 }
@@ -83,6 +86,7 @@ struct ActivitySalon: View {
     var body: some View {
         HStack(alignment: .top) {
             Text(salonName)
+                .font(.cardExtra)
             
             Spacer()
             
@@ -104,6 +108,7 @@ struct ANActivityDetails: View {
                 
                 // Desc
                 Text("Grooming experience at Dog Groomer Alaska was exceptional. The groomer's expertise, professionalism, and friendly demeanor made us feel confident in their care for our beloved pet. Milo appeared happy and content after the grooming session, and we were satisfied with the results. It was a positive and gratifying experience, ensuring that Milo is well-groomed and looking their best.")
+                    .font(.cardContent)
                 
                 // Image
                 Image("dummyImg")
@@ -114,7 +119,7 @@ struct ANActivityDetails: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
         .background(
-            Color("PrimaryColorLight")
+            Color.anPrimaryLight
         )
         .cornerRadius(8)
     }
@@ -123,5 +128,6 @@ struct ANActivityDetails: View {
 struct ANActivityDetails_Previews: PreviewProvider {
     static var previews: some View {
         ANActivityDetails()
+            .padding(.horizontal, 10)
     }
 }

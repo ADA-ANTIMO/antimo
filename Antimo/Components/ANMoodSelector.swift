@@ -16,10 +16,10 @@ struct MoodButton: View {
                 .font(.system(size: 20))
         }
         .padding(14)
-        .background(Color(.white))
+        .background(Color.white)
         .overlay(
             RoundedRectangle(cornerRadius: 50)
-                .stroke(Color("PrimaryColor"), lineWidth: 1)
+                .stroke(Color.anPrimary, lineWidth: 1)
         )
         .cornerRadius(50)
     }
@@ -50,12 +50,12 @@ struct ANMoodSelector: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
         .background(
-            Color("PrimaryColorLight")
+            Color.anPrimaryLight
         )
         .overlay(
             RoundedRectangle(cornerRadius: 8)
                 .stroke(
-                    Color("PrimaryColor"), lineWidth: 1
+                    Color.anPrimary, lineWidth: 1
                 )
         )
         .cornerRadius(8)

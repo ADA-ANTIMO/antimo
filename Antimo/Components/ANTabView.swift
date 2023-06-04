@@ -16,39 +16,52 @@ struct ANTabView: View {
                 DashboardView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .tabItem {
-                        Label("Dashboard", systemImage: "house")
+                        Label {
+                            Text("Dashboard")
+                                .font(.tab)
+                        } icon: {
+                            Image(systemName: "house")
+                        }
                     }
                     .tag(0)
                 
                 ReminderView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .tabItem {
-                        Label("Reminder", systemImage: "alarm")
+                        Label {
+                            Text("Dashboard")
+                                .font(.tab)
+                        } icon: {
+                            Image(systemName: "house")
+                        }
                     }
                     .tag(1)
                 
                 SummaryView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .tabItem {
-                        Label("Summary", systemImage: "pill")
-                            .background(Color.blue)
+                        Label {
+                            Text("Summary")
+                                .font(.tab)
+                        } icon: {
+                            Image(systemName: "pill")
+                        }
                     }
                     .tag(2)
                 ProfileView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .tabItem {
-                        Label("Profile", systemImage: "person")
-                            .background(Color.blue)
+                        Label {
+                            Text("Profile")
+                                .font(.tab)
+                        } icon: {
+                            Image(systemName: "person")
+                        }
                     }
                     .tag(3)
             }
             .preferredColorScheme(.light)
+            
 
-    }
-}
-
-struct ANTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        ANTabView(selectedTab: .constant(0))
     }
 }

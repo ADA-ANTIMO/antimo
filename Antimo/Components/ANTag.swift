@@ -10,13 +10,14 @@ import SwiftUI
 struct TagInput: View {
     var body: some View {
         TextField("Tag", text: .constant(""))
+            .font(.tag)
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 8)
             .padding(.vertical, 12)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color("PrimaryColor"), lineWidth: 2)
+                    .stroke(Color.anPrimary, lineWidth: 2)
             )
             .cornerRadius(8)
     }
@@ -29,11 +30,11 @@ struct AddTagButton: View {
         } label: {
             Image(systemName: "plus")
         }
-        .foregroundColor(Color("PrimaryColor"))
+        .foregroundColor(Color.anPrimary)
         .padding(4)
         .background(
             Rectangle()
-                .stroke(Color("PrimaryColor"), lineWidth: 1)
+                .stroke(Color.anPrimary, lineWidth: 1)
         )
     }
 }

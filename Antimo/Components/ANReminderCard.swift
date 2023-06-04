@@ -17,7 +17,7 @@ struct ReminderIcon: View {
         }
         .padding(8)
         .background(
-            Color(.white)
+            Color.white
         )
         .cornerRadius(8)
     }
@@ -31,10 +31,12 @@ struct ReminderDetails: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
+                .font(.reminderTitle)
             
             Spacer()
             
             Text(time)
+                .font(.reminderTime)
         }
         
         Spacer()
@@ -45,6 +47,7 @@ struct ReminderDetails: View {
             Spacer()
             
             Text(frequency)
+                .font(.reminderFrequency)
         }
     }
 }
@@ -84,7 +87,7 @@ struct ANReminderCard: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
         .background(
-            Color("PrimaryColorLight")
+            Color.anPrimaryLight
         )
         .cornerRadius(8)
     }
