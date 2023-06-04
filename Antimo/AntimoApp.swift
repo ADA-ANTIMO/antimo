@@ -14,6 +14,8 @@ struct AntimoApp: App {
     @StateObject var routerManager = NavigationRouter()
     @StateObject var notificationManager = NotificationsManager()
     
+    @State private var selectedTab = 0
+    
     let persistenceController = PersistenceController.shared
     
     // TODO: use @AppStorage
@@ -24,7 +26,7 @@ struct AntimoApp: App {
             if isFirstAppOpen {
                 OnboardingView()
             } else {
-                DummyView()
+                ANTabView(selectedTab: $selectedTab)
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .environmentObject(routerManager)
                     .onAppear {
