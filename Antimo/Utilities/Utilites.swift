@@ -12,7 +12,7 @@ struct Utilities {
         case up, down
     }
     // MARK: - Date Utilities
-    static func formattedDate(from date: Date, format: String) -> String {
+    static func formattedDate(from date: Date, format: String = "d MMM yyyy") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: date)
