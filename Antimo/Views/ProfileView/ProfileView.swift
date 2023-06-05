@@ -13,6 +13,11 @@ struct ProfileView: View {
     
     var body: some View {
         NavigationStack(path: $routerManager.routes) {
+            ANToolbar(title: "Summary") {
+                Text("Share")
+                    .font(.toolbar)
+                    .foregroundColor(Color.anNavigation)
+            }
             ScrollView {
                 VStack(spacing: 25) {
                     ZStack {
