@@ -7,21 +7,26 @@
 
 import SwiftUI
 
-struct ANBaseContainer<Children: View, Toolbar: View>: View {
+struct ANBaseContainer<Toolbar: View, Children: View>: View {
     let toolbar: () -> Toolbar
     let children: () -> Children
+    
+    init(@ViewBuilder toolbar: @escaping () -> Toolbar, @ViewBuilder children: @escaping () -> Children) {
+        self.toolbar = toolbar
+        self.children = children
+    }
     
     var body: some View {
         VStack {
             toolbar()
-            GeometryReader { geometry in
-                VStack {
-                    children()
-                }
-                .frame(height: geometry.size.height)
+            
+            VStack {
+                children()
             }
             
+            Spacer()
         }
+        .toolbar(.hidden, for: .navigationBar)
     }
 }
 
