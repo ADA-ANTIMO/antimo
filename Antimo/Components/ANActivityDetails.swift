@@ -23,13 +23,20 @@ enum ActivityActions: String, CaseIterable {
 
 struct ActivityMeta: View {
     let icon: String
+    let activity: String
     let time: String
     
     var body: some View {
-        VStack {
+        HStack(alignment: .top) {
             ZStack {
-                Image(systemName: icon)
-                    .font(.system(size: 29))
+                VStack {
+                    Image(systemName: icon)
+                        .font(.system(size: 29))
+                       
+                    Text(activity)
+                        .font(.cardActivity)
+                }
+                .foregroundColor(Color.anPrimary)
             }
             .padding(8)
             .background(
@@ -37,24 +44,31 @@ struct ActivityMeta: View {
             )
             .cornerRadius(8)
             
-            Text(time)
-                .font(.cardTime)
+            Spacer()
+            
+            ZStack {
+                Text(time)
+                    .font(.cardTime)
+            }
+            .foregroundColor(Color.primary)
+            .padding(8)
+            .background(
+                Color.white
+            )
+            .cornerRadius(8)
         }
-        
     }
 }
 
 struct ActivityHeading: View {
-    let activity: String
     let title: String
     
     @State var showSheet: Bool = false
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
             HStack() {
-                Text(activity)
-                    .font(.cardActivity)
+                Text(title)
+                    .font(.cardTitle)
                 
                 Spacer()
                 
@@ -72,25 +86,41 @@ struct ActivityHeading: View {
                     }
                 }
             }
+    }
+}
+
+struct ActivityExtra: View {
+    let icon: String
+    let extra: String
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            Image(systemName: icon)
+                .foregroundColor(Color.anPrimary)
             
-            Text(title)
-                .font(.cardTitle)
+            Text(extra)
+                .font(.cardExtra)
         }
     }
 }
 
-struct ActivitySalon: View {
-    let salonName: String
-    let satisfaction: String
+struct ActivityStatus: View {
+    let status: String
     
     var body: some View {
-        HStack(alignment: .top) {
-            Text(salonName)
-                .font(.cardExtra)
-            
+        HStack {
             Spacer()
             
-            Image(systemName: satisfaction)
+            ZStack {
+                Image(systemName: status)
+                    .font(.system(size: 30))
+            }
+            .padding(8)
+            .foregroundColor(Color.anPrimary)
+            .background(
+                Color.white
+            )
+            .cornerRadius(8)
         }
     }
 }
@@ -99,27 +129,40 @@ struct ANActivityDetails: View {
     let activity:DummyData
     
     var body: some View {
-        HStack(alignment: .top, spacing: 16) {
-            ActivityMeta(icon: activity.icon, time: activity.time)
+        VStack() {
+            ZStack(alignment: .top) {
+                Image(activity.image)
+                    .resizable()
+                       .scaledToFill()
+                       .frame(width: .infinity, height: 200, alignment: .center)
+                       .clipped()
+                    
+                VStack {
+                    ActivityMeta(icon: activity.icon, activity: activity.activity, time: activity.time)
+                    
+                    Spacer()
+                    
+                   ActivityStatus(status: "face.smiling")
+                }
+                .padding(8)
+            }
+            .foregroundColor(.white)
+            .frame(height: 200)
+            
+           
             
             // Details
             VStack(alignment: .leading, spacing: 16) {
-                ActivityHeading(activity: activity.activity, title: activity.activity)
+                ActivityHeading(title: activity.activity)
                 
-                ActivitySalon(salonName: activity.salonName, satisfaction: activity.satisfaction)
+                ActivityExtra(icon: "book", extra: "Dog Groomer Alaska")
                 
                 // Desc
                 Text(activity.desc)
                     .font(.cardContent)
-                
-                // Image
-                Image(activity.image)
-                    .resizable()
-                    .scaledToFit()
             }
+            .padding(16)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
         .background(
             Color.anPrimaryLight
         )
