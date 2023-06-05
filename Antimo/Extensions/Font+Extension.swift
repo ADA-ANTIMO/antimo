@@ -34,7 +34,7 @@ extension Font {
     static let profile = Font.system(size: 16, weight: .regular, design: .rounded)
     
     static let sectionHeading = Font.system(size: 20, weight: .medium, design: .rounded)
-    static let addActivity = Font.system(size: 22, weight: .bold, design: .rounded)
+    static let addActivity = Font.system(size: 20, weight: .semibold, design: .rounded)
     static let inputLabel = Font.system(size: 16, weight: .semibold, design: .rounded)
     static let input = Font.system(size: 14, weight: .regular, design: .rounded)
     static let tag = Font.system(size: 12, weight: .regular, design: .rounded)

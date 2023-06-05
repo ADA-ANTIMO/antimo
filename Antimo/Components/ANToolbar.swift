@@ -10,13 +10,27 @@ import SwiftUI
 struct ANToolbar<Toolbar:View>: View {
     let leading: (() -> Toolbar)?
     let title: String
-    let trailing: () -> Toolbar
+    let trailing: (() -> Toolbar)?
+    
+    init(title: String
+    ) {
+        self.leading = nil
+        self.title = title
+        self.trailing = nil
+    }
     
     init(title: String, trailing: @escaping () -> Toolbar
     ) {
         self.leading = nil
         self.title = title
         self.trailing = trailing
+    }
+    
+    init(leading: @escaping () -> Toolbar, title: String
+    ) {
+        self.leading = leading
+        self.title = title
+        self.trailing = nil
     }
     
     init(leading: @escaping () -> Toolbar,title: String, trailing: @escaping () -> Toolbar
@@ -51,7 +65,11 @@ struct ANToolbar<Toolbar:View>: View {
                     HStack() {
                         Spacer()
                         
-                        trailing()
+                        if let trailing = trailing {
+                            trailing()
+                        } else {
+                            Text("")
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -65,8 +83,18 @@ struct ANToolbar<Toolbar:View>: View {
 
 struct ANToolbar_Previews: PreviewProvider {
     static var previews: some View {
-        ANToolbar(title: "Text") {
-            Text("huahuahahuu")
+        VStack {
+            ANToolbar(leading: {
+                Text("HIWHIWHIW")
+            }, title: "Text")
+            
+            ANToolbar<AnyView>(title: "Text")
+            
+            ANToolbar(leading: {
+                Text("HIWHIWHIW")
+            }, title: "Text") {
+                Text("djwoajdo")
+            }
         }
     }
 }

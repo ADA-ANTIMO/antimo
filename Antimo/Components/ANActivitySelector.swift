@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SelectorItem: View {
     let icon: String;
-    let text: String;
+    let label: String;
     
     var body: some View {
         VStack(spacing: 4) {
@@ -20,10 +20,9 @@ struct SelectorItem: View {
                 // hack for changing color svg
                 //.overlay(Rectangle().background(.red).blendMode(.overlay))
             
-            Text(text)
+            Text(label)
                 .font(.activitySelector)
         }
-        
         .frame(width: 60, height: 60)
         .background(
             Color.anPrimary
@@ -36,11 +35,11 @@ struct SelectorItem: View {
 struct ANActivitySelector: View {
     var body: some View {
         HStack(spacing: 16) {
-            SelectorItem(icon:"carrot.fill", text: "Nutrition")
-            SelectorItem(icon:"cross.case.fill", text: "Medication")
-            SelectorItem(icon:"tennisball.fill", text: "Exercise")
-            SelectorItem(icon:"comb.fill", text: "Grooming")
-            SelectorItem(icon:"heart.fill", text: "Other")
+            SelectorItem(icon:"carrot.fill", label: "Nutrition")
+            SelectorItem(icon:"cross.case.fill", label: "Medication")
+            SelectorItem(icon:"tennisball.fill", label: "Exercise")
+            SelectorItem(icon:"comb.fill", label: "Grooming")
+            SelectorItem(icon:"heart.fill", label: "Other")
         }
     }
 }
