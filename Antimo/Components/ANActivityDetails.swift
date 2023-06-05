@@ -8,8 +8,8 @@
 import SwiftUI
 
 enum ActivityActions: String, CaseIterable {
-    case Delete = "Delete"
     case Edit = "Edit"
+    case Delete = "Delete"
     
     func buttonRole() -> ButtonRole? {
         switch self {
