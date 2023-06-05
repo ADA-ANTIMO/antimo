@@ -49,7 +49,7 @@ enum Route: View, Hashable {
         case .dashboard:
             DashboardView()
         case .addActivities:
-            DashboardListAcitivityView()
+            AddActivityView()
         case .reminder:
             ReminderView()
         case .profile:

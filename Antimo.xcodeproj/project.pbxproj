@@ -34,6 +34,7 @@
 		4E5AC2172A2D055900090ED5 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5AC2162A2D055900090ED5 /* DummyData.swift */; };
 		4E6994982A2D7F70004D8D98 /* ANDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6994972A2D7F70004D8D98 /* ANDatePicker.swift */; };
 		4E69949A2A2D866F004D8D98 /* ANTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6994992A2D866F004D8D98 /* ANTimePicker.swift */; };
+		4E69949D2A2D89DB004D8D98 /* AddActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E69949C2A2D89DB004D8D98 /* AddActivityView.swift */; };
 		4E816E772A27C6D500824D10 /* ANReminderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E816E762A27C6D500824D10 /* ANReminderCard.swift */; };
 		4EB9EAC52A29925400777B11 /* ANActivityDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */; };
 		4EB9EAC82A29973900777B11 /* CardStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB9EAC72A29973900777B11 /* CardStyles.swift */; };
@@ -106,6 +107,7 @@
 		4E5AC2162A2D055900090ED5 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		4E6994972A2D7F70004D8D98 /* ANDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANDatePicker.swift; sourceTree = "<group>"; };
 		4E6994992A2D866F004D8D98 /* ANTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTimePicker.swift; sourceTree = "<group>"; };
+		4E69949C2A2D89DB004D8D98 /* AddActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddActivityView.swift; sourceTree = "<group>"; };
 		4E816E762A27C6D500824D10 /* ANReminderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANReminderCard.swift; sourceTree = "<group>"; };
 		4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANActivityDetails.swift; sourceTree = "<group>"; };
 		4EB9EAC72A29973900777B11 /* CardStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStyles.swift; sourceTree = "<group>"; };
@@ -190,6 +192,15 @@
 				4E5AC2162A2D055900090ED5 /* DummyData.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4E69949B2A2D8994004D8D98 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				4E69949C2A2D89DB004D8D98 /* AddActivityView.swift */,
+				61A98B752A25016500152C87 /* DashboardView.swift */,
+			);
+			path = HomeView;
 			sourceTree = "<group>";
 		};
 		4EB9EAC62A29970700777B11 /* Protocols */ = {
@@ -300,6 +311,8 @@
 		61A98B6C2A24FF9F00152C87 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+
+				4E69949B2A2D8994004D8D98 /* HomeView */,
 				6131A52E2A2D8D79007BF2F7 /* ReminderView */,
 				61A98B752A25016500152C87 /* DashboardView.swift */,
 				6131A5252A2D063D007BF2F7 /* ProfileView */,
@@ -413,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6131A5292A2D0681007BF2F7 /* ProfileCardView.swift in Sources */,
+				4E69949D2A2D89DB004D8D98 /* AddActivityView.swift in Sources */,
 				4E41F5DD2A26F0A1003C0A25 /* Weekday+CoreDataProperties.swift in Sources */,
 				4E41F5DE2A26F0A1003C0A25 /* MedicationActivity+CoreDataClass.swift in Sources */,
 				6131A4B12A28FE54007BF2F7 /* RouteFinder.swift in Sources */,
