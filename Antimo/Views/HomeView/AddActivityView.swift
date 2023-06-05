@@ -56,7 +56,7 @@ struct AddActivityView: View {
     @EnvironmentObject private var routerManager: NavigationRouter
     
     var body: some View {
-        VStack() {
+        ANBaseContainer {
             ANToolbar(leading: {
                 Button(action: {
                     routerManager.goBack()
@@ -70,16 +70,13 @@ struct AddActivityView: View {
                     .foregroundColor(Color.anNavigation)
                 })
             }, title: "Add Activity")
-            
+        } children: {
             ActivityOption(icon:"carrot.fill", label: "Nutrition")
             ActivityOption(icon:"cross.case.fill", label: "Medication")
             ActivityOption(icon:"tennisball.fill", label: "Exercise")
             ActivityOption(icon:"comb.fill", label: "Grooming")
             ActivityOption(icon:"heart.fill", label: "Other")
-            
-            Spacer()
         }
-        .toolbar(.hidden, for: .navigationBar)
     }
 }
 

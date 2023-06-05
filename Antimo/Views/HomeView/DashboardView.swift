@@ -58,11 +58,11 @@ struct DashboardView: View {
     @EnvironmentObject private var routerManager: NavigationRouter
     @StateObject var notificationManager = NotificationsManager()
     
-    @State var activities = [DummyData(), DummyData(), DummyData()]
+    @State var activities:[DummyData] = []
     
     var body: some View {
         NavigationStack(path: $routerManager.routes) {
-            VStack(spacing: 0) {
+            ANBaseContainer(toolbar: {
                 ANToolbar(title: "Journal") {
                     NavigationLink(value: Route.addActivities) {
                         Text("Add Activity")
@@ -73,7 +73,7 @@ struct DashboardView: View {
                         $0
                     }
                 }
-                
+            }, children: {
                 if activities.isEmpty {
                     Spacer()
                     
@@ -105,7 +105,7 @@ struct DashboardView: View {
                     }
                     .frame(maxWidth: .infinity)
                 }
-            }
+            })
         }
     }
 }

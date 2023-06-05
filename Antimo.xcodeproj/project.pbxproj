@@ -197,8 +197,8 @@
 		4E69949B2A2D8994004D8D98 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
-				4E69949C2A2D89DB004D8D98 /* AddActivityView.swift */,
 				61A98B752A25016500152C87 /* DashboardView.swift */,
+				4E69949C2A2D89DB004D8D98 /* AddActivityView.swift */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -311,10 +311,8 @@
 		61A98B6C2A24FF9F00152C87 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-
 				4E69949B2A2D8994004D8D98 /* HomeView */,
 				6131A52E2A2D8D79007BF2F7 /* ReminderView */,
-				61A98B752A25016500152C87 /* DashboardView.swift */,
 				6131A5252A2D063D007BF2F7 /* ProfileView */,
 				61A98B7A2A2501D100152C87 /* SummaryView.swift */,
 				6131A4B22A293523007BF2F7 /* OnboardingView.swift */,

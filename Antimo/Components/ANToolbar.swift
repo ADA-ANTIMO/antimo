@@ -19,21 +19,21 @@ struct ANToolbar<Toolbar:View>: View {
         self.trailing = nil
     }
     
-    init(title: String, trailing: @escaping () -> Toolbar
+    init(title: String, @ViewBuilder trailing: @escaping () -> Toolbar
     ) {
         self.leading = nil
         self.title = title
         self.trailing = trailing
     }
     
-    init(leading: @escaping () -> Toolbar, title: String
+    init(@ViewBuilder leading: @escaping () -> Toolbar, title: String
     ) {
         self.leading = leading
         self.title = title
         self.trailing = nil
     }
     
-    init(leading: @escaping () -> Toolbar,title: String, trailing: @escaping () -> Toolbar
+    init(@ViewBuilder leading: @escaping () -> Toolbar, title: String, @ViewBuilder trailing: @escaping () -> Toolbar
     ) {
         self.leading = leading
         self.title = title
