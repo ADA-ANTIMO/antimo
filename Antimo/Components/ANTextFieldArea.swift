@@ -29,7 +29,10 @@ struct ANTextFieldArea: View {
                 TextEditor(text: $text)
                     .font(.input)
                     .padding(4)
-                    .border(Color.anPrimary, width: 1)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.anPrimary, lineWidth: 1)
+                    )
             }
         }
     }

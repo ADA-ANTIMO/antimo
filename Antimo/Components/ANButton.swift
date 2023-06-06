@@ -56,8 +56,6 @@ struct OutlineButton: View {
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color.anPrimary, lineWidth: 1)
         )
-        
-       
     }
 }
 

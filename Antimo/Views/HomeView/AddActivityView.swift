@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+enum ActivityTypes: String {
+    case nutrition = "Nutrition"
+    case medication = "Medication"
+    case exercise = "Exercise"
+    case grooming = "Grooming"
+    case other = "Other"
+}
+
 struct ActivityIcon: View {
     let icon: String
     
@@ -27,10 +35,11 @@ struct ActivityIcon: View {
 struct ActivityOption: View {
     let icon: String
     let label: String
+    let action: () -> Void
     
     var body: some View {
         Button {
-            
+            action()
         } label: {
             HStack(alignment: .center, spacing: 16) {
                 ActivityIcon(icon:icon)
@@ -54,6 +63,17 @@ struct ActivityOption: View {
 
 struct AddActivityView: View {
     @EnvironmentObject private var routerManager: NavigationRouter
+    @State var isSheetPresented = false
+    @State var selectedActivity: ActivityTypes = .nutrition
+    
+    private func openActivityForm(activity:ActivityTypes) {
+        selectedActivity = activity
+        isSheetPresented = true
+    }
+    
+    private func closeActivityForm() {
+        isSheetPresented = false
+    }
     
     var body: some View {
         ANBaseContainer {
@@ -71,11 +91,33 @@ struct AddActivityView: View {
                 })
             }, title: "Add Activity")
         } children: {
-            ActivityOption(icon:"carrot.fill", label: "Nutrition")
-            ActivityOption(icon:"cross.case.fill", label: "Medication")
-            ActivityOption(icon:"tennisball.fill", label: "Exercise")
-            ActivityOption(icon:"comb.fill", label: "Grooming")
-            ActivityOption(icon:"heart.fill", label: "Other")
+            VStack {
+                ActivityOption(icon:"carrot.fill", label: "Nutrition") {
+                    openActivityForm(activity: .nutrition)
+                }
+                
+                ActivityOption(icon:"cross.case.fill", label: "Medication") {
+                    openActivityForm(activity: .medication)
+                }
+                
+                ActivityOption(icon:"tennisball.fill", label: "Exercise") {
+                    openActivityForm(activity: .exercise)
+                }
+                
+                ActivityOption(icon:"comb.fill", label: "Grooming") {
+                    openActivityForm(activity: .grooming)
+                }
+                
+                ActivityOption(icon:"heart.fill", label: "Other") {
+                    openActivityForm(activity: .other)
+                }
+            }
+            .padding()
+        }
+        .sheet(isPresented: $isSheetPresented) {
+            ActivitySheetView(activityType: selectedActivity.rawValue) {
+                closeActivityForm()
+            }
         }
     }
 }

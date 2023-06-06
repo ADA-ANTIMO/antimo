@@ -20,7 +20,10 @@ struct ANTextField: View {
             TextField(placeholder, text: $text)
                 .font(.input)
                 .padding(10)
-                .border(Color.anPrimary, width: 1)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.anPrimary, lineWidth: 1)
+                )
         }
     }
 }

@@ -7,53 +7,6 @@
 
 import SwiftUI
 
-struct AddExerciseView: View {
-    @EnvironmentObject private var routerManager: NavigationRouter
-    
-    var body: some View {
-        Group {
-            Text("Add Exercise Form")
-            
-            Button("Back to dashboard") {
-                routerManager.reset()
-            }
-        }
-        .toolbar(.hidden, for: .tabBar)
-    }
-}
-
-struct AddNutritionView: View {
-    @EnvironmentObject private var routerManager: NavigationRouter
-    
-    var body: some View {
-        Group {
-            Text("Add Nutrition Form")
-            
-            Button("Back to dashboard") {
-                routerManager.reset()
-            }
-        }
-        .toolbar(.hidden, for: .tabBar)
-    }
-}
-
-struct DashboardListAcitivityView: View {
-    @State var isFormVisible: Bool = false
-    
-    var body: some View {
-        Group {
-            NavigationLink(value: Route.addExercise) {
-                Text("Add Exercise")
-            }
-            
-            NavigationLink(value: Route.addNutrition) {
-                Text("Add Nutrition")
-            }
-        }
-        .toolbar(.hidden, for: .tabBar)
-    }
-}
-
 struct DashboardView: View {
     @EnvironmentObject private var routerManager: NavigationRouter
     @StateObject var notificationManager = NotificationsManager()

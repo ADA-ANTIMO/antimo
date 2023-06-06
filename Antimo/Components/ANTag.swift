@@ -39,6 +39,7 @@ struct AddTagButton: View {
     }
 }
 
+// TODO: change how to layout tags
 struct ANTag: View {
     var rows: [Int]
     var tes = [3,3,2]
@@ -62,11 +63,11 @@ struct ANTag: View {
     var body: some View {
         Grid {
             ForEach(Array(zip(rows.indices, rows)), id: \.0) { (index, colCount) in
-                GridRow {
+                GridRow() {
                     ForEach(0..<colCount, id: \.self) { _ in
                         TagInput()
                     }
-                    
+                     
                     if index + 1 == rows.count {
                         AddTagButton()
                     }
