@@ -30,8 +30,12 @@ struct ANBaseContainer<Toolbar: View, Children: View>: View {
     }
 }
 
-//struct ANBaseContainer_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ANBaseContainer()
-//    }
-//}
+struct ANBaseContainer_Previews: PreviewProvider {
+    static var previews: some View {
+        ANBaseContainer(toolbar: {
+            Text("foo")
+        }, children: {
+            Text("Bar")
+        })
+    }
+}
