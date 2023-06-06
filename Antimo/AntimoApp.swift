@@ -70,16 +70,17 @@ private extension AntimoApp {
     
     func handleDeeplinking(from url: URL) async {
         
-        let routeFinder = RouteFinder()
-        if let route = await routeFinder.find(from: url) {
-            switch route {
-            case .addExercise:
-                routerManager.push(to: route)
-            case.addNutrition:
-                routerManager.push(to: route)
-            default:
-                routerManager.push(to: route)
-            }
-        }
+        //Not as page anymore but a sheet
+//        let routeFinder = RouteFinder()
+//        if let route = await routeFinder.find(from: url) {
+//            switch route {
+//            case .addExercise:
+//                routerManager.push(to: route)
+//            case.addNutrition:
+//                routerManager.push(to: route)
+//            default:
+//                routerManager.push(to: route)
+//            }
+//        }
     }
 }

@@ -15,8 +15,6 @@ enum Route: View, Hashable {
     case summary
     case profile
     case addActivities
-    case addExercise
-    case addNutrition
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(self.hashValue)
@@ -33,10 +31,6 @@ enum Route: View, Hashable {
         case (.profile, .profile):
             return true
         case (.addActivities, .addActivities):
-            return true
-        case (.addExercise, .addExercise):
-            return true
-        case (.addNutrition, .addNutrition):
             return true
         default:
             return false
@@ -56,10 +50,6 @@ enum Route: View, Hashable {
             ProfileView()
         case .summary:
             SummaryView()
-        case .addExercise:
-            AddExerciseView()
-        case .addNutrition:
-            AddNutritionView()
         }
     }
 }
