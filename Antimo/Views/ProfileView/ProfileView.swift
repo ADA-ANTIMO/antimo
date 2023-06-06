@@ -6,18 +6,18 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ProfileView: View {
     @StateObject var viewModel = ProfileModel()
     @EnvironmentObject private var routerManager: NavigationRouter
     
+    
     var body: some View {
         NavigationStack(path: $routerManager.routes) {
             ANBaseContainer {
                 ANToolbar(title: "Summary") {
-                    Text("Share")
-                        .font(.toolbar)
-                        .foregroundColor(Color.anNavigation)
+                    Text("")
                 }
             } children: {
                 ScrollView {
@@ -29,19 +29,30 @@ struct ProfileView: View {
                             
                             HStack(spacing: 20) {
                                 EditableCircularProfileImage(viewModel: viewModel)
-                                
                                 VStack(alignment: .leading, spacing: 10) {
-                                    Text("Tukang Kesroh")
-                                    Text("10 October 1999")
-                                    Text("Beagle")
+                                    HStack {
+                                        Text(viewModel.renderedDogName)
+                                        Spacer()
+                                        HStack {
+                                            Text("Edit").font(.toolbar).foregroundColor(.anNavigation)
+                                            Image(systemName: "square.and.pencil").foregroundColor(.anNavigation)
+                                        }
+                                        .onTapGesture {
+                                            viewModel.openProfileForm()
+                                        }
+                                    }
+                                    HStack {
+                                        Text(viewModel.renderedBOD)
+                                        Spacer()
+                                        Text(viewModel.renderedAge)
+                                    }
+                                    
+                                    HStack {
+                                        Text(viewModel.renderedBreed)
+                                        Spacer()
+                                        Text(viewModel.renderedWeight)
+                                    }
                                 }
-                                
-                                VStack(alignment: .trailing, spacing: 10) {
-                                    Text("Edit")
-                                    Text("24 y.o")
-                                    Text("26.65 Kg")
-                                }
-                                
                             }
                             .padding()
                         }
@@ -66,6 +77,43 @@ struct ProfileView: View {
                     }
                 }
             }
+        }
+        .snackbar(isPresented: $viewModel.showSnackBar, text: "Dog profile has been updated", type: .success)
+        .sheet(isPresented: $viewModel.isEditting) {
+            VStack {
+                ANToolbar(leading: {
+                    Text("Cancel")
+                        .font(.toolbar)
+                        .foregroundColor(Color.anNavigation)
+                        .onTapGesture {
+                            viewModel.closeProfileForm()
+                        }
+                }, title: "Edit Profile") {
+                    Text("Save")
+                        .font(.toolbar)
+                        .foregroundColor(Color.anNavigation)
+                        .onTapGesture {
+                            viewModel.saveProfileData()
+                        }
+                }
+                
+                Group {
+                    ANTextField(text: $viewModel.dogName, placeholder: "", label: "Dog Name")
+                    ANTextField(text: $viewModel.gender, placeholder: "", label: "Gender")
+                    ANDatePicker(date: $viewModel.bod, label: "Birth of date")
+                    ANTextField(text: $viewModel.breed, placeholder: "", label: "Breed")
+                    ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight")
+                }
+                .padding(.horizontal)
+                
+                VStack {
+                    
+                }
+            }
+            .padding(.vertical)
+            
+            Spacer()
+            
         }
     }
 }
