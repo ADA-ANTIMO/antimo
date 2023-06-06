@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let days = ["Every Sunday", "Every Monday", "Every Tuesday", "Every Wednesday", "Every Thursday", "Every Friday", "Every Saturday"]
+
 struct ReminderView: View {
     @State var reminderType: String = ""
     @State var title: String = ""
@@ -15,6 +17,8 @@ struct ReminderView: View {
     @State var frequency: String = ""
     
     @State var isSheetPresented: Bool = false
+    @State var isDaysSelectorPresented: Bool = false
+    @State var daysSelection = Set<String>()
     
     private func openReminderForm() {
         isSheetPresented = true
@@ -22,6 +26,16 @@ struct ReminderView: View {
     
     private func closeReminderForm() {
         isSheetPresented = false
+        resetForm()
+    }
+    
+    private func resetForm() {
+        reminderType = ""
+        title = ""
+        desc = ""
+        time = ""
+        frequency = ""
+        daysSelection.removeAll()
     }
     
     var body: some View {
@@ -70,13 +84,45 @@ struct ReminderView: View {
                     
                     ANTimePicker(time: .constant(Date()), label: "Time")
                     
-                    ANDatePicker(date: .constant(Date()), label: "Repeat")
+                    HStack {
+                        Text("Repeat")
+                        Spacer()
+                        Text("Weekday")
+                            .onTapGesture {
+                                isSheetPresented = false
+                                isDaysSelectorPresented = true
+                            }
+                    }
                 }
                 .padding()
                 
                 Spacer()
             }
             .padding(.vertical)
+        }
+        .sheet(isPresented: $isDaysSelectorPresented) {
+            VStack {
+                ANToolbar(leading: {
+                    Text("Back").font(.toolbar).foregroundColor(.anNavigation).onTapGesture {
+                        openReminderForm()
+                            isDaysSelectorPresented = false
+                        }
+                }, title: "Repeat")
+            }
+            .padding(.vertical)
+            
+            List(days, id: \.self, selection: $daysSelection) { day in
+                Text(day)
+                    .onTapGesture {
+                        if daysSelection.contains(day) {
+                            daysSelection.remove(day)
+                        } else {
+                            daysSelection.insert(day)
+                        }
+                    }
+            }
+            Spacer()
+            
         }
     }
 }
