@@ -15,10 +15,9 @@ struct ReminderIcon: View {
             Image(systemName: icon)
                 .font(.system(size: 29))
         }
+        .frame(width: 48, height: 48)
         .padding(8)
-        .background(
-            Color.white
-        )
+        .background(.white)
         .cornerRadius(8)
     }
 }
@@ -26,28 +25,15 @@ struct ReminderIcon: View {
 struct ReminderDetails: View {
     let title: String
     let time: String
-    let frequency: String
+    
     
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
                 .font(.reminderTitle)
             
-            Spacer()
-            
             Text(time)
                 .font(.reminderTime)
-        }
-        
-        Spacer()
-        
-        Spacer()
-        
-        VStack {
-            Spacer()
-            
-            Text(frequency)
-                .font(.reminderFrequency)
         }
     }
 }
@@ -67,7 +53,7 @@ struct ReminderToggle: View {
 }
 
 struct ANReminderCard: View {
-    let icon: String
+    let icon: AcitivityIcons
     let title: String
     let time: String
     let frequency: String
@@ -76,19 +62,22 @@ struct ANReminderCard: View {
     
     
     var body: some View {
-        HStack(alignment: .center) {
-            ReminderIcon(icon:icon)
+        HStack(alignment: .center, spacing: 16) {
+            ReminderIcon(icon:icon.rawValue).foregroundColor(.anPrimary)
             
-            ReminderDetails(title: title, time: time, frequency: frequency)
+            ReminderDetails(title: title, time: time)
             
-            ReminderToggle(isOn: $isOn)
+            Spacer()
+            VStack {
+                ReminderToggle(isOn: $isOn)
+                Text(frequency)
+                    .font(.reminderFrequency)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: 48)
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
-        .background(
-            Color.anPrimaryLight
-        )
+        .padding(.horizontal, 8)
+        .padding(.vertical, 16)
+        .background(Color.anPrimaryLight)
         .cornerRadius(8)
     }
 }
