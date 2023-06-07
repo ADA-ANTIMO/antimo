@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct EditableCircularProfileImage: View {
-    @ObservedObject var viewModel: ProfileModel
+    @ObservedObject var viewModel: SummaryViewModel
     @StateObject var imagePicker = ImagePicker()
     
     var uiImage: UIImage {

@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct SummaryView: View {
-    @StateObject var viewModel = ProfileModel()
+    @StateObject var viewModel = SummaryViewModel()
     @EnvironmentObject private var routerManager: NavigationRouter
     
     
