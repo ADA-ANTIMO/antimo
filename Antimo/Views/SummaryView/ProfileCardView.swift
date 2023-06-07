@@ -53,7 +53,7 @@ struct EditableCircularProfileImage: View {
                     .font(.system(size: 30))
                     .foregroundColor(.accentColor)
             }
-                         .buttonStyle(.borderless)
+            .buttonStyle(.borderless)
         }
         .onChange(of: imagePicker.uiImage) { newImage in
             if let newImage {

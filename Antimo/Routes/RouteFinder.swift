@@ -8,8 +8,7 @@
 import Foundation
 
 enum DeepLinkURLs: String {
-    case addExercise = "add_exercise"
-    case addNutrition = "add_nutrition"
+    case addJournals = "add_journals"
 }
 
 struct RouteFinder {

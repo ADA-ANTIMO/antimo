@@ -7,36 +7,19 @@
 
 import SwiftUI
 
+enum NavigationTabs: String {
+    case summary = "Summary"
+    case journal = "Journal"
+    case activity = "Activity"
+    case reminder = "Reminder"
+}
+
 struct ANTabView: View {
-    @Binding var selectedTab: Int
+    @Binding var selectedTab: NavigationTabs
     
     // TODO: Change TabBar Icons
     var body: some View {
             TabView(selection: $selectedTab) {
-                DashboardView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .tabItem {
-                        Label {
-                            Text("Dashboard")
-                                .font(.tab)
-                        } icon: {
-                            Image(systemName: "house")
-                        }
-                    }
-                    .tag(0)
-                
-                ReminderView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .tabItem {
-                        Label {
-                            Text("Calendar")
-                                .font(.tab)
-                        } icon: {
-                            Image(systemName: "calendar.badge.clock")
-                        }
-                    }
-                    .tag(1)
-                
                 SummaryView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .tabItem {
@@ -44,21 +27,47 @@ struct ANTabView: View {
                             Text("Summary")
                                 .font(.tab)
                         } icon: {
-                            Image(systemName: "pill")
+                            Image(systemName: "chart.bar.xaxis")
                         }
                     }
-                    .tag(2)
-                ProfileView()
+                    .tag(NavigationTabs.summary)
+                
+                JournalView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .tabItem {
                         Label {
-                            Text("Profile")
+                            Text("Journal")
                                 .font(.tab)
                         } icon: {
-                            Image(systemName: "person")
+                            Image(systemName: "text.book.closed.fill")
                         }
                     }
-                    .tag(3)
+                    .tag(NavigationTabs.journal)
+                
+                ActivityView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .tabItem {
+                        Label {
+                            Text("Activity")
+                                .font(.tab)
+                        } icon: {
+                            Image(systemName: "calendar")
+                        }
+                    }
+                    .tag(NavigationTabs.activity)
+                
+                ReminderView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .tabItem {
+                        Label {
+                            Text("Reminder")
+                                .font(.tab)
+                        } icon: {
+                            Image(systemName: "alarm.fill")
+                        }
+                    }
+                    .tag(NavigationTabs.reminder)
+                
             }
             .preferredColorScheme(.light)
     }

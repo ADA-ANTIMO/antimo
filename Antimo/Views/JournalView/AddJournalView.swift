@@ -61,7 +61,7 @@ struct ActivityOption: View {
     }
 }
 
-struct AddActivityView: View {
+struct AddJournalView: View {
     @EnvironmentObject private var routerManager: NavigationRouter
     @State var isSheetPresented = false
     @State var selectedActivity: ActivityTypes = .nutrition
@@ -89,7 +89,7 @@ struct AddActivityView: View {
                     .font(.toolbar)
                     .foregroundColor(Color.anNavigation)
                 })
-            }, title: "Add Activity")
+            }, title: "Add Journal")
         } children: {
             VStack {
                 ActivityOption(icon:"carrot.fill", label: "Nutrition") {
@@ -115,15 +115,15 @@ struct AddActivityView: View {
             .padding()
         }
         .sheet(isPresented: $isSheetPresented) {
-            ActivitySheetView(activityType: selectedActivity.rawValue) {
+            JournalSheetView(activityType: selectedActivity.rawValue) {
                 closeActivityForm()
             }
         }
     }
 }
 
-struct AddActivityView_Previews: PreviewProvider {
+struct AddJournalView_Previews: PreviewProvider {
     static var previews: some View {
-        AddActivityView()
+        AddJournalView()
     }
 }

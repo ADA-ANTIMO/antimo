@@ -8,7 +8,7 @@
 import SwiftUI
 import PhotosUI
 
-struct ProfileView: View {
+struct SummaryView: View {
     @StateObject var viewModel = ProfileModel()
     @EnvironmentObject private var routerManager: NavigationRouter
     
@@ -89,7 +89,7 @@ struct ProfileView: View {
                             viewModel.closeProfileForm()
                         }
                 }, title: "Edit Profile") {
-                    Text("Save")
+                    Text("Update")
                         .font(.toolbar)
                         .foregroundColor(Color.anNavigation)
                         .onTapGesture {
@@ -118,9 +118,9 @@ struct ProfileView: View {
     }
 }
 
-struct ProfileView_Previews: PreviewProvider {
+struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        SummaryView()
     }
 }
 
