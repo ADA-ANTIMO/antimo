@@ -19,25 +19,42 @@ struct ANImageUploader: View {
             PhotosPicker(selection: $imagePicker.imageSelection,
                          matching: .images,
                          photoLibrary: .shared()) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 8)
-                        .frame(height: 100)
-                        .foregroundColor(.anPrimaryLight)
-                        .overlay(
+                
+                Group {
+                    if let uiImage = imagePicker.uiImage {
+                        HStack {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 150)
+                                .overlay(alignment: .topTrailing) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .font(.system(size: 20))
+                                        .foregroundColor(.anPrimary)
+                                }
+                            Spacer()
+                        }
+                    } else {
+                        RoundedRectangle(cornerRadius: 8)
+                            .frame(height: 150)
+                            .foregroundColor(.anPrimaryLight)
+                            .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(Color.anPrimary, lineWidth: 1)
                             )
-                    
-                    Image(systemName: "photo.fill.on.rectangle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.anPrimary)
-                        .frame(width: 71, height: 57)
+                            .overlay(
+                                Image(systemName: "photo.fill.on.rectangle.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(.anPrimary)
+                                    .frame(width: 71, height: 57)
+                            )
+                    }
                 }
             }
             .buttonStyle(.borderless)
         }
-        
     }
 }
 
