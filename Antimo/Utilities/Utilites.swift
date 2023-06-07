@@ -30,5 +30,9 @@ struct Utilities {
             }
     }
     
-    
+    static func convertTo24HourFormat(date: Date) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        return dateFormatter.string(from: date)
+    }
 }
