@@ -10,11 +10,11 @@ import SwiftUI
 
 // TODO: Find out how to present AddAcitivityView dynamically: exercise, nutrition, etc..
 enum Route: View, Hashable {
-    case dashboard
-    case reminder
     case summary
-    case profile
-    case addActivities
+    case journal
+    case activity
+    case reminder
+    case addJournals
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(self.hashValue)
@@ -22,15 +22,15 @@ enum Route: View, Hashable {
     
     static func == (lhs: Route, rhs: Route) -> Bool {
         switch (lhs, rhs) {
-        case (.dashboard, .dashboard):
+        case (.summary, .summary):
+            return true
+        case (.journal, .journal):
+            return true
+        case (.activity, .activity):
             return true
         case (.reminder, .reminder):
             return true
-        case (.summary, .summary):
-            return true
-        case (.profile, .profile):
-            return true
-        case (.addActivities, .addActivities):
+        case (.addJournals, .addJournals):
             return true
         default:
             return false
@@ -40,16 +40,16 @@ enum Route: View, Hashable {
     
     var body: some View {
         switch self {
-        case .dashboard:
-            DashboardView()
-        case .addActivities:
-            AddActivityView()
-        case .reminder:
-            ReminderView()
-        case .profile:
-            ProfileView()
         case .summary:
             SummaryView()
+        case .journal:
+            JournalView()
+        case .activity:
+            ActivityView()
+        case .reminder:
+            ReminderView()
+        case .addJournals:
+            AddJournalView()
         }
     }
 }

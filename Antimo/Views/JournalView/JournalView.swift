@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DashboardView: View {
+struct JournalView: View {
     @EnvironmentObject private var routerManager: NavigationRouter
     @StateObject var notificationManager = NotificationsManager()
     
@@ -17,8 +17,8 @@ struct DashboardView: View {
         NavigationStack(path: $routerManager.routes) {
             ANBaseContainer(toolbar: {
                 ANToolbar(title: "Journal") {
-                    NavigationLink(value: Route.addActivities) {
-                        Text("Add Activity")
+                    NavigationLink(value: Route.addJournals) {
+                        Text("Add Journal")
                             .font(.toolbar)
                             .foregroundColor(Color.anNavigation)
                     }

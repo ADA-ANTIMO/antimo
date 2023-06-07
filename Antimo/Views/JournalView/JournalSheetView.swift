@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ActivitySheetView: View {
+struct JournalSheetView: View {
     var activityType:String
     var handleClose: () -> Void
     
@@ -53,7 +53,7 @@ struct ActivitySheetView: View {
 
 struct ActivitySheetView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitySheetView(activityType: "") {
+        JournalSheetView(activityType: "") {
             
         }
     }

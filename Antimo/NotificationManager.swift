@@ -55,7 +55,7 @@ class NotificationsManager: ObservableObject {
                 content.sound = UNNotificationSound.default
                 
                 // TODO: define proper deeplinks
-                let deepLinkURL = URL(string: "antimo://\(DeepLinkURLs.addExercise.rawValue)")!
+                let deepLinkURL = URL(string: "antimo://\(DeepLinkURLs.addJournals.rawValue)")!
                 content.userInfo = ["link": deepLinkURL.absoluteString]
                 
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
@@ -89,7 +89,7 @@ class NotificationsManager: ObservableObject {
                 // let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
                 
                 // MARK: Trigger Calendar, based on date and time values
-                let deepLinkURL = URL(string: "antimo://\(DeepLinkURLs.addExercise.rawValue)")!
+                let deepLinkURL = URL(string: "antimo://\(DeepLinkURLs.addJournals.rawValue)")!
                 content.userInfo = ["link": deepLinkURL.absoluteString]
                 
                 // Define the weekday range (Monday to Friday)
