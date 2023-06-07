@@ -8,24 +8,21 @@
 import SwiftUI
 
 struct ActivityView: View {
-    @EnvironmentObject private var routerManager: NavigationRouter
+    @EnvironmentObject private var activityNavigation: ActivityNavigationManager
     @StateObject var vm = ActivityViewModel()
     
     var body: some View {
-        NavigationStack(path: $routerManager.routes) {
-            ANBaseContainer(toolbar: {
-                ANToolbar(title: "Calendar") {
-                    Text("Add Event")
-                        .font(.toolbar)
-                        .foregroundColor(Color.anNavigation)
-                        .onTapGesture { vm.isEventSheetPresented = true }
-                }
-            }, children: {
-                UpcomingEventView()
-            })
-            .sheet(isPresented: $vm.isEventSheetPresented) { AddEventSheetView(vm: vm) }
-        }
-        
+        ANBaseContainer(toolbar: {
+            ANToolbar(title: "Calendar") {
+                Text("Add Event")
+                    .font(.toolbar)
+                    .foregroundColor(Color.anNavigation)
+                    .onTapGesture { vm.isEventSheetPresented = true }
+            }
+        }, children: {
+            UpcomingEventView()
+        })
+        .sheet(isPresented: $vm.isEventSheetPresented) { AddEventSheetView(vm: vm) }
     }
 }
 

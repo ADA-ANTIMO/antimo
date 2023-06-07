@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct UpcomingEventView: View {
+    @EnvironmentObject private var activityNavigation: ActivityNavigationManager
+    
     var body: some View {
         VStack(spacing: 8) {
             HStack {
@@ -15,14 +17,12 @@ struct UpcomingEventView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: Route.events) {
-                    Text("Show All")
-                        .font(.toolbar)
-                        .foregroundColor(Color.anNavigation)
-                }
-                .navigationDestination(for: Route.self) {
-                    $0
-                }
+                Text("Show All")
+                    .font(.toolbar)
+                    .foregroundColor(Color.anNavigation)
+                    .onTapGesture {
+                        activityNavigation.push(to: .allEvents)
+                    }
             }
             
             ScrollView {

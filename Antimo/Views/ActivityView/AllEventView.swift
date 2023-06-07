@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AllEventView: View {
-    @EnvironmentObject private var routerManager: NavigationRouter
+    @EnvironmentObject private var activityNavigation: ActivityNavigationManager
     @StateObject var vm = ActivityViewModel()
     
     var body: some View {
@@ -17,7 +17,7 @@ struct AllEventView: View {
                 Text("Back")
                     .font(.toolbar)
                     .foregroundColor(Color.anNavigation)
-                    .onTapGesture { routerManager.goBack() }
+                    .onTapGesture { activityNavigation.goBack() }
             }, title: "Add Reminder") {
                 Text("Add Event")
                     .font(.toolbar)

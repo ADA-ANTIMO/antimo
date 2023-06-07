@@ -58,8 +58,6 @@
 		6131A5322A2F90C6007BF2F7 /* ANNumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6131A5312A2F90C6007BF2F7 /* ANNumberField.swift */; };
 		6131A5342A2FAE52007BF2F7 /* ReminderFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6131A5332A2FAE52007BF2F7 /* ReminderFormView.swift */; };
 		6131A5362A2FAE76007BF2F7 /* DaysSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6131A5352A2FAE76007BF2F7 /* DaysSelectorView.swift */; };
-		6138BC532A28A5F30017BE63 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6138BC522A28A5F30017BE63 /* Route.swift */; };
-		6138BC552A28A81F0017BE63 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6138BC542A28A81F0017BE63 /* NavigationRouter.swift */; };
 		61A98B582A24FEA000152C87 /* AntimoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B572A24FEA000152C87 /* AntimoApp.swift */; };
 		61A98B5A2A24FEA000152C87 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B592A24FEA000152C87 /* ContentView.swift */; };
 		61A98B5C2A24FEA000152C87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61A98B5B2A24FEA000152C87 /* Assets.xcassets */; };
@@ -86,6 +84,8 @@
 		61AD59F42A30EEF900BC5780 /* AllEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AD59F32A30EEF900BC5780 /* AllEventView.swift */; };
 		61AD59F62A30F4B600BC5780 /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AD59F52A30F4B600BC5780 /* ActivityViewModel.swift */; };
 		61AD59F82A30FD7400BC5780 /* JournalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AD59F72A30FD7400BC5780 /* JournalViewModel.swift */; };
+		61AD59FC2A311F3200BC5780 /* JournalRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AD59FB2A311F3200BC5780 /* JournalRoutes.swift */; };
+		61AD59FE2A3121A500BC5780 /* ActivityRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AD59FD2A3121A500BC5780 /* ActivityRoutes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,8 +140,6 @@
 		6131A5312A2F90C6007BF2F7 /* ANNumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANNumberField.swift; sourceTree = "<group>"; };
 		6131A5332A2FAE52007BF2F7 /* ReminderFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFormView.swift; sourceTree = "<group>"; };
 		6131A5352A2FAE76007BF2F7 /* DaysSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysSelectorView.swift; sourceTree = "<group>"; };
-		6138BC522A28A5F30017BE63 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
-		6138BC542A28A81F0017BE63 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		61A98B542A24FEA000152C87 /* Antimo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Antimo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A98B572A24FEA000152C87 /* AntimoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntimoApp.swift; sourceTree = "<group>"; };
 		61A98B592A24FEA000152C87 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -169,6 +167,8 @@
 		61AD59F32A30EEF900BC5780 /* AllEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEventView.swift; sourceTree = "<group>"; };
 		61AD59F52A30F4B600BC5780 /* ActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
 		61AD59F72A30FD7400BC5780 /* JournalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalViewModel.swift; sourceTree = "<group>"; };
+		61AD59FB2A311F3200BC5780 /* JournalRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalRoutes.swift; sourceTree = "<group>"; };
+		61AD59FD2A3121A500BC5780 /* ActivityRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRoutes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,9 +254,9 @@
 		6138BC582A28B47E0017BE63 /* Routes */ = {
 			isa = PBXGroup;
 			children = (
-				6138BC522A28A5F30017BE63 /* Route.swift */,
+				61AD59FD2A3121A500BC5780 /* ActivityRoutes.swift */,
+				61AD59FB2A311F3200BC5780 /* JournalRoutes.swift */,
 				6131A4B02A28FE54007BF2F7 /* RouteFinder.swift */,
-				6138BC542A28A81F0017BE63 /* NavigationRouter.swift */,
 			);
 			path = Routes;
 			sourceTree = "<group>";
@@ -492,6 +492,7 @@
 				61A98B5A2A24FEA000152C87 /* ContentView.swift in Sources */,
 				61AD59EA2A30CF2600BC5780 /* ANImageUploader.swift in Sources */,
 				4E41F5D12A26F0A1003C0A25 /* OtherActivity+CoreDataProperties.swift in Sources */,
+				61AD59FC2A311F3200BC5780 /* JournalRoutes.swift in Sources */,
 				4EB9EACA2A29B7FD00777B11 /* ANActivitySelector.swift in Sources */,
 				61A98B902A26E10E00152C87 /* ANTextField.swift in Sources */,
 				4E5AC2112A2C99E100090ED5 /* EnvironmentValues+Extension.swift in Sources */,
@@ -508,7 +509,6 @@
 				4E41F5D42A26F0A1003C0A25 /* Tag+CoreDataClass.swift in Sources */,
 				4E41F5D52A26F0A1003C0A25 /* Tag+CoreDataProperties.swift in Sources */,
 				61A98B582A24FEA000152C87 /* AntimoApp.swift in Sources */,
-				6138BC552A28A81F0017BE63 /* NavigationRouter.swift in Sources */,
 				6131A5302A2D8EC4007BF2F7 /* ANBaseContainer.swift in Sources */,
 				61AD59EC2A30E38300BC5780 /* UpcomingEventView.swift in Sources */,
 				6131A5222A2CB8D9007BF2F7 /* ANSnackBar.swift in Sources */,
@@ -529,6 +529,7 @@
 				4EB9EAC52A29925400777B11 /* ANActivityDetails.swift in Sources */,
 				61AD59F42A30EEF900BC5780 /* AllEventView.swift in Sources */,
 				4E41F5DA2A26F0A1003C0A25 /* GroomingActivity+CoreDataClass.swift in Sources */,
+				61AD59FE2A3121A500BC5780 /* ActivityRoutes.swift in Sources */,
 				61A98B872A2502B000152C87 /* Font+Extension.swift in Sources */,
 				4E5AC2172A2D055900090ED5 /* DummyData.swift in Sources */,
 				4E41F5DB2A26F0A1003C0A25 /* GroomingActivity+CoreDataProperties.swift in Sources */,
@@ -541,7 +542,6 @@
 				4E41F5D92A26F0A1003C0A25 /* NutritionActivity+CoreDataProperties.swift in Sources */,
 				4E41F5D02A26F0A1003C0A25 /* OtherActivity+CoreDataClass.swift in Sources */,
 				4E41F5D62A26F0A1003C0A25 /* ExerciseActivity+CoreDataClass.swift in Sources */,
-				6138BC532A28A5F30017BE63 /* Route.swift in Sources */,
 				4E4ADAB72A2B57910069C167 /* ANTag.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -671,7 +671,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Antimo/Preview Content\"";
-				DEVELOPMENT_TEAM = 578BJN6MM7;
+				DEVELOPMENT_TEAM = BBJ66M42MQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -701,7 +701,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Antimo/Preview Content\"";
-				DEVELOPMENT_TEAM = 578BJN6MM7;
+				DEVELOPMENT_TEAM = BBJ66M42MQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

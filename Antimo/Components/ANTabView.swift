@@ -17,44 +17,60 @@ enum NavigationTabs: String {
 struct ANTabView: View {
     @Binding var selectedTab: NavigationTabs
     
+    @StateObject var journalNavigation = JournalNavigationManager()
+    @StateObject var activityNavigation = ActivityNavigationManager()
+    
     // TODO: Change TabBar Icons
     var body: some View {
             TabView(selection: $selectedTab) {
                 SummaryView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .tabItem {
-                        Label {
-                            Text("Summary")
-                                .font(.tab)
-                        } icon: {
-                            Image(systemName: "chart.bar.xaxis")
-                        }
+                .tabItem {
+                    Label {
+                        Text("Summary")
+                            .font(.tab)
+                    } icon: {
+                        Image(systemName: "chart.bar.xaxis")
                     }
-                    .tag(NavigationTabs.summary)
+                }
+                .tag(NavigationTabs.summary)
                 
-                JournalView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .tabItem {
-                        Label {
-                            Text("Journal")
-                                .font(.tab)
-                        } icon: {
-                            Image(systemName: "text.book.closed.fill")
+                NavigationStack(path: $journalNavigation.journalPaths) {
+                    JournalView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .navigationDestination(for: JournalRoute.self) { _ in
+                            AddJournalView()
                         }
+                }
+                .tabItem {
+                    Label {
+                        Text("Journal")
+                            .font(.tab)
+                    } icon: {
+                        Image(systemName: "text.book.closed.fill")
                     }
-                    .tag(NavigationTabs.journal)
+                }
+                .tag(NavigationTabs.journal)
+                .environmentObject(journalNavigation)
+                    
                 
-                ActivityView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .tabItem {
-                        Label {
-                            Text("Activity")
-                                .font(.tab)
-                        } icon: {
-                            Image(systemName: "calendar")
+                NavigationStack(path: $activityNavigation.activityPaths) {
+                    ActivityView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .navigationDestination(for: ActivityRoute.self) { _ in
+                            AllEventView()
                         }
+                }
+                .tabItem {
+                    Label {
+                        Text("Activity")
+                            .font(.tab)
+                    } icon: {
+                        Image(systemName: "calendar")
                     }
-                    .tag(NavigationTabs.activity)
+                }
+                .tag(NavigationTabs.activity)
+                .environmentObject(activityNavigation)
                 
                 ReminderView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
