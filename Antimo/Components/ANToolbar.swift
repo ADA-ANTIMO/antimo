@@ -75,6 +75,8 @@ struct ANToolbar<Toolbar:View>: View {
                 .frame(maxWidth: .infinity)
             }
             .padding(.horizontal, 16)
+            .padding(.top, 8)
+            .padding(.bottom, 8)
             
             Divider()
         }

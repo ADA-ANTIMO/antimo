@@ -11,10 +11,9 @@ import SwiftUI
 struct AntimoApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     
-    @StateObject var routerManager = NavigationRouter()
     @StateObject var notificationManager = NotificationsManager()
     
-    @State private var selectedTab: NavigationTabs = .reminder
+    @State private var selectedTab: NavigationTabs = .summary
     
     let persistenceController = PersistenceController.shared
     
@@ -28,7 +27,7 @@ struct AntimoApp: App {
             } else {
                 ANTabView(selectedTab: $selectedTab)
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .environmentObject(routerManager)
+//                    .environmentObject(routerManager)
                     .onAppear {
                         appDelegate.app = self
                     }

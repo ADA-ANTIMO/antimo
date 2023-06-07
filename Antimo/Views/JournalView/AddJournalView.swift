@@ -62,7 +62,7 @@ struct ActivityOption: View {
 }
 
 struct AddJournalView: View {
-    @EnvironmentObject private var routerManager: NavigationRouter
+    @EnvironmentObject private var journalNavigation: JournalNavigationManager
     @State var isSheetPresented = false
     @State var selectedActivity: ActivityTypes = .nutrition
     
@@ -79,7 +79,7 @@ struct AddJournalView: View {
         ANBaseContainer {
             ANToolbar(leading: {
                 Button(action: {
-                    routerManager.goBack()
+                    journalNavigation.goBack()
                 }, label: {
                     HStack {
                         Image(systemName: "chevron.left")

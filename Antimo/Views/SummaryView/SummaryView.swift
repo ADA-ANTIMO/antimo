@@ -10,71 +10,67 @@ import PhotosUI
 
 struct SummaryView: View {
     @StateObject var viewModel = SummaryViewModel()
-    @EnvironmentObject private var routerManager: NavigationRouter
-    
     
     var body: some View {
-        NavigationStack(path: $routerManager.routes) {
-            ANBaseContainer {
-                ANToolbar(title: "Summary") {
-                    Text("")
-                }
-            } children: {
-                ScrollView {
-                    VStack(spacing: 25) {
-                        ZStack {
-                            Rectangle()
-                                .fill(Color.anPrimaryLight)
-                                .cornerRadius(8)
-                            
-                            HStack(spacing: 20) {
-                                EditableCircularProfileImage(viewModel: viewModel)
-                                VStack(alignment: .leading, spacing: 10) {
+        ANBaseContainer {
+            ANToolbar(title: "Summary") {
+                Text("")
+            }
+        } children: {
+            ScrollView {
+                VStack(spacing: 25) {
+                    ZStack {
+                        Rectangle()
+                            .fill(Color.anPrimaryLight)
+                            .cornerRadius(8)
+                        
+                        HStack(spacing: 20) {
+                            EditableCircularProfileImage(viewModel: viewModel)
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack {
+                                    Text(viewModel.renderedDogName)
+                                    Spacer()
                                     HStack {
-                                        Text(viewModel.renderedDogName)
-                                        Spacer()
-                                        HStack {
-                                            Text("Edit").font(.toolbar).foregroundColor(.anNavigation)
-                                            Image(systemName: "square.and.pencil").foregroundColor(.anNavigation)
-                                        }
-                                        .onTapGesture {
-                                            viewModel.openProfileForm()
-                                        }
+                                        Text("Edit").font(.toolbar).foregroundColor(.anNavigation)
+                                        Image(systemName: "square.and.pencil").foregroundColor(.anNavigation)
                                     }
-                                    HStack {
-                                        Text(viewModel.renderedBOD)
-                                        Spacer()
-                                        Text(viewModel.renderedAge)
-                                    }
-                                    
-                                    HStack {
-                                        Text(viewModel.renderedBreed)
-                                        Spacer()
-                                        Text(viewModel.renderedWeight)
+                                    .onTapGesture {
+                                        viewModel.openProfileForm()
                                     }
                                 }
+                                HStack {
+                                    Text(viewModel.renderedBOD)
+                                    Spacer()
+                                    Text(viewModel.renderedAge)
+                                }
+                                
+                                HStack {
+                                    Text(viewModel.renderedBreed)
+                                    Spacer()
+                                    Text(viewModel.renderedWeight)
+                                }
                             }
-                            .padding()
                         }
-                        .padding(.horizontal)
-                        .frame(width: UIScreen.main.bounds.width)
-                        
-                        VStack (alignment: .leading, spacing: 10) {
-                            Text("Last Visit")
-                            HStack (spacing: 10) {
-                                LastVisitCard(activityType: "Veterinary", icon: "person", name: "Veterinary Name", date: Date())
-                                LastVisitCard(activityType: "Grooming", icon: "comb.fill", name: "Groomer Name", date: Date())
-                            }
-                            LastVisitCard(activityType: "Medication", icon: "person", name:"Medicine", date: Date())
-                        }
-                        .padding(.horizontal)
-                        
-                        WeightChartView()
-                            .padding(.horizontal)
-                        
-                        ExerciseChartView()
-                            .padding(.horizontal)
+                        .padding()
                     }
+                    .padding(.horizontal)
+                    .frame(width: UIScreen.main.bounds.width)
+                    
+                    VStack (alignment: .leading, spacing: 10) {
+                        Text("Last Visit")
+                        HStack (spacing: 10) {
+                            LastVisitCard(activityType: "Veterinary", icon: "person", name: "Veterinary Name", date: Date())
+                            LastVisitCard(activityType: "Grooming", icon: "comb.fill", name: "Groomer Name", date: Date())
+                        }
+                        LastVisitCard(activityType: "Medication", icon: "person", name:"Medicine", date: Date())
+                    }
+                    .padding(.horizontal)
+                    
+                    WeightChartView()
+                        .padding(.horizontal)
+                    
+                    ExerciseChartView()
+                        .padding(.horizontal)
                 }
             }
         }
