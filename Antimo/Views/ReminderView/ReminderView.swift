@@ -20,12 +20,12 @@ struct ReminderView: View {
             }
         }, children: {
             ScrollView {
-                ANReminderCard(icon: "doc", title: "Meal Time", time: "10.00", frequency: "Every Day")
-                ANReminderCard(icon: "doc", title: "Meal Time", time: "10.00", frequency: "Every Day")
-                ANReminderCard(icon: "doc", title: "Meal Time", time: "10.00", frequency: "Every Day")
-                ANReminderCard(icon: "doc", title: "Meal Time", time: "10.00", frequency: "Every Day")
+                ANReminderCard(icon: .nutrition, title: "Meal Time", time: "10.00", frequency: "Every Day")
+                ANReminderCard(icon: .exercise, title: "Meal Time", time: "10.00", frequency: "Every Day")
+                ANReminderCard(icon: .grooming, title: "Meal Time", time: "10.00", frequency: "Every Day")
+                ANReminderCard(icon: .other, title: "Meal Time", time: "10.00", frequency: "Every Day")
             }
-            .padding()
+            .padding(.horizontal)
         })
         .sheet(isPresented: $vm.isReminderFormPresented) { ReminderFormView(vm: vm) }
     }

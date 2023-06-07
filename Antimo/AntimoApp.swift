@@ -14,7 +14,7 @@ struct AntimoApp: App {
     @StateObject var routerManager = NavigationRouter()
     @StateObject var notificationManager = NotificationsManager()
     
-    @State private var selectedTab: NavigationTabs = .activity
+    @State private var selectedTab: NavigationTabs = .reminder
     
     let persistenceController = PersistenceController.shared
     
