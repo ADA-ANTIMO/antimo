@@ -15,6 +15,7 @@ enum Route: View, Hashable {
     case activity
     case reminder
     case addJournals
+    case events
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(self.hashValue)
@@ -31,6 +32,8 @@ enum Route: View, Hashable {
         case (.reminder, .reminder):
             return true
         case (.addJournals, .addJournals):
+            return true
+        case (.events, .events):
             return true
         default:
             return false
@@ -50,6 +53,8 @@ enum Route: View, Hashable {
             ReminderView()
         case .addJournals:
             AddJournalView()
+        case .events:
+            AllEventView()
         }
     }
 }

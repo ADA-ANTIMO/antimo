@@ -8,9 +8,24 @@
 import SwiftUI
 
 struct ActivityView: View {
+    @EnvironmentObject private var routerManager: NavigationRouter
+    @StateObject var vm = ActivityViewModel()
+    
     var body: some View {
-        ANImageUploader(label: "Upload your image")
-            .padding()
+        NavigationStack(path: $routerManager.routes) {
+            ANBaseContainer(toolbar: {
+                ANToolbar(title: "Calendar") {
+                    Text("Add Event")
+                        .font(.toolbar)
+                        .foregroundColor(Color.anNavigation)
+                        .onTapGesture { vm.isEventSheetPresented = true }
+                }
+            }, children: {
+                UpcomingEventView()
+            })
+            .sheet(isPresented: $vm.isEventSheetPresented) { AddEventSheetView(vm: vm) }
+        }
+        
     }
 }
 

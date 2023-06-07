@@ -62,10 +62,10 @@ struct SummaryView: View {
                         VStack (alignment: .leading, spacing: 10) {
                             Text("Last Visit")
                             HStack (spacing: 10) {
-                                EventCard(activityType: "Veterinary", icon: "person", name: "Veterinary Name", date: Date())
-                                EventCard(activityType: "Grooming", icon: "comb.fill", name: "Groomer Name", date: Date())
+                                LastVisitCard(activityType: "Veterinary", icon: "person", name: "Veterinary Name", date: Date())
+                                LastVisitCard(activityType: "Grooming", icon: "comb.fill", name: "Groomer Name", date: Date())
                             }
-                            EventCard(activityType: "Medication", icon: "person", name:"Medicine", date: Date())
+                            LastVisitCard(activityType: "Medication", icon: "person", name:"Medicine", date: Date())
                         }
                         .padding(.horizontal)
                         
@@ -124,7 +124,7 @@ struct SummaryView_Previews: PreviewProvider {
     }
 }
 
-struct EventCard: View {
+struct LastVisitCard: View {
     var activityType: String
     var icon: String
     var name: String
