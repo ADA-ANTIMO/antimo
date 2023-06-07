@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ActivityView: View {
     var body: some View {
-        Text("Hello from activity view")
+        ANImageUploader(label: "Upload your image")
+            .padding()
     }
 }
 

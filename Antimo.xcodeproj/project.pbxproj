@@ -81,6 +81,7 @@
 		61A98B8E2A26399700152C87 /* ANTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B8D2A26399700152C87 /* ANTabView.swift */; };
 		61A98B902A26E10E00152C87 /* ANTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B8F2A26E10E00152C87 /* ANTextField.swift */; };
 		61A98B922A26E45200152C87 /* ANTextFieldArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B912A26E45200152C87 /* ANTextFieldArea.swift */; };
+		61AD59EA2A30CF2600BC5780 /* ANImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AD59E92A30CF2600BC5780 /* ANImageUploader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -159,6 +160,7 @@
 		61A98B8D2A26399700152C87 /* ANTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTabView.swift; sourceTree = "<group>"; };
 		61A98B8F2A26E10E00152C87 /* ANTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTextField.swift; sourceTree = "<group>"; };
 		61A98B912A26E45200152C87 /* ANTextFieldArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTextFieldArea.swift; sourceTree = "<group>"; };
+		61AD59E92A30CF2600BC5780 /* ANImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANImageUploader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +312,7 @@
 				4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */,
 				4EB9EAC92A29B7FD00777B11 /* ANActivitySelector.swift */,
 				4E4ADAB62A2B57910069C167 /* ANTag.swift */,
+				61AD59E92A30CF2600BC5780 /* ANImageUploader.swift */,
 				4E5AC20E2A2C8E0000090ED5 /* ANCard.swift */,
 				4E5AC2142A2CF76E00090ED5 /* ANToolbar.swift */,
 				4E6994972A2D7F70004D8D98 /* ANDatePicker.swift */,
@@ -472,6 +475,7 @@
 				4EB9EAC82A29973900777B11 /* CardStyles.swift in Sources */,
 				61A98B762A25016500152C87 /* JournalView.swift in Sources */,
 				61A98B5A2A24FEA000152C87 /* ContentView.swift in Sources */,
+				61AD59EA2A30CF2600BC5780 /* ANImageUploader.swift in Sources */,
 				4E41F5D12A26F0A1003C0A25 /* OtherActivity+CoreDataProperties.swift in Sources */,
 				4EB9EACA2A29B7FD00777B11 /* ANActivitySelector.swift in Sources */,
 				61A98B902A26E10E00152C87 /* ANTextField.swift in Sources */,
