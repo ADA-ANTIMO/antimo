@@ -12,5 +12,8 @@ extension Color {
     static let anPrimaryLight = Color("PrimaryColorLight")
     static let anAccent = Color("AccentColor")
     static let anNavigation = Color("Navigation")
+    static let anLegendLight = Color("LegendLight")
+    static let anLegendMedium = Color("LegendMedium")
+    static let anLegendHeavy = Color("LegendHeavy")
 }
 
