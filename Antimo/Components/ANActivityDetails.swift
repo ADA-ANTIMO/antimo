@@ -134,7 +134,7 @@ struct ANActivityDetails: View {
                 Image(activity.image)
                     .resizable()
                        .scaledToFill()
-                       .frame(width: .infinity, height: 200, alignment: .center)
+                       .frame(height: 200, alignment: .center)
                        .clipped()
                     
                 VStack {

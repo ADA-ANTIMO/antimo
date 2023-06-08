@@ -26,39 +26,46 @@ struct MoodButton: View {
 }
 
 struct ANMoodSelector: View {
+    let label: String
+    
     var body: some View {
-        HStack(alignment: .center) {
-            MoodButton(icon:"face.smiling")
+        VStack(alignment: .leading) {
+            Text(label)
+                .font(.inputLabel)
             
-            Spacer()
-            
-            MoodButton(icon:"face.smiling")
-            
-            Spacer()
-            
-            MoodButton(icon:"face.smiling")
-            
-            Spacer()
-            
-            MoodButton(icon:"face.smiling")
-            
-            Spacer()
-            
-            MoodButton(icon:"face.smiling")
+            HStack(alignment: .center) {
+                MoodButton(icon:"face.smiling")
+                
+                Spacer()
+                
+                MoodButton(icon:"face.smiling")
+                
+                Spacer()
+                
+                MoodButton(icon:"face.smiling")
+                
+                Spacer()
+                
+                MoodButton(icon:"face.smiling")
+                
+                Spacer()
+                
+                MoodButton(icon:"face.smiling")
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(
+                Color.anPrimaryLight
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(
+                        Color.anPrimary, lineWidth: 1
+                    )
+            )
+            .cornerRadius(8)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .background(
-            Color.anPrimaryLight
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(
-                    Color.anPrimary, lineWidth: 1
-                )
-        )
-        .cornerRadius(8)
     }
 }
 

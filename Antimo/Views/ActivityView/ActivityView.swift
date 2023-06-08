@@ -20,6 +20,8 @@ struct ActivityView: View {
                     .onTapGesture { vm.isEventSheetPresented = true }
             }
         }, children: {
+            ANCalendar()
+                .padding()
             UpcomingEventView()
         })
         .sheet(isPresented: $vm.isEventSheetPresented) { AddEventSheetView(vm: vm) }
