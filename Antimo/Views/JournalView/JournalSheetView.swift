@@ -57,9 +57,9 @@ struct JournalSheetView: View {
             }, title: activityType.rawValue)
             .padding(.vertical)
         } children: {
-            VStack {
+            VStack(spacing: 20) {
                 if activityType == .medication {
-                    ANTextField(text: .constant(""), placeholder: "Activity name", label: "Activity Name")
+                    ANActivityPicker(label: "Activity:")
                 } else {
                     ANTextField(text: .constant(""), placeholder: "Activity name", label: "Activity Name")
                 }

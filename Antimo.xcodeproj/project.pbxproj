@@ -39,6 +39,7 @@
 		4E79B5BA2A316C9800285A80 /* ANCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E79B5B92A316C9800285A80 /* ANCalendar.swift */; };
 		4E79B5C22A317E8900285A80 /* DateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E79B5C12A317E8900285A80 /* DateValue.swift */; };
 		4E816E772A27C6D500824D10 /* ANReminderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E816E762A27C6D500824D10 /* ANReminderCard.swift */; };
+		4EB6043D2A32C2DD00905849 /* ANActivityPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB6043C2A32C2DD00905849 /* ANActivityPicker.swift */; };
 		4EB9EAC52A29925400777B11 /* ANActivityDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */; };
 		4EB9EAC82A29973900777B11 /* CardStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB9EAC72A29973900777B11 /* CardStyles.swift */; };
 		4EB9EACA2A29B7FD00777B11 /* ANActivitySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB9EAC92A29B7FD00777B11 /* ANActivitySelector.swift */; };
@@ -123,6 +124,8 @@
 		4E79B5B92A316C9800285A80 /* ANCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANCalendar.swift; sourceTree = "<group>"; };
 		4E79B5C12A317E8900285A80 /* DateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValue.swift; sourceTree = "<group>"; };
 		4E816E762A27C6D500824D10 /* ANReminderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANReminderCard.swift; sourceTree = "<group>"; };
+		4EB6043C2A32C2DD00905849 /* ANActivityPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANActivityPicker.swift; sourceTree = "<group>"; };
+		4EB6043E2A32C3CB00905849 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4EB9EAC42A29925400777B11 /* ANActivityDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANActivityDetails.swift; sourceTree = "<group>"; };
 		4EB9EAC72A29973900777B11 /* CardStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStyles.swift; sourceTree = "<group>"; };
 		4EB9EAC92A29B7FD00777B11 /* ANActivitySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANActivitySelector.swift; sourceTree = "<group>"; };
@@ -307,6 +310,7 @@
 				61A98B5B2A24FEA000152C87 /* Assets.xcassets */,
 				61A98B622A24FEA000152C87 /* Antimo.xcdatamodeld */,
 				61A98B5D2A24FEA000152C87 /* Preview Content */,
+				4EB6043E2A32C3CB00905849 /* README.md */,
 			);
 			path = Antimo;
 			sourceTree = "<group>";
@@ -342,6 +346,7 @@
 				6131A5312A2F90C6007BF2F7 /* ANNumberField.swift */,
 				4E79B5B92A316C9800285A80 /* ANCalendar.swift */,
 				4E79B5C02A317E6F00285A80 /* TestCalendar */,
+				4EB6043C2A32C2DD00905849 /* ANActivityPicker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -543,6 +548,7 @@
 				61A98B8C2A25063100152C87 /* Utilites.swift in Sources */,
 				61A98B642A24FEA000152C87 /* Antimo.xcdatamodeld in Sources */,
 				61AD59F22A30EEF000BC5780 /* AddEventSheetView.swift in Sources */,
+				4EB6043D2A32C2DD00905849 /* ANActivityPicker.swift in Sources */,
 				4E41F5D32A26F0A1003C0A25 /* Reminder+CoreDataProperties.swift in Sources */,
 				4E41F5D82A26F0A1003C0A25 /* NutritionActivity+CoreDataClass.swift in Sources */,
 				4EB9EAC52A29925400777B11 /* ANActivityDetails.swift in Sources */,
