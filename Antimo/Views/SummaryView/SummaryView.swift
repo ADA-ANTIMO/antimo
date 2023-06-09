@@ -98,7 +98,7 @@ struct SummaryView: View {
                     ANTextField(text: $viewModel.gender, placeholder: "", label: "Gender")
                     ANDatePicker(date: $viewModel.bod, label: "Birth of date")
                     ANTextField(text: $viewModel.breed, placeholder: "", label: "Breed")
-                    ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight")
+                    ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight", suffix: "Kg")
                 }
                 .padding(.horizontal)
                 

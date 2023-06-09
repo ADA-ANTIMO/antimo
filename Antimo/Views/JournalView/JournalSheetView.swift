@@ -23,7 +23,7 @@ struct NutritionInputs: View {
 struct ExerciseInputs: View {
     var body: some View {
         Group {
-            ANNumberField(text: .constant(""), placeholder: "Duration in minutes", label: "Duration")
+            ANNumberField(text: .constant(""), placeholder: "Duration in minutes", label: "Duration", suffix: "Minutes")
             
             ANMoodSelector(label: "Mood")
         }
@@ -71,6 +71,8 @@ struct JournalSheetView: View {
                 switch activityType {
                 case .nutrition:
                     NutritionInputs()
+                case .medication:
+                    ANTextField(text: .constant(""), placeholder: "Vet name", label: "Vet")
                 case .exercise:
                     ExerciseInputs()
                 case .grooming:
@@ -94,8 +96,7 @@ struct JournalSheetView: View {
 
 struct ActivitySheetView_Previews: PreviewProvider {
     static var previews: some View {
-        JournalSheetView(activityType: .medication) {
-            
+        JournalSheetView(activityType: .exercise) {
         }
     }
 }
