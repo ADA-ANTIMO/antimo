@@ -115,7 +115,9 @@ struct AddJournalView: View {
             .padding()
         }
         .sheet(isPresented: $isSheetPresented) {
-            JournalSheetView(activityType: selectedActivity.rawValue) {
+            JournalSheetView(
+                activityType: selectedActivity
+            ) {
                 closeActivityForm()
             }
         }

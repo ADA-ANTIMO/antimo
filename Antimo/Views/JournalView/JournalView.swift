@@ -11,7 +11,7 @@ struct JournalView: View {
     @EnvironmentObject private var journalNavigation: JournalNavigationManager
     @StateObject var notificationManager = NotificationsManager()
     
-    @State var activities:[DummyData] = []
+    @State var activities:[DummyData] = [DummyData(), DummyData()]
     
     var body: some View {
         ANBaseContainer(toolbar: {
