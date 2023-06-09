@@ -59,4 +59,29 @@ struct Utilities {
         dateFormatter.dateFormat = "HH:mm:ss"
         return dateFormatter.string(from: date)
     }
+    
+    static func getTime(date: Date) -> DateComponents {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute], from: date)
+        
+        return components
+    }
+    
+    static func getDate(date: Date) -> DateComponents {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day, .month, .year], from: date)
+        
+        return components
+    }
+    
+    static func createDate(date:DateComponents, time:DateComponents) -> Date {
+        var components = DateComponents()
+        components.year = date.year
+        components.month = date.month
+        components.day = date.day
+        components.hour = time.hour
+        components.minute = time.minute
+        
+        return Calendar.current.date(from: components) ?? Date()
+    }
 }

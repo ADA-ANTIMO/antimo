@@ -25,12 +25,12 @@ struct FillButton: View {
             action()
         } label: {
             Text(text)
+                .foregroundColor(Color.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 14)
+                .background(Color.anPrimary)
+                .cornerRadius(8)
         }
-        .foregroundColor(Color.white)
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 14)
-        .background(Color.anPrimary)
-        .cornerRadius(8)
     }
 }
 
@@ -48,14 +48,14 @@ struct OutlineButton: View {
             action()
         } label: {
             Text(text)
+                .foregroundColor(Color.anPrimary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 14)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.anPrimary, lineWidth: 1)
+                )
         }
-        .foregroundColor(Color.anPrimary)
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 14)
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.anPrimary, lineWidth: 1)
-        )
     }
 }
 

@@ -7,25 +7,37 @@
 
 import SwiftUI
 
+enum Mood: String, CaseIterable{
+    case veryLow = "verylow"
+    case low = "low"
+    case medium = "medium"
+    case high = "high"
+    case veryHigh = "veryHigh"
+}
+
 struct MoodButton: View {
     let icon: String
     
     var body: some View {
-        ZStack {
-            Image(systemName: icon)
-                .font(.system(size: 20))
+        VStack {
+            ZStack {
+                Image(systemName: icon)
+                    .font(.system(size: 20))
+            }
+            .padding(14)
+            .background(Color.white)
+            .overlay(
+                RoundedRectangle(cornerRadius: 50)
+                    .stroke(Color.anPrimary, lineWidth: 1)
+            )
+            .cornerRadius(50)
         }
-        .padding(14)
-        .background(Color.white)
-        .overlay(
-            RoundedRectangle(cornerRadius: 50)
-                .stroke(Color.anPrimary, lineWidth: 1)
-        )
-        .cornerRadius(50)
+        .frame(maxWidth: .infinity)
     }
 }
 
 struct ANMoodSelector: View {
+    @Binding var selectedMood: String
     let label: String
     
     var body: some View {
@@ -34,23 +46,13 @@ struct ANMoodSelector: View {
                 .font(.inputLabel)
             
             HStack(alignment: .center) {
-                MoodButton(icon:"face.smiling")
-                
-                Spacer()
-                
-                MoodButton(icon:"face.smiling")
-                
-                Spacer()
-                
-                MoodButton(icon:"face.smiling")
-                
-                Spacer()
-                
-                MoodButton(icon:"face.smiling")
-                
-                Spacer()
-                
-                MoodButton(icon:"face.smiling")
+                ForEach(Mood.allCases, id: \.self) { mood in
+                    MoodButton(icon: "face.smiling")
+                        .opacity(selectedMood == mood.rawValue ? 1 : 0.5)
+                        .onTapGesture {
+                            selectedMood = mood.rawValue
+                        }
+                }
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 12)
