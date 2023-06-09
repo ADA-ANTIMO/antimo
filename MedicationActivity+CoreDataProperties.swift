@@ -2,7 +2,7 @@
 //  MedicationActivity+CoreDataProperties.swift
 //  Antimo
 //
-//  Created by Bisma Mahendra I Dewa Gede on 31/05/23.
+//  Created by Bisma Mahendra I Dewa Gede on 09/06/23.
 //
 //
 
@@ -17,6 +17,7 @@ extension MedicationActivity {
     }
 
     @NSManaged public var id: UUID?
+    @NSManaged public var vet: String?
     @NSManaged public var activity: Activity?
 
 }

@@ -12,7 +12,6 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(sortDescriptors: []) private var activities: FetchedResults<Activity>
-    @FetchRequest(sortDescriptors: []) private var tags: FetchedResults<Tag>
     
     var body: some View {
        NavigationView {
@@ -25,7 +24,6 @@ struct ContentView: View {
                     .onAppear {
                         if activity.title == "Berenang" {
                             debugPrint(activity)
-                            debugPrint(activity.tags?.count == 0)
                         }
 //                        debugPrint(activity.activity?.unwrappedTags)
                     }

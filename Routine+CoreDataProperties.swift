@@ -2,7 +2,7 @@
 //  Routine+CoreDataProperties.swift
 //  Antimo
 //
-//  Created by Bisma Mahendra I Dewa Gede on 31/05/23.
+//  Created by Bisma Mahendra I Dewa Gede on 09/06/23.
 //
 //
 
@@ -17,14 +17,15 @@ extension Routine {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var weekdays: NSSet?
     @NSManaged public var reminder: Reminder?
-
+    @NSManaged public var weekdays: NSSet?
+    
     public var getWeekdays: [Weekday] {
-        let setOfWeekdays = weekdays as? Set<Weekday> ?? []
-        
-        return Array(setOfWeekdays)
+            let setOfWeekdays = weekdays as? Set<Weekday> ?? []
+            
+            return Array(setOfWeekdays)
     }
+
 }
 
 // MARK: Generated accessors for weekdays

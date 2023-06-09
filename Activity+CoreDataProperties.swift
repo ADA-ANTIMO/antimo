@@ -2,13 +2,12 @@
 //  Activity+CoreDataProperties.swift
 //  Antimo
 //
-//  Created by Bisma Mahendra I Dewa Gede on 31/05/23.
+//  Created by Bisma Mahendra I Dewa Gede on 09/06/23.
 //
 //
 
 import Foundation
 import CoreData
-import UIKit
 
 
 extension Activity {
@@ -28,29 +27,6 @@ extension Activity {
     @NSManaged public var medication: MedicationActivity?
     @NSManaged public var nutrition: NutritionActivity?
     @NSManaged public var other: OtherActivity?
-    @NSManaged public var tags: NSSet?
-
-    public var getTags: [Tag] {
-        let setOfTags = tags as? Set<Tag> ?? []
-        
-        return Array(setOfTags)
-    }
-}
-
-// MARK: Generated accessors for tags
-extension Activity {
-
-    @objc(addTagsObject:)
-    @NSManaged public func addToTags(_ value: Tag)
-
-    @objc(removeTagsObject:)
-    @NSManaged public func removeFromTags(_ value: Tag)
-
-    @objc(addTags:)
-    @NSManaged public func addToTags(_ values: NSSet)
-
-    @objc(removeTags:)
-    @NSManaged public func removeFromTags(_ values: NSSet)
 
 }
 

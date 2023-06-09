@@ -2,7 +2,7 @@
 //  GroomingActivity+CoreDataProperties.swift
 //  Antimo
 //
-//  Created by Bisma Mahendra I Dewa Gede on 31/05/23.
+//  Created by Bisma Mahendra I Dewa Gede on 09/06/23.
 //
 //
 
@@ -17,8 +17,8 @@ extension GroomingActivity {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var satisfaction: Int16
     @NSManaged public var salon: String?
+    @NSManaged public var satisfaction: String?
     @NSManaged public var activity: Activity?
 
 }
