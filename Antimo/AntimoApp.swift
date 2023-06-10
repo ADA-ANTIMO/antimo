@@ -27,7 +27,6 @@ struct AntimoApp: App {
             } else {
                 ANTabView(selectedTab: $selectedTab)
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
-//                    .environmentObject(routerManager)
                     .onAppear {
                         appDelegate.app = self
                     }

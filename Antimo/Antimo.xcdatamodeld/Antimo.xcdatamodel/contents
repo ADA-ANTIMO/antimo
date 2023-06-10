@@ -45,6 +45,11 @@
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="other" inverseEntity="Activity"/>
     </entity>
+    <entity name="Pet" representedClassName="Pet" syncable="YES">
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="weight" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Reminder" representedClassName="Reminder" syncable="YES">
         <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="desc" optional="YES" attributeType="String"/>

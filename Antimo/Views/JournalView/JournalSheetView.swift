@@ -62,7 +62,7 @@ struct JournalSheetView: View {
             }, title: vm.selectedActivity.rawValue)
             .padding(.vertical)
         } children: {
-            VStack(spacing: 20) {
+            VStack(spacing: 12) {
                 if vm.selectedActivity == .medication {
                     ANActivityPicker(selected: $vm.title, label: "Activity:")
                 } else {
@@ -94,6 +94,8 @@ struct JournalSheetView: View {
                     let date = Utilities.getDate(date: vm.date)
                     let time = Utilities.getTime(date: vm.time)
                     let newDate = Utilities.createDate(date: date, time: time)
+                    
+                    print(newDate)
                     
                     vm.submitForm()
                 }

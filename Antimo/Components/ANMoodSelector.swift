@@ -48,9 +48,11 @@ struct ANMoodSelector: View {
             HStack(alignment: .center) {
                 ForEach(Mood.allCases, id: \.self) { mood in
                     MoodButton(icon: "face.smiling")
-                        .opacity(selectedMood == mood.rawValue ? 1 : 0.5)
+                        .opacity(selectedMood == mood.rawValue ? 1 : 0.25)
                         .onTapGesture {
-                            selectedMood = mood.rawValue
+                            withAnimation {
+                                selectedMood = mood.rawValue
+                            }
                         }
                 }
             }

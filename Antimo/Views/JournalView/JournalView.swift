@@ -10,18 +10,18 @@ import SwiftUI
 struct JournalView: View {
     @EnvironmentObject private var journalNavigation: JournalNavigationManager
     @StateObject var notificationManager = NotificationsManager()
-    
     @State var activities:[DummyData] = [DummyData(), DummyData()]
     
     var body: some View {
         ANBaseContainer(toolbar: {
             ANToolbar(title: "Journal") {
-                Text("Add Journal")
-                    .font(.toolbar)
-                    .foregroundColor(Color.anNavigation)
-                    .onTapGesture {
-                        journalNavigation.push(to: .addJournal)
-                    }
+                Button {
+                    journalNavigation.push(to: .addJournal)
+                } label: {
+                    Text("Add Journal")
+                        .font(.toolbar)
+                        .foregroundColor(Color.anNavigation)
+                }
             }
         }, children: {
             if activities.isEmpty {
