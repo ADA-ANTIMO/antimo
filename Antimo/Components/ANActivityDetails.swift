@@ -56,7 +56,7 @@ struct ActivityMeta: View {
             ZStack {
                 let timeComponents = Utilities.getTime(date: createdAt)
                 
-                Text("\(timeComponents.hour!):\(timeComponents.minute!)")
+                Text(String(format: "%02d:%02d", timeComponents.hour!, timeComponents.minute!))
                     .font(.cardTime)
             }
             .foregroundColor(Color.primary)
@@ -138,13 +138,13 @@ struct ActivityStatus: View {
 }
 
 struct ANActivityDetails: View {
-    let activity:ExerciseActivity
+    let activity:Activity
     let actions:[Action]
     
     var body: some View {
         VStack() {
             ZStack(alignment: .top) {
-                let image = FileManager().retrieveImage(with: activity.activity!.imagePath) ?? UIImage(systemName: "exclamationmark.triangle.fill")!
+                let image = FileManager().retrieveImage(with: activity.imagePath) ?? UIImage(named: "dummyImg")!
                 
                 Image(uiImage: image)
                     .resizable()
@@ -153,7 +153,7 @@ struct ANActivityDetails: View {
                        .clipped()
                     
                 VStack {
-                    ActivityMeta(icon: "book", type: activity.activity!.type!, createdAt: activity.activity!.createdAt!)
+                    ActivityMeta(icon: "book", type: activity.type!, createdAt: activity.createdAt!)
                     
                     Spacer()
                     
@@ -168,12 +168,25 @@ struct ANActivityDetails: View {
             
             // Details
             VStack(alignment: .leading, spacing: 16) {
-                ActivityHeading(actions: actions,title: activity.activity!.title!)
+                ActivityHeading(actions: actions,title: activity.title!)
                 
-                ActivityExtra(icon: "book", extra: "Dog Groomer Alaska")
+                if activity.type != ActivityTypes.other.rawValue {
+                    switch activity.type {
+                    case ActivityTypes.nutrition.rawValue:
+                        ActivityExtra(icon: "book", extra: "\(activity.nutrition!.menu!) (\(activity.nutrition!.isEatenUp ? "Eaten Up" : "Has Leftover"))")
+                    case ActivityTypes.medication.rawValue:
+                        ActivityExtra(icon: "book", extra: "\(activity.medication?.vet ?? "-")")
+                    case ActivityTypes.exercise.rawValue:
+                        ActivityExtra(icon: "book", extra: "\(activity.exercise!.duration) Minutes")
+                    case ActivityTypes.grooming.rawValue:
+                        ActivityExtra(icon: "book", extra: "\(activity.grooming!.salon!)")
+                    default:
+                        EmptyView()
+                    }
+                }
                 
                 // Desc
-                Text(activity.activity!.note!)
+                Text(activity.note!)
                     .font(.cardContent)
             }
             .padding(16)

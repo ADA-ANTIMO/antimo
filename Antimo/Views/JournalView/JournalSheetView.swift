@@ -60,11 +60,11 @@ struct JournalSheetView: View {
                         .font(.toolbar)
                         .foregroundColor(Color.anNavigation)
                 })
-            }, title: vm.selectedActivity.rawValue)
+            }, title: vm.activityType.rawValue)
             .padding(.vertical)
         } children: {
             VStack(spacing: 12) {
-                if vm.selectedActivity == .medication {
+                if vm.activityType == .medication {
                     ANActivityPicker(selected: $vm.title, label: "Activity:")
                 } else {
                     ANTextField(text: $vm.title, placeholder: "Activity name", label: "Activity Name")
@@ -74,11 +74,13 @@ struct JournalSheetView: View {
                 
                 ANTimePicker(time: $vm.time, label: "Time")
                 
-                switch vm.selectedActivity {
+                switch vm.activityType {
                 case .nutrition:
                     NutritionInputs()
                 case .medication:
-                    ANTextField(text: $vm.vet, placeholder: "Vet name", label: "Vet")
+                    if vm.title == "Vet" {
+                        ANTextField(text: $vm.vet, placeholder: "Vet name", label: "Vet")
+                    }
                 case .exercise:
                     ExerciseInputs()
                 case .grooming:
@@ -89,19 +91,22 @@ struct JournalSheetView: View {
                 
                 ANTextFieldArea(text: $vm.note, label: "Note (optional)", placeholder: "Activity note...")
                 
-                ANImageUploader(imagePicker: vm.imagePicker, label: "\(vm.selectedActivity.rawValue) photo (optional)")
+                ANImageUploader(imagePicker: vm.imagePicker, label: "\(vm.activityType.rawValue) photo (optional)")
                 
-                ANButton("Submit") {
-                    let date = Utilities.getDate(date: vm.date)
-                    let time = Utilities.getTime(date: vm.time)
-                    let newDate = Utilities.createDate(date: date, time: time)
-                    
-                    print(newDate)
-                    
-                    vm.submitForm(context: viewContext)
+                ANButton("Submit") {    
+                    if vm.selectedActivity != nil {
+                        vm.submitEditForm(context: viewContext)
+                    } else {
+                        vm.submitForm(context: viewContext)
+                    }
                 }
             }
             .padding(.horizontal, 16)
+        }
+        .onAppear {
+            if let selectedActivity = vm.selectedActivity {
+                vm.setState(activity: selectedActivity)
+            }
         }
     }
 }

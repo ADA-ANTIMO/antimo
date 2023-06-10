@@ -2,12 +2,13 @@
 //  Activity+CoreDataProperties.swift
 //  Antimo
 //
-//  Created by Bisma Mahendra I Dewa Gede on 09/06/23.
+//  Created by Bisma Mahendra I Dewa Gede on 10/06/23.
 //
 //
 
 import SwiftUI
 import CoreData
+
 
 extension Activity {
 

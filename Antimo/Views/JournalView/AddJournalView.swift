@@ -13,6 +13,23 @@ enum ActivityTypes: String {
     case exercise = "Exercise"
     case grooming = "Grooming"
     case other = "Other"
+    
+    static func getByString(type: String) -> ActivityTypes {
+        print(type, "<<<<<<< TYPE")
+        
+        switch type {
+        case "Nutrition":
+            return ActivityTypes.nutrition
+        case "Medication":
+            return ActivityTypes.medication
+        case "Exercise":
+            return ActivityTypes.exercise
+        case "Grooming":
+            return ActivityTypes.grooming
+        default:
+            return ActivityTypes.other
+        }
+    }
 }
 
 struct ActivityIcon: View {
@@ -83,28 +100,30 @@ struct AddJournalView: View {
         } children: {
             VStack {
                 ActivityOption(icon:"carrot.fill", label: "Nutrition") {
-                    vm.openActivityForm(activity: .nutrition)
+                    vm.openActivityForm(selectedActivityType: .nutrition)
                 }
                 
                 ActivityOption(icon:"cross.case.fill", label: "Medication") {
-                    vm.openActivityForm(activity: .medication)
+                    vm.openActivityForm(selectedActivityType: .medication)
                 }
                 
                 ActivityOption(icon:"tennisball.fill", label: "Exercise") {
-                    vm.openActivityForm(activity: .exercise)
+                    vm.openActivityForm(selectedActivityType: .exercise)
                 }
                 
                 ActivityOption(icon:"comb.fill", label: "Grooming") {
-                    vm.openActivityForm(activity: .grooming)
+                    vm.openActivityForm(selectedActivityType: .grooming)
                 }
                 
                 ActivityOption(icon:"heart.fill", label: "Other") {
-                    vm.openActivityForm(activity: .other)
+                    vm.openActivityForm(selectedActivityType: .other)
                 }
             }
             .padding()
         }
-        .sheet(isPresented: $vm.isSheetPresented) {
+        .sheet(isPresented: $vm.isSheetPresented, onDismiss: {
+            vm.resetState()
+        }) {
             JournalSheetView()
             .environmentObject(vm)
         }
