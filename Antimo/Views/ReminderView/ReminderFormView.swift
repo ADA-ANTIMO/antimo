@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReminderFormView: View {
     @ObservedObject var vm: ReminderViewModel
+    var onSubmit: () -> Void
     
     var body: some View {
         VStack {
@@ -21,7 +22,9 @@ struct ReminderFormView: View {
                 Text("Save")
                     .font(.toolbar)
                     .foregroundColor(Color.anNavigation)
-                    .onTapGesture { vm.closeReminderForm() }
+                    .onTapGesture {
+                        onSubmit()
+                    }
             }
             
             VStack {
@@ -31,12 +34,19 @@ struct ReminderFormView: View {
                 ANTextFieldArea(text: $vm.desc, label: "Description", placeholder: "Add description...")
                     .frame(height: 200)
                 
-                ANTimePicker(time: .constant(Date()), label: "Time")
+                ANTimePicker(time: $vm.time, label: "Time")
                 
                 HStack {
                     Text("Repeat")
                     Spacer()
-                    Text("Weekday")
+                    Group {
+                        if vm.selectedDays().isEmpty {
+                            Text("Choose Frequency")
+                        } else {
+                            Text(vm.getRenderedFrequency(vm.selectedDays().map{ $0.value }))
+                        }
+                    }
+                    
                         .onTapGesture { vm.openDaysSelectorForm() }
                 }
             }
@@ -55,6 +65,8 @@ struct ReminderFormView: View {
 
 struct ReminderFormView_Previews: PreviewProvider {
     static var previews: some View {
-        ReminderFormView(vm: ReminderViewModel())
+        ReminderFormView(vm: ReminderViewModel(), onSubmit:  {
+            
+        })
     }
 }
