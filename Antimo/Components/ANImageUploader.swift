@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct ANImageUploader: View {
-    @StateObject var imagePicker = ImagePicker()
+    @ObservedObject var imagePicker: ImagePicker
     var label: String
     
     var body: some View {
@@ -60,6 +60,6 @@ struct ANImageUploader: View {
 
 struct ANImageUploader_Previews: PreviewProvider {
     static var previews: some View {
-        ANImageUploader(label: "")
+        ANImageUploader(imagePicker: ImagePicker(), label: "")
     }
 }
