@@ -77,36 +77,29 @@ class NotificationsManager: ObservableObject {
         }
     }
     
-    func scheduleReminderNotification() {
+    // identifier is routineID
+    func scheduleReminderNotification(identifier: String, title: String, subtitle: String, weekdays: [Int], hour: Int, minute: Int) {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             if settings.authorizationStatus == .authorized {
                 let content = UNMutableNotificationContent()
-                content.title = "Feed the dog"
-                content.subtitle = "it looks hungry"
+                content.title = title
+                content.subtitle = subtitle
                 content.sound = UNNotificationSound.default
-                
-                // Trigger Interval
-                // let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
                 
                 // MARK: Trigger Calendar, based on date and time values
                 let deepLinkURL = URL(string: "antimo://\(DeepLinkURLs.addJournals.rawValue)")!
                 content.userInfo = ["link": deepLinkURL.absoluteString]
-                
-                // Define the weekday range (Monday to Friday)
-                let weekdays: [Int] = [2, 3, 4, 5, 6] // Monday = 2, Tuesday = 3, Wednesday = 4, Thursday = 5, Friday = 6
-                let weekend: [Int] = [1, 7]
-                
-                let datesSchedule = [""]
 
                 // Schedule notifications for each weekday
-                for day in weekend {
+                for day in weekdays {
                     var dateComponents = DateComponents()
-        //                    dateComponents.weekday = day
-                    dateComponents.hour = 16 // Set the desired hour for the notification (in 24-hour format)
-                    dateComponents.minute = 14 // Set the desired minute for the notification
+                    dateComponents.weekday = day
+                    dateComponents.hour = hour // Set the desired hour for the notification (in 24-hour format)
+                    dateComponents.minute = minute // Set the desired minute for the notification
 
                     let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-                    let request = UNNotificationRequest(identifier: "notification_\(day)", content: content, trigger: trigger)
+                    let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+                    
                     UNUserNotificationCenter.current().add(request) { error in
                         if let error = error {
                             print("Error scheduling notification: \(error.localizedDescription)")

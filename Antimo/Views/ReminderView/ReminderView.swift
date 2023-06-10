@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct ReminderView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)]) private var reminders: FetchedResults<Reminder>
+    
     @StateObject var vm = ReminderViewModel()
+    @StateObject var notificationManager = NotificationsManager()
     
     var body: some View {
         ANBaseContainer(toolbar: {
@@ -19,15 +24,34 @@ struct ReminderView: View {
                     .onTapGesture { vm.openReminderForm() }
             }
         }, children: {
+            
             ScrollView {
-                ANReminderCard(icon: .nutrition, title: "Meal Time", time: "10.00", frequency: "Every Day")
-                ANReminderCard(icon: .exercise, title: "Meal Time", time: "10.00", frequency: "Every Day")
-                ANReminderCard(icon: .grooming, title: "Meal Time", time: "10.00", frequency: "Every Day")
-                ANReminderCard(icon: .other, title: "Meal Time", time: "10.00", frequency: "Every Day")
+                ForEach(reminders) { reminder in
+                    ANReminderCard(icon: vm.getIcon(reminder.type ?? ""),
+                                   title: reminder.title ?? "",
+                                   time: vm.getRenderedHourAndMinutes(reminder.routine?.getWeekdays.first?.time ?? Date()),
+                                   frequency: vm.getRenderedFrequency(
+                                    vm.convertWeekDaysObjIntoInt(reminder.routine?.getWeekdays ?? [])),
+                                   isOn: reminder.isActive,
+                                   onToggle: { newValue in
+                        vm.toggleActivation(
+                            reminder: reminder,
+                            viewContext: viewContext,
+                            notificationManager: notificationManager,
+                            newValue: newValue
+                        )
+                    }
+                    )
+                }
             }
             .padding(.horizontal)
         })
-        .sheet(isPresented: $vm.isReminderFormPresented) { ReminderFormView(vm: vm) }
+        .onAppear { notificationManager.request() }
+        .sheet(isPresented: $vm.isReminderFormPresented) {
+            ReminderFormView(vm: vm, onSubmit: {
+                vm.addReminder(viewContext: viewContext, notificationManager: notificationManager)
+            })
+        }
     }
 }
 

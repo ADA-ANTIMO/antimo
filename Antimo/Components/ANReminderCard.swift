@@ -44,6 +44,7 @@ struct ReminderToggle: View {
     var body: some View {
         VStack {
             Toggle(isOn: $isOn) {
+                
             }
             .frame(maxWidth: .infinity)
             .tint(Color("PrimaryColor"))
@@ -58,8 +59,20 @@ struct ANReminderCard: View {
     let time: String
     let frequency: String
     
-    @State var isOn = false
+    var isOn: Bool
+    var onToggle: (_ isActive: Bool) -> Void
     
+    @State private var localIsOn: Bool
+    
+    init(icon: AcitivityIcons, title: String, time: String, frequency: String, isOn: Bool, onToggle: @escaping (Bool) -> Void) {
+            self.icon = icon
+            self.title = title
+            self.time = time
+            self.frequency = frequency
+            self.isOn = isOn
+            self.onToggle = onToggle
+            _localIsOn = State(initialValue: isOn)
+        }
     
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
@@ -69,7 +82,7 @@ struct ANReminderCard: View {
             
             Spacer()
             VStack {
-                ReminderToggle(isOn: $isOn)
+                ReminderToggle(isOn: $localIsOn)
                 Text(frequency)
                     .font(.reminderFrequency)
             }
@@ -79,6 +92,9 @@ struct ANReminderCard: View {
         .padding(.vertical, 16)
         .background(Color.anPrimaryLight)
         .cornerRadius(8)
+        .onChange(of: localIsOn) { newValue in
+            onToggle(newValue)
+        }
     }
 }
 
