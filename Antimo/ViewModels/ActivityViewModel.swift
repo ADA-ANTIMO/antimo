@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 @MainActor
 class ActivityViewModel: ObservableObject {
@@ -40,6 +41,81 @@ class ActivityViewModel: ObservableObject {
         closeEventSheet()
         resetEventSheetForm()
         isShowSnackBar.toggle()
+    }
+    
+    func addEvent(viewContext: NSManagedObjectContext, notificationManager: NotificationsManager) {
+        let newReminder = Reminder(context: viewContext)
+
+        newReminder.id = UUID()
+        newReminder.type = selectedActivityType.rawValue
+        newReminder.title = eventTitle
+        newReminder.desc = eventDesc
+        newReminder.isActive = true
+        newReminder.createdAt = Date()
+        
+        
+        let newEvent = Event(context: viewContext)
+        newEvent.id = UUID()
+        newEvent.reminder = newReminder
+        
+        let triggerDate = Utilities.createDate(
+            date: Utilities.getDate(date: eventDate),
+            time: Utilities.getTime(date: eventTime)
+        )
+        
+        newEvent.triggerDate = triggerDate
+        
+        newReminder.event = newEvent
+        
+        do {
+            try viewContext.save()
+            
+            notificationManager.scheduleEventNotification(
+                identifier: newReminder.id!.uuidString,
+                title: newReminder.title!,
+                subtitle: newReminder.desc!,
+                triggerDate: newEvent.triggerDate!
+            )
+            
+            
+            saveEvent()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
+    
+    func getIcon(_ iconName: String) -> AcitivityIcons {
+        switch iconName {
+        case "Nutrition":
+            return AcitivityIcons.nutrition
+        case "Medication":
+            return AcitivityIcons.medication
+        case "Exercise":
+            return AcitivityIcons.exercise
+        case "Grooming":
+            return AcitivityIcons.grooming
+        default:
+            return AcitivityIcons.other
+        }
+    }
+    
+    func getRenderedHourAndMinutes(_ date: Date = Date()) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+        
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute], from: date)
+        
+        if let hour = components.hour, let minute = components.minute {
+            let renderedHour = hour < 10 ? "0\(hour)" : String(hour)
+            let renderedMinutes = minute < 10 ? "0\(minute)" : String(minute)
+            return "\(renderedHour):\(renderedMinutes)"
+        }
+        
+        return "09:00"
     }
     
 }

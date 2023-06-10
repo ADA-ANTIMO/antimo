@@ -9,6 +9,8 @@ import SwiftUI
 
 struct UpcomingEventView: View {
     @EnvironmentObject private var activityNavigation: ActivityNavigationManager
+    var vm: ActivityViewModel
+    var events: FetchedResults<Event>
     
     var body: some View {
         VStack(spacing: 8) {
@@ -25,19 +27,20 @@ struct UpcomingEventView: View {
                     }
             }
             
-            ScrollView {
-                ANEventCard(icon: .nutrition, title: "Bring To Central Park", desc: "Central park is a good place to bring Milo. We can meet others dog owner ...", time: "10:00")
-                ANEventCard(icon: .nutrition, title: "Bring To Central Park", desc: "Central park is a good place to bring Milo. We can meet others dog owner ...", time: "10:00")
-                ANEventCard(icon: .nutrition, title: "Bring To Central Park", desc: "Central park is a good place to bring Milo. We can meet others dog owner ...", time: "10:00")
-                ANEventCard(icon: .nutrition, title: "Bring To Central Park", desc: "Central park is a good place to bring Milo. We can meet others dog owner ...", time: "10:00")
+            ForEach(events) { event in
+                ANEventCard(
+                    icon: vm.getIcon(event.reminder?.type ?? ""),
+                    title: event.reminder?.title ?? "",
+                    desc: event.reminder?.desc ?? "",
+                    time: vm.getRenderedHourAndMinutes(event.triggerDate ?? Date())
+                )
             }
         }
-        .padding()
     }
 }
 
-struct UpcomingEventView_Previews: PreviewProvider {
-    static var previews: some View {
-        UpcomingEventView()
-    }
-}
+//struct UpcomingEventView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UpcomingEventView(vm: ActivityViewModel(), events: [])
+//    }
+//}
