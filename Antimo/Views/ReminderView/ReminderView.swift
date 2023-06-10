@@ -10,15 +10,15 @@ import SwiftUI
 struct ReminderView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)]) private var reminders: FetchedResults<Reminder>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)]) private var routines: FetchedResults<Routine>
     
     @StateObject var vm = ReminderViewModel()
     @StateObject var notificationManager = NotificationsManager()
     
     var body: some View {
         ANBaseContainer(toolbar: {
-            ANToolbar(title: "Reminder") {
-                Text("Add Reminder")
+            ANToolbar(title: "Routine") {
+                Text("Add Routine")
                     .font(.toolbar)
                     .foregroundColor(Color.anNavigation)
                     .onTapGesture { vm.openReminderForm() }
@@ -26,16 +26,16 @@ struct ReminderView: View {
         }, children: {
             
             ScrollView {
-                ForEach(reminders) { reminder in
-                    ANReminderCard(icon: vm.getIcon(reminder.type ?? ""),
-                                   title: reminder.title ?? "",
-                                   time: vm.getRenderedHourAndMinutes(reminder.routine?.getWeekdays.first?.time ?? Date()),
+                ForEach(routines) { routine in
+                    ANReminderCard(icon: vm.getIcon(routine.reminder?.type ?? ""),
+                                   title: routine.reminder?.title ?? "",
+                                   time: vm.getRenderedHourAndMinutes(routine.getWeekdays.first?.time ?? Date()),
                                    frequency: vm.getRenderedFrequency(
-                                    vm.convertWeekDaysObjIntoInt(reminder.routine?.getWeekdays ?? [])),
-                                   isOn: reminder.isActive,
+                                    vm.convertWeekDaysObjIntoInt(routine.getWeekdays)),
+                                   isOn: routine.reminder?.isActive ?? false,
                                    onToggle: { newValue in
                         vm.toggleActivation(
-                            reminder: reminder,
+                            reminder: routine.reminder!,
                             viewContext: viewContext,
                             notificationManager: notificationManager,
                             newValue: newValue

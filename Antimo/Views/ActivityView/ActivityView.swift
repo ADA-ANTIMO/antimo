@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ActivityView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)]) private var events: FetchedResults<Event>
+    
     @EnvironmentObject private var activityNavigation: ActivityNavigationManager
     @StateObject var vm = ActivityViewModel()
+    @StateObject var notificationManager = NotificationsManager()
     
     var body: some View {
         ANBaseContainer(toolbar: {
@@ -20,11 +25,17 @@ struct ActivityView: View {
                     .onTapGesture { vm.isEventSheetPresented = true }
             }
         }, children: {
-            ANCalendar()
-                .padding()
-            UpcomingEventView()
+            ScrollView {
+                ANCalendar()
+                UpcomingEventView(vm: vm, events: events)
+            }
+            .scrollIndicators(.hidden)
+            .padding()
+            
         })
-        .sheet(isPresented: $vm.isEventSheetPresented) { AddEventSheetView(vm: vm) }
+        .sheet(isPresented: $vm.isEventSheetPresented) { AddEventSheetView(vm: vm, onSubmit: {
+            vm.addEvent(viewContext: viewContext, notificationManager: notificationManager)
+        }) }
     }
 }
 

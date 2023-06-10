@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct AllEventView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)]) private var events: FetchedResults<Event>
+    
     @EnvironmentObject private var activityNavigation: ActivityNavigationManager
     @StateObject var vm = ActivityViewModel()
+    @StateObject var notificationManager = NotificationsManager()
     
     var body: some View {
         ANBaseContainer(toolbar: {
@@ -25,14 +30,20 @@ struct AllEventView: View {
                     .onTapGesture { vm.isEventSheetPresented = true }
             }
         }, children: {
-            ScrollView {
-                ANEventCard(icon: .nutrition, title: "Bring To Central Park", desc: "Central park is a good place to bring Milo. We can meet others dog owner ...", time: "10:00")
-                ANEventCard(icon: .nutrition, title: "Bring To Central Park", desc: "Central park is a good place to bring Milo. We can meet others dog owner ...", time: "10:00")
-                ANEventCard(icon: .nutrition, title: "Bring To Central Park", desc: "Central park is a good place to bring Milo. We can meet others dog owner ...", time: "10:00")
-                ANEventCard(icon: .nutrition, title: "Bring To Central Park", desc: "Central park is a good place to bring Milo. We can meet others dog owner ...", time: "10:00")
+            ForEach(events) { event in
+                ANEventCard(
+                    icon: vm.getIcon(event.reminder?.type ?? ""),
+                    title: event.reminder?.title ?? "",
+                    desc: event.reminder?.desc ?? "",
+                    time: vm.getRenderedHourAndMinutes(event.triggerDate ?? Date())
+                )
             }
+            .padding(.horizontal)
         })
-        .sheet(isPresented: $vm.isEventSheetPresented) { AddEventSheetView(vm: vm) }
+        // TODO: Pass onSubmit
+        .sheet(isPresented: $vm.isEventSheetPresented) { AddEventSheetView(vm: vm, onSubmit: {
+            vm.addEvent(viewContext: viewContext, notificationManager: notificationManager)
+        }) }
     }
 }
 

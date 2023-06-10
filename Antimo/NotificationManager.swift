@@ -46,22 +46,32 @@ class NotificationsManager: ObservableObject {
         }
     }
     
-    func scheduleEventNotification() {
+    func scheduleEventNotification(identifier: String, title: String, subtitle: String, triggerDate: Date) {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             if settings.authorizationStatus == .authorized {
                 let content = UNMutableNotificationContent()
-                content.title = "Feed the dog"
-                content.subtitle = "it looks hungry"
+                content.title = title
+                content.subtitle = subtitle
                 content.sound = UNNotificationSound.default
                 
                 // TODO: define proper deeplinks
                 let deepLinkURL = URL(string: "antimo://\(DeepLinkURLs.addJournals.rawValue)")!
                 content.userInfo = ["link": deepLinkURL.absoluteString]
                 
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                var dateComponents = DateComponents()
+                let date = Utilities.getDate(date: triggerDate)
+                let hourAndMinutes = Utilities.getTime(date: triggerDate)
                 
-                // TODO: define proper identifier
-                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                dateComponents.year = date.year
+                dateComponents.month = date.month
+                dateComponents.day = date.day
+                
+                dateComponents.hour = hourAndMinutes.hour
+                dateComponents.minute = hourAndMinutes.minute
+                
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+                
+                let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
                 
                 UNUserNotificationCenter.current().add(request) { error in
                     if let error = error {

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddEventSheetView: View {
     @ObservedObject var vm: ActivityViewModel
+    var onSubmit: () -> Void
     
     var body: some View {
         VStack {
@@ -21,7 +22,9 @@ struct AddEventSheetView: View {
                 Text("Save")
                     .font(.toolbar)
                     .foregroundColor(Color.anNavigation)
-                    .onTapGesture { vm.closeEventSheet() }
+                    .onTapGesture {
+                        onSubmit()
+                    }
             }
             
             VStack {
@@ -44,6 +47,6 @@ struct AddEventSheetView: View {
 
 struct AddEventSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        AddEventSheetView(vm: ActivityViewModel())
+        AddEventSheetView(vm: ActivityViewModel(), onSubmit: {})
     }
 }
