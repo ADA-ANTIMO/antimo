@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct JournalView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var journalNavigation: JournalNavigationManager
+    @FetchRequest(sortDescriptors: []) private var activities: FetchedResults<ExerciseActivity>
     @StateObject var notificationManager = NotificationsManager()
-    @State var activities:[DummyData] = [DummyData(), DummyData()]
     
     var body: some View {
         ANBaseContainer(toolbar: {
@@ -38,10 +39,21 @@ struct JournalView: View {
                     VStack(spacing: 8) {
                         ForEach(activities, id: \.self) { activity in
                             Section {
-                                ANActivityDetails(activity: activity)
+                                let editAction = Action(id: UUID(), type: .Edit) {
+                                    journalNavigation.push(to: .addJournal)
+                                }
+                                
+                                let deleteAction = Action(id: UUID(), type: .Delete) {
+                                    viewContext.delete(activity)
+                                }
+                                
+                                ANActivityDetails(activity: activity, actions: [editAction, deleteAction])
                             } header: {
                                 HStack {
-                                    Text("Monday, 29 May 2023")
+                                    let dateText = Utilities
+                                        .formattedDate(from: activity.activity!.createdAt!, format: "EEEE, d MMM yyyy")
+                                    
+                                    Text(dateText)
                                         .font(.date)
                                     
                                     Spacer()

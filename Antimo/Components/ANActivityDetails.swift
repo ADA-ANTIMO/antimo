@@ -21,10 +21,16 @@ enum ActivityActions: String, CaseIterable {
     }
 }
 
+struct Action: Identifiable {
+    let id: UUID
+    let type: ActivityActions
+    let action: () -> Void
+}
+
 struct ActivityMeta: View {
     let icon: String
-    let activity: String
-    let time: String
+    let type: String
+    let createdAt: Date
     
     var body: some View {
         HStack(alignment: .top) {
@@ -33,8 +39,9 @@ struct ActivityMeta: View {
                     Image(systemName: icon)
                         .font(.system(size: 29))
                        
-                    Text(activity)
+                    Text(type)
                         .font(.cardActivity)
+                        .foregroundColor(Color.anPrimary)
                 }
                 .foregroundColor(Color.anPrimary)
             }
@@ -47,7 +54,9 @@ struct ActivityMeta: View {
             Spacer()
             
             ZStack {
-                Text(time)
+                let timeComponents = Utilities.getTime(date: createdAt)
+                
+                Text("\(timeComponents.hour!):\(timeComponents.minute!)")
                     .font(.cardTime)
             }
             .foregroundColor(Color.primary)
@@ -61,6 +70,7 @@ struct ActivityMeta: View {
 }
 
 struct ActivityHeading: View {
+    let actions:[Action]
     let title: String
     
     @State var showSheet: Bool = false
@@ -79,9 +89,11 @@ struct ActivityHeading: View {
                         .foregroundColor(.blue)
                 }
                 .confirmationDialog("Select Action", isPresented: $showSheet) {
-                    ForEach(ActivityActions.allCases, id:\.self) {
-                        Button($0.rawValue, role: $0.buttonRole()) {
-                            
+                    ForEach(actions) { action in
+                        Button(role: action.type.buttonRole()) {
+                            action.action()
+                        } label: {
+                            Text(action.type.rawValue)
                         }
                     }
                 }
@@ -126,19 +138,22 @@ struct ActivityStatus: View {
 }
 
 struct ANActivityDetails: View {
-    let activity:DummyData
+    let activity:ExerciseActivity
+    let actions:[Action]
     
     var body: some View {
         VStack() {
             ZStack(alignment: .top) {
-                Image(activity.image)
+                let image = FileManager().retrieveImage(with: activity.activity!.imagePath) ?? UIImage(systemName: "exclamationmark.triangle.fill")!
+                
+                Image(uiImage: image)
                     .resizable()
                        .scaledToFill()
                        .frame(height: 200, alignment: .center)
                        .clipped()
                     
                 VStack {
-                    ActivityMeta(icon: activity.icon, activity: activity.activity, time: activity.time)
+                    ActivityMeta(icon: "book", type: activity.activity!.type!, createdAt: activity.activity!.createdAt!)
                     
                     Spacer()
                     
@@ -153,12 +168,12 @@ struct ANActivityDetails: View {
             
             // Details
             VStack(alignment: .leading, spacing: 16) {
-                ActivityHeading(title: activity.activity)
+                ActivityHeading(actions: actions,title: activity.activity!.title!)
                 
                 ActivityExtra(icon: "book", extra: "Dog Groomer Alaska")
                 
                 // Desc
-                Text(activity.desc)
+                Text(activity.activity!.note!)
                     .font(.cardContent)
             }
             .padding(16)
@@ -167,12 +182,5 @@ struct ANActivityDetails: View {
             Color.anPrimaryLight
         )
         .cornerRadius(8)
-    }
-}
-
-struct ANActivityDetails_Previews: PreviewProvider {
-    static var previews: some View {
-        ANActivityDetails(activity: DummyData())
-            .padding(.horizontal, 10)
     }
 }

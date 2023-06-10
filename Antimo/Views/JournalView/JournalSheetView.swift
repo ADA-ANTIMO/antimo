@@ -48,6 +48,7 @@ struct GroomingInputs: View {
 
 struct JournalSheetView: View {
     @EnvironmentObject var vm: JournalViewModel
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
         ANBaseContainer {
@@ -88,7 +89,7 @@ struct JournalSheetView: View {
                 
                 ANTextFieldArea(text: $vm.note, label: "Note (optional)", placeholder: "Activity note...")
                 
-                ANImageUploader(label: "\(vm.selectedActivity.rawValue) photo (optional)")
+                ANImageUploader(imagePicker: vm.imagePicker, label: "\(vm.selectedActivity.rawValue) photo (optional)")
                 
                 ANButton("Submit") {
                     let date = Utilities.getDate(date: vm.date)
@@ -97,7 +98,7 @@ struct JournalSheetView: View {
                     
                     print(newDate)
                     
-                    vm.submitForm()
+                    vm.submitForm(context: viewContext)
                 }
             }
             .padding(.horizontal, 16)
