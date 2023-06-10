@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct NutritionInputs: View {
+    @EnvironmentObject var vm: JournalViewModel
+    
     var body: some View {
         Group {
-            ANTextField(text: .constant(""), placeholder: "Food name", label: "Menu")
+            ANTextField(text: $vm.menu, placeholder: "Food name", label: "Menu")
             
-            Toggle(isOn: .constant(true)) {
-                Text("Food out?")
+            Toggle(isOn: $vm.isEatenUp) {
+                Text("Eaten Up?")
                     .font(.inputLabel)
             }
         }
@@ -21,58 +23,61 @@ struct NutritionInputs: View {
 }
 
 struct ExerciseInputs: View {
+    @EnvironmentObject var vm: JournalViewModel
+    
     var body: some View {
         Group {
-            ANNumberField(text: .constant(""), placeholder: "Duration in minutes", label: "Duration", suffix: "Minutes")
+            ANNumberField(text: $vm.duration, placeholder: "Duration in minutes", label: "Duration", suffix: "Minutes")
             
-            ANMoodSelector(label: "Mood")
+            ANMoodSelector(selectedMood: $vm.mood, label: "Mood")
         }
     }
 }
 
 struct GroomingInputs: View {
+    @EnvironmentObject var vm: JournalViewModel
+    
     var body: some View {
         Group {
-            ANTextField(text: .constant(""), placeholder: "Pet salon name", label: "Pet Salon")
+            ANTextField(text: $vm.salon, placeholder: "Pet salon name", label: "Pet Salon")
             
-            ANMoodSelector(label: "Satisfaction")
+            ANMoodSelector(selectedMood: $vm.mood, label: "Satisfaction")
         }
     }
 }
 
 struct JournalSheetView: View {
-    var activityType:ActivityTypes
-    var handleClose: () -> Void
+    @EnvironmentObject var vm: JournalViewModel
     
     var body: some View {
         ANBaseContainer {
             ANToolbar(leading: {
                 Button(action: {
-                    handleClose()
+                    vm.closeActivityForm()
                 }, label: {
                     Text("Cancel")
                         .font(.toolbar)
                         .foregroundColor(Color.anNavigation)
                 })
-            }, title: activityType.rawValue)
+            }, title: vm.selectedActivity.rawValue)
             .padding(.vertical)
         } children: {
-            VStack(spacing: 20) {
-                if activityType == .medication {
-                    ANActivityPicker(label: "Activity:")
+            VStack(spacing: 12) {
+                if vm.selectedActivity == .medication {
+                    ANActivityPicker(selected: $vm.title, label: "Activity:")
                 } else {
-                    ANTextField(text: .constant(""), placeholder: "Activity name", label: "Activity Name")
+                    ANTextField(text: $vm.title, placeholder: "Activity name", label: "Activity Name")
                 }
                 
-                ANDatePicker(date: .constant(Date.now), label: "Date")
+                ANDatePicker(date: $vm.date, label: "Date")
                 
-                ANTimePicker(time: .constant(Date.now), label: "Time")
+                ANTimePicker(time: $vm.time, label: "Time")
                 
-                switch activityType {
+                switch vm.selectedActivity {
                 case .nutrition:
                     NutritionInputs()
                 case .medication:
-                    ANTextField(text: .constant(""), placeholder: "Vet name", label: "Vet")
+                    ANTextField(text: $vm.vet, placeholder: "Vet name", label: "Vet")
                 case .exercise:
                     ExerciseInputs()
                 case .grooming:
@@ -81,22 +86,21 @@ struct JournalSheetView: View {
                     EmptyView()
                 }
                 
-                ANTextFieldArea(text: .constant(""), label: "Note (optional)", placeholder: "Activity note...")
+                ANTextFieldArea(text: $vm.note, label: "Note (optional)", placeholder: "Activity note...")
                 
-                ANImageUploader(label: "\(activityType.rawValue) photo (optional)")
+                ANImageUploader(label: "\(vm.selectedActivity.rawValue) photo (optional)")
                 
                 ANButton("Submit") {
-                    handleClose()
+                    let date = Utilities.getDate(date: vm.date)
+                    let time = Utilities.getTime(date: vm.time)
+                    let newDate = Utilities.createDate(date: date, time: time)
+                    
+                    print(newDate)
+                    
+                    vm.submitForm()
                 }
             }
             .padding(.horizontal, 16)
-        }
-    }
-}
-
-struct ActivitySheetView_Previews: PreviewProvider {
-    static var previews: some View {
-        JournalSheetView(activityType: .exercise) {
         }
     }
 }

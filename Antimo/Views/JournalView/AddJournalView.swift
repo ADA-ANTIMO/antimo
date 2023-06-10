@@ -63,17 +63,7 @@ struct ActivityOption: View {
 
 struct AddJournalView: View {
     @EnvironmentObject private var journalNavigation: JournalNavigationManager
-    @State var isSheetPresented = false
-    @State var selectedActivity: ActivityTypes = .nutrition
-    
-    private func openActivityForm(activity:ActivityTypes) {
-        selectedActivity = activity
-        isSheetPresented = true
-    }
-    
-    private func closeActivityForm() {
-        isSheetPresented = false
-    }
+    @StateObject var vm = JournalViewModel()
     
     var body: some View {
         ANBaseContainer {
@@ -93,33 +83,30 @@ struct AddJournalView: View {
         } children: {
             VStack {
                 ActivityOption(icon:"carrot.fill", label: "Nutrition") {
-                    openActivityForm(activity: .nutrition)
+                    vm.openActivityForm(activity: .nutrition)
                 }
                 
                 ActivityOption(icon:"cross.case.fill", label: "Medication") {
-                    openActivityForm(activity: .medication)
+                    vm.openActivityForm(activity: .medication)
                 }
                 
                 ActivityOption(icon:"tennisball.fill", label: "Exercise") {
-                    openActivityForm(activity: .exercise)
+                    vm.openActivityForm(activity: .exercise)
                 }
                 
                 ActivityOption(icon:"comb.fill", label: "Grooming") {
-                    openActivityForm(activity: .grooming)
+                    vm.openActivityForm(activity: .grooming)
                 }
                 
                 ActivityOption(icon:"heart.fill", label: "Other") {
-                    openActivityForm(activity: .other)
+                    vm.openActivityForm(activity: .other)
                 }
             }
             .padding()
         }
-        .sheet(isPresented: $isSheetPresented) {
-            JournalSheetView(
-                activityType: selectedActivity
-            ) {
-                closeActivityForm()
-            }
+        .sheet(isPresented: $vm.isSheetPresented) {
+            JournalSheetView()
+            .environmentObject(vm)
         }
     }
 }

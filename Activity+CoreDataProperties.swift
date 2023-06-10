@@ -6,9 +6,8 @@
 //
 //
 
-import Foundation
+import SwiftUI
 import CoreData
-
 
 extension Activity {
 

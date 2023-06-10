@@ -15,8 +15,9 @@ enum Medication: String, CaseIterable {
 }
 
 struct ANActivityPicker: View {
-    @State var selected: Medication = .vaccine
+    @Binding var selected: String
     @State var isDropdownShown = false
+    
     let label:String
     
     var body: some View {
@@ -29,14 +30,14 @@ struct ANActivityPicker: View {
             Menu {
                 ForEach(Medication.allCases, id: \.self) { activityType in
                     Button {
-                        selected = activityType
+                        selected = activityType.rawValue
                     } label: {
                         Text(activityType.rawValue)
                     }
                 }
             } label: {
                 HStack {
-                    Text(selected.rawValue)
+                    Text(selected)
                     
                     Spacer()
                     
@@ -59,12 +60,5 @@ struct ANActivityPicker: View {
                 }
             }
         }
-    }
-}
-
-struct ANActivityPicker_Previews: PreviewProvider {
-    static var previews: some View {
-        ANActivityPicker(label: "Activity:")
-            .padding(.horizontal)
     }
 }
