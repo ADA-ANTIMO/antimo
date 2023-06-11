@@ -46,6 +46,7 @@
 		4EBB3C632A348CB000F87DBC /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBB3C4D2A348CB000F87DBC /* Event+CoreDataProperties.swift */; };
 		4EBB3C642A348CB000F87DBC /* MedicationActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBB3C4E2A348CB000F87DBC /* MedicationActivity+CoreDataClass.swift */; };
 		4EBB3C652A348CB000F87DBC /* MedicationActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBB3C4F2A348CB000F87DBC /* MedicationActivity+CoreDataProperties.swift */; };
+		4EC3C6B92A35AC0E00BBF3CF /* FetchResults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC3C6B82A35AC0E00BBF3CF /* FetchResults+Extension.swift */; };
 		4EEB02E22A274F260093D088 /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02E12A274F260093D088 /* StatefulPreviewWrapper.swift */; };
 		6131A4AF2A28F687007BF2F7 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6131A4AE2A28F687007BF2F7 /* NotificationManager.swift */; };
 		6131A4B12A28FE54007BF2F7 /* RouteFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6131A4B02A28FE54007BF2F7 /* RouteFinder.swift */; };
@@ -132,6 +133,7 @@
 		4EBB3C4D2A348CB000F87DBC /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4EBB3C4E2A348CB000F87DBC /* MedicationActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4EBB3C4F2A348CB000F87DBC /* MedicationActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4EC3C6B82A35AC0E00BBF3CF /* FetchResults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FetchResults+Extension.swift"; sourceTree = "<group>"; };
 		4EEB02E12A274F260093D088 /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
 		6131A4AE2A28F687007BF2F7 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		6131A4B02A28FE54007BF2F7 /* RouteFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFinder.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 				4E5AC2102A2C99E100090ED5 /* EnvironmentValues+Extension.swift */,
 				61AD59FF2A31EB8F00BC5780 /* UINavigationController+Gesture.swift */,
 				4E5AC2122A2C9A6600090ED5 /* View+Extension.swift */,
+				4EC3C6B82A35AC0E00BBF3CF /* FetchResults+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 				4EBB3C5C2A348CB000F87DBC /* Activity+CoreDataClass.swift in Sources */,
 				4EBB3C602A348CB000F87DBC /* Weekday+CoreDataClass.swift in Sources */,
 				4E69949D2A2D89DB004D8D98 /* AddJournalView.swift in Sources */,
+				4EC3C6B92A35AC0E00BBF3CF /* FetchResults+Extension.swift in Sources */,
 				4EBB3C632A348CB000F87DBC /* Event+CoreDataProperties.swift in Sources */,
 				6131A5322A2F90C6007BF2F7 /* ANNumberField.swift in Sources */,
 				6131A4B12A28FE54007BF2F7 /* RouteFinder.swift in Sources */,
