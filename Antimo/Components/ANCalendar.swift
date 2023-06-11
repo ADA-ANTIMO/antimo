@@ -14,7 +14,7 @@ extension Date {
         
         let calendar = Calendar.current
         
-        // getting start date
+        // getting start date that will result time 00:00
         let startDate = calendar.date(from: Calendar.current.dateComponents([.year, .month], from: self))!
         
         let range = calendar.range(of: .day, in: .month, for: startDate)!
@@ -28,6 +28,7 @@ extension Date {
 }
 
 struct ANCalendar:View {
+    @EnvironmentObject private var activityNavigation: ActivityNavigationManager
     @State var currentDate: Date = Date.now
     
     // State for displaying month and change when button chevron clicked
@@ -78,20 +79,23 @@ struct ANCalendar:View {
     func DateItem(date: DateValue) -> some View {
         VStack {
             if date.day != -1 {
-                Text("\(date.day)")
-                
+                Button {
+                    activityNavigation.push(to: .activitesPerDate(date.date))
+                } label: {
+                    Text("\(date.day)")
+                        .frame(width: 30, height: 30)
+                        .padding(8)
+                        .background(
+                            Circle()
+                                .fill(
+                                    Color.anLegendLight
+                                )
+                                .opacity(date.day != -1 ? 1 : 0)
+                        )
+                }
             }
         }
         .foregroundColor(Color.white)
-        .frame(width: 30, height: 30)
-        .padding(8)
-        .background(
-            Circle()
-                .fill(
-                    Color.anLegendLight
-                )
-                .opacity(date.day != -1 ? 1 : 0)
-        )
     }
     
     var body: some View {

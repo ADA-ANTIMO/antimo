@@ -38,8 +38,11 @@ struct ANTabView: View {
                 NavigationStack(path: $journalNavigation.journalPaths) {
                     JournalView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .navigationDestination(for: JournalRoute.self) { _ in
-                            AddJournalView()
+                        .navigationDestination(for: JournalRoute.self) { route in
+                            switch(route) {
+                            case .addJournal:
+                                AddJournalView()
+                            }
                         }
                 }
                 .tabItem {
@@ -57,8 +60,15 @@ struct ANTabView: View {
                 NavigationStack(path: $activityNavigation.activityPaths) {
                     ActivityView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .navigationDestination(for: ActivityRoute.self) { _ in
-                            AllEventView()
+                        .navigationDestination(for: ActivityRoute.self) { route in
+                            switch(route) {
+                            case .allEvents:
+                                AllEventView()
+                            case let .activitesPerDate(selectedDate):
+                                ActivityDetailsView(selectedDate: selectedDate)
+                            case .addJournal:
+                                ActivityAddJournalView()
+                            }
                         }
                 }
                 .tabItem {
