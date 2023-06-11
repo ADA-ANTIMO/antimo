@@ -23,7 +23,7 @@ struct ANTextFieldArea: View {
                 .font(.inputLabel)
             
             ZStack(alignment: .topLeading) {
-                if text.isEmpty {
+                if debouncedText.isEmpty {
                     Text(placeholder)
                         .font(.input)
                         .foregroundColor(Color.gray)

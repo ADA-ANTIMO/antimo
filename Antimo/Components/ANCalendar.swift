@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 // Extending Date to get Current Month Dates...
 extension Date {
@@ -29,10 +30,28 @@ extension Date {
 
 struct ANCalendar:View {
     @EnvironmentObject private var activityNavigation: ActivityNavigationManager
-    @State var currentDate: Date = Date.now
+    @FetchRequest var activities: FetchedResults<Activity>
+    @Binding var currentDate: Date
     
     // State for displaying month and change when button chevron clicked
-    @State var currentMonth: Int = 0
+    @Binding var currentMonth: Int
+    
+    init (currentDate: Binding<Date>, currentMonth: Binding<Int>) {
+        _currentDate = currentDate
+        _currentMonth = currentMonth
+        
+        let startDate = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: currentDate.wrappedValue))!
+        let range = Calendar.current.range(of: .day, in: .month, for: startDate)!
+        let endDate = Calendar.current.date(bySetting: .day, value: range.count, of: startDate)!
+        
+        let request: NSFetchRequest<Activity> = Activity.fetchRequest()
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "createdAt", ascending: false)
+        ]
+        request.predicate = NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, endDate as CVarArg)
+
+        _activities = FetchRequest(fetchRequest: request)
+    }
     
     func getCurrentMonth() -> Date {
         let calendar = Calendar.current
@@ -77,22 +96,42 @@ struct ANCalendar:View {
     
     
     func DateItem(date: DateValue) -> some View {
-        VStack {
-            if date.day != -1 {
-                Button {
-                    activityNavigation.push(to: .activitesPerDate(date.date))
+        let key = Utilities.formattedDate(from: date.date, format: "EEEE, d MMM yyyy")
+        let activityInDay = activities.byDate.activities[key]?.count ?? 0
+        let hasNoActivity = activityInDay == 0
+        let isNotDayOfMonth = date.day != -1
+        
+        return VStack {
+            if isNotDayOfMonth {
+                Button() {
+                    if !hasNoActivity {
+                        activityNavigation.push(to: .activitesPerDate(date.date))
+                    }
                 } label: {
-                    Text("\(date.day)")
-                        .frame(width: 30, height: 30)
-                        .padding(8)
-                        .background(
-                            Circle()
-                                .fill(
-                                    Color.anLegendLight
-                                )
-                                .opacity(date.day != -1 ? 1 : 0)
-                        )
+                    if hasNoActivity {
+                        Text("\(date.day)")
+                            .frame(width: 25, height: 25)
+                            .padding(8)
+                            .background(
+                                Circle()
+                                    .stroke(Color.anLegendHeavy, lineWidth: 1)
+                                    .opacity(isNotDayOfMonth ? 1 : 0)
+                            )
+                            .foregroundColor(Color.anLegendHeavy)
+                    } else {
+                        Text("\(date.day)")
+                            .frame(width: 25, height: 25)
+                            .padding(8)
+                            .background(
+                                Circle()
+                                    .fill(
+                                        activityInDay == 1 ? Color.anLegendLight: activityInDay == 2 ? Color.anLegendMedium : Color.anLegendHeavy
+                                    )
+                                    .opacity(isNotDayOfMonth ? 1 : 0)
+                            )
+                    }
                 }
+                .disabled(hasNoActivity)
             }
         }
         .foregroundColor(Color.white)
@@ -156,9 +195,13 @@ struct ANCalendar:View {
                     
                     switch(direction) {
                     case .left:
-                        currentMonth -= 1
+                        withAnimation {
+                            currentMonth -= 1
+                        }
                     case .right:
-                        currentMonth += 1
+                        withAnimation {
+                            currentMonth += 1
+                        }
                     default:
                         print("no clue")
                     }
@@ -196,10 +239,3 @@ struct ANCalendar:View {
         }
     }
 }
-
-struct ANCalendar_Previews: PreviewProvider {
-    static var previews: some View {
-        ANCalendar()
-    }
-}
-

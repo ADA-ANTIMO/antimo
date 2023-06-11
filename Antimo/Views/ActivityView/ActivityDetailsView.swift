@@ -6,14 +6,26 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ActivityDetailsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var activityNavigation: ActivityNavigationManager
-    @FetchRequest(sortDescriptors: []) private var activities: FetchedResults<Activity>
+    @FetchRequest var activities: FetchedResults<Activity>
     @StateObject var vm = JournalViewModel()
     
-    let selectedDate:Date
+    init (selectedDate: Date) {
+        let startDate = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: selectedDate))!
+        let endDate = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: startDate)!
+        
+        let request: NSFetchRequest<Activity> = Activity.fetchRequest()
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "createdAt", ascending: false)
+        ]
+        request.predicate = NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, endDate as CVarArg)
+
+        _activities = FetchRequest(fetchRequest: request)
+    }
    
     var body: some View {
         ANBaseContainer(toolbar: {

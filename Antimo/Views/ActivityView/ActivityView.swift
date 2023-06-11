@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ActivityView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)]) private var events: FetchedResults<Event>
-    
     @EnvironmentObject private var activityNavigation: ActivityNavigationManager
     @StateObject var vm = ActivityViewModel()
     @StateObject var notificationManager = NotificationsManager()
+    @State var currentDate = Date.now
+    @State var currentMonth = 0
     
     var body: some View {
         ANBaseContainer(toolbar: {
@@ -26,7 +26,7 @@ struct ActivityView: View {
             }
         }, children: {
             ScrollView {
-                ANCalendar()
+                ANCalendar(currentDate: $currentDate, currentMonth: $currentMonth)
                 UpcomingEventView(vm: vm, events: events)
             }
             .scrollIndicators(.hidden)
