@@ -6,8 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ANTextFieldArea: View {
+    @State var publisher = PassthroughSubject<String, Never>()
+    @State var debouncedText = ""
+    var debounceSeconds = 0.5
+    
     @Binding var text: String
     var label: String
     var placeholder: String
@@ -26,14 +31,24 @@ struct ANTextFieldArea: View {
                         .zIndex(1)
                 }
                 
-                TextEditor(text: $text)
+                TextEditor(text: $debouncedText)
                     .font(.input)
                     .padding(4)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.anPrimary, lineWidth: 1)
                     )
+                    .onChange(of: debouncedText) { value in
+                        publisher.send(value)
+                    }
+                    .onReceive(
+                        publisher.debounce(for: .seconds(debounceSeconds),scheduler: DispatchQueue.main)) { value in
+                            text = value
+                        }
             }
+        }
+        .onAppear{
+            debouncedText = text
         }
     }
 }

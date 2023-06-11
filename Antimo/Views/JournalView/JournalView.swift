@@ -6,17 +6,32 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct JournalView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var journalNavigation: JournalNavigationManager
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)]) private var activities: FetchedResults<Activity>
+    @FetchRequest var activities: FetchedResults<Activity>
     @StateObject var notificationManager = NotificationsManager()
     @StateObject var vm = JournalViewModel()
-    @State var dictOfActivities = [String: [Activity]]()
-    @State var keyOfDict: [String] = []
+    
+    init () {
+        let lastWeek = Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? Date.now
+        let startDate = Calendar.current.startOfDay(for: lastWeek)
+        let endDate = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: Date.now) ?? Date.now
+        
+        let request: NSFetchRequest<Activity> = Activity.fetchRequest()
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "createdAt", ascending: false)
+        ]
+        request.predicate = NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, endDate as CVarArg)
+
+        _activities = FetchRequest(fetchRequest: request)
+    }
     
     var body: some View {
+        let _ = Self._printChanges()
+        
         ANBaseContainer(toolbar: {
             ANToolbar(title: "Journal") {
                 Button {
@@ -30,19 +45,19 @@ struct JournalView: View {
         }, children: {
             if activities.isEmpty {
                 Spacer()
-                
+
                 Text("There are no journals\n available yet, let's make your\n journal soon")
                     .font(.placeholder)
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color.gray)
-                
+
                 Spacer()
             } else {
                 ScrollView {
                     VStack(spacing: 8) {
-                        ForEach(keyOfDict, id: \.self) { key in
+                        ForEach(activities.byDate.keys, id: \.self) { key in
                             Section {
-                                ForEach(dictOfActivities[key] ?? [], id: \.self) { activity in
+                                ForEach(activities.byDate.activities[key] ?? [], id: \.self) { activity in
                                     let editAction = Action(id: UUID(), type: .Edit) {
                                         vm.selectedActivity = activity
                                         vm.openActivityForm(selectedActivityType: ActivityTypes.getByString(type: activity.type ?? ""))
@@ -50,6 +65,13 @@ struct JournalView: View {
                                     
                                     let deleteAction = Action(id: UUID(), type: .Delete) {
                                         viewContext.delete(activity)
+                                        
+                                        do {
+                                            try viewContext.save()
+                                        } catch {
+                                            let nsError = error as NSError
+                                            debugPrint("Unresolved error \(nsError), \(nsError.userInfo)")
+                                        }
                                     }
                                     
                                     ANActivityDetails(activity: activity, actions: [editAction, deleteAction])
@@ -76,24 +98,6 @@ struct JournalView: View {
         }) {
             JournalSheetView()
                 .environmentObject(vm)
-        }
-        .onAppear {
-            for activity in activities {
-                 let key = Utilities.formattedDate(from: activity.createdAt!, format: "EEEE, d MMM yyyy")
-                
-                if var dict = dictOfActivities[key] {
-                    dict.append(activity)
-                    
-                    dictOfActivities[key] = dict
-                } else {
-                    keyOfDict.append(key)
-                    dictOfActivities[key] = [activity]
-                }
-            }
-        }
-        .onDisappear {
-            dictOfActivities = [String: [Activity]]()
-            keyOfDict = []
         }
     }
 }

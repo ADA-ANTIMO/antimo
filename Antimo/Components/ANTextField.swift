@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import Combine
+
 
 struct ANTextField: View {
-    @Binding var text: String
+    @State var publisher = PassthroughSubject<String, Never>()
+    @State var debouncedText: String = ""
+    var debounceSeconds = 0.5
     
+    @Binding var text: String
     var placeholder: String
     var label: String
     
@@ -17,13 +22,23 @@ struct ANTextField: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label).font(.inputLabel)
             
-            TextField(placeholder, text: $text)
+            TextField(placeholder, text: $debouncedText)
                 .font(.input)
                 .padding(10)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.anPrimary, lineWidth: 1)
                 )
+                .onChange(of: debouncedText) { value in
+                    publisher.send(value)
+                }
+                .onReceive(
+                    publisher.debounce(for: .seconds(debounceSeconds),scheduler: DispatchQueue.main)) { value in
+                        text = value
+                    }
+        }
+        .onAppear{
+            debouncedText = text
         }
     }
 }
