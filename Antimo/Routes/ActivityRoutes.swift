@@ -9,9 +9,10 @@ import Foundation
 import Combine
 import SwiftUI
 
-enum ActivityRoute: String , Hashable {
+enum ActivityRoute: Hashable {
     case allEvents
-    case activitesPerDate
+    case activitesPerDate(Date)
+    case addJournal
 }
 
 class ActivityNavigationManager: ObservableObject{

@@ -15,8 +15,6 @@ enum ActivityTypes: String {
     case other = "Other"
     
     static func getByString(type: String) -> ActivityTypes {
-        print(type, "<<<<<<< TYPE")
-        
         switch type {
         case "Nutrition":
             return ActivityTypes.nutrition

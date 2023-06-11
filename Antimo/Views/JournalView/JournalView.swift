@@ -12,7 +12,6 @@ struct JournalView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var journalNavigation: JournalNavigationManager
     @FetchRequest var activities: FetchedResults<Activity>
-    @StateObject var notificationManager = NotificationsManager()
     @StateObject var vm = JournalViewModel()
     
     init () {
@@ -30,8 +29,6 @@ struct JournalView: View {
     }
     
     var body: some View {
-        let _ = Self._printChanges()
-        
         ANBaseContainer(toolbar: {
             ANToolbar(title: "Journal") {
                 Button {
