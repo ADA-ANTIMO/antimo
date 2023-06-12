@@ -153,6 +153,16 @@ class SummaryViewModel: ObservableObject {
         isEditting = false
         resetForm()
     }
+    
+    func closeWeightSheet() {
+        weight = ""
+        isWeightSheetPresented = false
+    }
+    
+    func openWeightSheet() {
+        weight = persistWeight
+        isWeightSheetPresented = true
+    }
 }
 
 
