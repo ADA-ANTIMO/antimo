@@ -19,12 +19,22 @@ struct ANTabView: View {
     
     @StateObject var journalNavigation = JournalNavigationManager()
     @StateObject var activityNavigation = ActivityNavigationManager()
+    @StateObject var dashboardNavigation = DashboardNavigationManager()
     
     // TODO: Change TabBar Icons
     var body: some View {
             TabView(selection: $selectedTab) {
-                SummaryView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                NavigationStack(path: $dashboardNavigation.dashboardPaths) {
+                    SummaryView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .navigationDestination(for: DashboardRoute.self) { route in
+                            switch(route) {
+                            case .allEvents:
+                                DashboardAllEventView()
+                            }
+                        }
+                }
+                
                 .tabItem {
                     Label {
                         Text("Summary")
@@ -34,6 +44,7 @@ struct ANTabView: View {
                     }
                 }
                 .tag(NavigationTabs.summary)
+                .environmentObject(dashboardNavigation)
                 
                 NavigationStack(path: $journalNavigation.journalPaths) {
                     JournalView()
@@ -95,6 +106,7 @@ struct ANTabView: View {
                     .tag(NavigationTabs.reminder)
                 
             }
+            .tint(Color.anPrimary)
             .preferredColorScheme(.light)
     }
 }

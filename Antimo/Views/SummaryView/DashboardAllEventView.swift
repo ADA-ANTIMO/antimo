@@ -1,47 +1,46 @@
 //
-//  SummaryView.swift
+//  DashboardAllEventView.swift
 //  Antimo
 //
-//  Created by Roli Bernanda on 29/05/23.
+//  Created by Roli Bernanda on 12/06/23.
 //
 
 import SwiftUI
 
-struct ActivityView: View {
+struct DashboardAllEventView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)])
     private var events: FetchedResults<Event>
     
-    @EnvironmentObject private var activityNavigation: ActivityNavigationManager
+    @EnvironmentObject private var dashboardNavigation: DashboardNavigationManager
     @StateObject var vm = ActivityViewModel()
     @StateObject var notificationManager = NotificationsManager()
-    @State var currentDate = Date.now
-    @State var currentMonth = 0
     
     var body: some View {
         ANBaseContainer(toolbar: {
-            ANToolbar(title: "Calendar") {
+            ANToolbar(leading: {
+                Text("Back")
+                    .font(.toolbar)
+                    .foregroundColor(Color.anNavigation)
+                    .onTapGesture { dashboardNavigation.goBack() }
+            }, title: "Add Reminder") {
                 Text("Add Event")
                     .font(.toolbar)
                     .foregroundColor(Color.anNavigation)
                     .onTapGesture { vm.isEventSheetPresented = true }
             }
         }, children: {
-            ScrollView {
-                ANCalendar(currentDate: $currentDate, currentMonth: $currentMonth)
-                UpcomingEventView(vm: vm, events: events, onShowAll: { activityNavigation.push(to: .allEvents) })
+            ForEach(events) { event in
+                ANEventCard(
+                    icon: vm.getIcon(event.reminder?.type ?? ""),
+                    title: event.reminder?.title ?? "",
+                    desc: event.reminder?.desc ?? "",
+                    time: vm.getRenderedHourAndMinutes(event.triggerDate ?? Date())
+                )
             }
-            .scrollIndicators(.hidden)
-            .padding()
-            
+            .padding(.horizontal)
         })
-        .onAppear {
-            if !notificationManager.hasPermission {
-                print(notificationManager.hasPermission)
-                notificationManager.request()
-            }
-        }
         .sheet(isPresented: $vm.isEventSheetPresented) {
             AddEventSheetView(
                 vm: vm,
@@ -53,8 +52,8 @@ struct ActivityView: View {
     }
 }
 
-struct ActivityView_Previews: PreviewProvider {
+struct DashboardAllEventView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityView()
+        DashboardAllEventView()
     }
 }

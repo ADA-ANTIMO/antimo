@@ -11,6 +11,7 @@ struct UpcomingEventView: View {
     @EnvironmentObject private var activityNavigation: ActivityNavigationManager
     var vm: ActivityViewModel
     var events: FetchedResults<Event>
+    var onShowAll: () -> Void
     
     var body: some View {
         VStack(spacing: 10) {
@@ -26,7 +27,7 @@ struct UpcomingEventView: View {
                         .font(.toolbar)
                         .foregroundColor(Color.anNavigation)
                         .onTapGesture {
-                            activityNavigation.push(to: .allEvents)
+                            onShowAll()
                         }
                 }
             }
