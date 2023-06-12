@@ -12,7 +12,7 @@ extension Font {
     static let sheetTitle = Font.system(size: 16, weight: .regular, design: .rounded)
     
     static let cardTitle = Font.system(size: 16, weight: .bold, design: .rounded)
-    static let cardActivity = Font.system(size: 12, weight: .regular, design: .rounded)
+    static let cardActivity = Font.system(size: 7, weight: .regular, design: .rounded)
     static let cardExtra = Font.system(size: 12, weight: .regular, design: .rounded)
     static let cardContent = Font.system(size: 12, weight: .regular, design: .rounded)
     static let cardTime = Font.system(size: 12, weight: .regular, design: .rounded)

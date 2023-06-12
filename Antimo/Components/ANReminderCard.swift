@@ -55,7 +55,7 @@ struct ReminderToggle: View {
 }
 
 struct ANReminderCard: View {
-    let icon: AcitivityIcons
+    let icon: ActivityIcons
     let title: String
     let time: String
     let frequency: String
@@ -65,7 +65,7 @@ struct ANReminderCard: View {
     
     @State private var localIsOn: Bool
     
-    init(icon: AcitivityIcons, title: String, time: String, frequency: String, isOn: Bool, onToggle: @escaping (Bool) -> Void) {
+    init(icon: ActivityIcons, title: String, time: String, frequency: String, isOn: Bool, onToggle: @escaping (Bool) -> Void) {
             self.icon = icon
             self.title = title
             self.time = time

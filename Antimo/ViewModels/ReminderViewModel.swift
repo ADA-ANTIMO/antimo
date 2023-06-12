@@ -146,18 +146,18 @@ class ReminderViewModel: ObservableObject {
         return "09:00"
     }
     
-    func getIcon(_ iconName: String) -> AcitivityIcons {
+    func getIcon(_ iconName: String) -> ActivityIcons {
         switch iconName {
         case "Nutrition":
-            return AcitivityIcons.nutrition
+            return ActivityIcons.nutrition
         case "Medication":
-            return AcitivityIcons.medication
+            return ActivityIcons.medication
         case "Exercise":
-            return AcitivityIcons.exercise
+            return ActivityIcons.exercise
         case "Grooming":
-            return AcitivityIcons.grooming
+            return ActivityIcons.grooming
         default:
-            return AcitivityIcons.other
+            return ActivityIcons.other
         }
     }
     

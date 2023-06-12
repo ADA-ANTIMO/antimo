@@ -14,24 +14,24 @@ enum ActivityTypes: String {
     case grooming = "Grooming"
     case other = "Other"
     
-    static func getByString(type: String) -> ActivityTypes {
+    static func getByString(type: String) -> Self {
         switch type {
         case "Nutrition":
-            return ActivityTypes.nutrition
+            return Self.nutrition
         case "Medication":
-            return ActivityTypes.medication
+            return Self.medication
         case "Exercise":
-            return ActivityTypes.exercise
+            return Self.exercise
         case "Grooming":
-            return ActivityTypes.grooming
+            return Self.grooming
         default:
-            return ActivityTypes.other
+            return Self.other
         }
     }
 }
 
 struct ActivityIcon: View {
-    let icon: AcitivityIcons
+    let icon: ActivityIcons
     
     var body: some View {
         ZStack {
@@ -48,7 +48,7 @@ struct ActivityIcon: View {
 }
 
 struct ActivityOption: View {
-    let icon: AcitivityIcons
+    let icon: ActivityIcons
     let label: String
     let action: () -> Void
     
