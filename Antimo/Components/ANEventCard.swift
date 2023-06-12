@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ANEventCard: View {
-    var icon: AcitivityIcons
+    var icon: ActivityIcons
     var title: String
     var desc: String
     var time: String

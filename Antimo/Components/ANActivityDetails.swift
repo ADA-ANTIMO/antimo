@@ -21,6 +21,12 @@ enum ActivityActions: String, CaseIterable {
     }
 }
 
+enum ExtraIcons: String, CaseIterable {
+    case mappin = "mappin.circle.fill"
+    case forkKnife = "fork.knife.circle.fill"
+    case timer = "timer.circle.fill"
+}
+
 struct Action: Identifiable {
     let id: UUID
     let type: ActivityActions
@@ -28,16 +34,52 @@ struct Action: Identifiable {
 }
 
 struct ActivityMeta: View {
-    let icon: String
-    let type: String
-    let createdAt: Date
-    
+    let activity: Activity
+
     var body: some View {
         HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                if activity.type != ActivityTypes.other.rawValue {
+                    switch activity.type {
+                    case ActivityTypes.nutrition.rawValue:
+                        ActivityExtra(icon: .forkKnife, extra: "\(activity.nutrition!.menu!) (\(activity.nutrition!.isEatenUp ? "Eaten Up" : "Has Leftover"))")
+                    case ActivityTypes.medication.rawValue:
+                        if let vet = activity.medication?.vet, !vet.isEmpty {
+                            ActivityExtra(icon: .mappin, extra: "\(vet)")
+                        }
+                    case ActivityTypes.exercise.rawValue:
+                        ActivityExtra(icon: .timer, extra: "\(activity.exercise!.duration) Minutes")
+                    case ActivityTypes.grooming.rawValue:
+                        ActivityExtra(icon: .mappin, extra: "\(activity.grooming!.salon!)")
+                    default:
+                        EmptyView()
+                    }
+                }
+                
+                HStack{
+                    let timeComponents = Utilities.getTime(date: activity.createdAt!)
+                    
+                    Text(String(format: "%02d:%02d", timeComponents.hour!, timeComponents.minute!))
+                        .font(.cardTime)
+                }
+                .foregroundColor(Color.primary)
+                .padding(8)
+                .background(
+                    Color.white
+                )
+                .cornerRadius(8)
+            }
+            
+            Spacer()
+            
             ZStack {
-                VStack {
-                    Image(systemName: icon)
-                        .font(.system(size: 29))
+                VStack(spacing: 0) {
+                    let type = activity.type ?? ""
+                    let icon = ActivityIcons.getActivityIcon(type: type)
+                    
+                    Image(icon.rawValue)
+                        .resizable()
+                        .frame(width: 29, height: 29)
                        
                     Text(type)
                         .font(.cardActivity)
@@ -45,21 +87,7 @@ struct ActivityMeta: View {
                 }
                 .foregroundColor(Color.anPrimary)
             }
-            .padding(8)
-            .background(
-                Color.white
-            )
-            .cornerRadius(8)
-            
-            Spacer()
-            
-            ZStack {
-                let timeComponents = Utilities.getTime(date: createdAt)
-                
-                Text(String(format: "%02d:%02d", timeComponents.hour!, timeComponents.minute!))
-                    .font(.cardTime)
-            }
-            .foregroundColor(Color.primary)
+            .frame(width: 40, height: 40)
             .padding(8)
             .background(
                 Color.white
@@ -102,12 +130,12 @@ struct ActivityHeading: View {
 }
 
 struct ActivityExtra: View {
-    let icon: String
+    let icon: ExtraIcons
     let extra: String
     
     var body: some View {
-        HStack(alignment: .top) {
-            Image(systemName: icon)
+        HStack() {
+            Image(systemName: icon.rawValue)
                 .foregroundColor(Color.anPrimary)
             
             Text(extra)
@@ -117,23 +145,24 @@ struct ActivityExtra: View {
 }
 
 struct ActivityStatus: View {
-    let status: String
+    let status: Mood
     
     var body: some View {
-        HStack {
-            Spacer()
+        ZStack{
+            Image("mood\(status.rawValue.capitalizedFirstLetter)")
+                .resizable()
+                .frame(width: 30, height: 30)
             
-            ZStack {
-                Image(systemName: status)
-                    .font(.system(size: 30))
-            }
-            .padding(8)
-            .foregroundColor(Color.anPrimary)
-            .background(
-                Color.white
-            )
-            .cornerRadius(8)
+            Color.anPrimary.blendMode(.sourceAtop)
         }
+        .drawingGroup(opaque: false)
+        .frame(width: 40, height: 40)
+        .padding(8)
+        .foregroundColor(Color.anPrimary)
+        .background(
+            Color.white
+        )
+        .cornerRadius(8)
     }
 }
 
@@ -143,7 +172,7 @@ struct ANActivityDetails: View {
     
     var body: some View {
         VStack() {
-            ZStack(alignment: .top) {
+            VStack() {
                 let image = FileManager().retrieveImage(with: activity.imagePath) ?? UIImage(named: "dummyImg")!
                 
                 Image(uiImage: image)
@@ -151,43 +180,23 @@ struct ANActivityDetails: View {
                        .scaledToFill()
                        .frame(height: 200, alignment: .center)
                        .clipped()
-                    
-                VStack {
-                    ActivityMeta(icon: "book", type: activity.type!, createdAt: activity.createdAt!)
-                    
-                    Spacer()
-                    
-                   ActivityStatus(status: "face.smiling")
-                }
-                .padding(8)
             }
-            .foregroundColor(.white)
             .frame(height: 200)
-            
-           
             
             // Details
             VStack(alignment: .leading, spacing: 16) {
-                ActivityHeading(actions: actions,title: activity.title!)
+                ActivityHeading(actions: actions, title: activity.title!)
                 
-                if activity.type != ActivityTypes.other.rawValue {
-                    switch activity.type {
-                    case ActivityTypes.nutrition.rawValue:
-                        ActivityExtra(icon: "book", extra: "\(activity.nutrition!.menu!) (\(activity.nutrition!.isEatenUp ? "Eaten Up" : "Has Leftover"))")
-                    case ActivityTypes.medication.rawValue:
-                        ActivityExtra(icon: "book", extra: "\(activity.medication?.vet ?? "-")")
-                    case ActivityTypes.exercise.rawValue:
-                        ActivityExtra(icon: "book", extra: "\(activity.exercise!.duration) Minutes")
-                    case ActivityTypes.grooming.rawValue:
-                        ActivityExtra(icon: "book", extra: "\(activity.grooming!.salon!)")
-                    default:
-                        EmptyView()
-                    }
-                }
+                ActivityMeta(activity: activity)
                 
                 // Desc
-                Text(activity.note!)
-                    .font(.cardContent)
+                HStack(alignment: .top) {
+                    Text(activity.note!)
+                        .font(.cardContent)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                   
+                    ActivityStatus(status: .high)
+                }
             }
             .padding(16)
         }

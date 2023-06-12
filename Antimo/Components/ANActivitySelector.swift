@@ -7,16 +7,31 @@
 
 import SwiftUI
 
-enum AcitivityIcons: String {
+enum ActivityIcons: String {
     case nutrition = "nutritionIcon"
     case medication = "medicationIcon"
     case exercise = "exerciseIcon"
     case grooming = "groomingIcon"
     case other = "otherIcon"
+    
+    static func getActivityIcon(type:String) -> Self {
+        switch type {
+        case "Nutrition":
+            return Self.nutrition
+        case "Medication":
+            return Self.medication
+        case "Exercise":
+            return Self.exercise
+        case "Grooming":
+            return Self.grooming
+        default:
+            return Self.other
+        }
+    }
 }
 
 struct SelectorItem: View {
-    let icon: AcitivityIcons;
+    let icon: ActivityIcons;
     let label: String;
     let isSelected: Bool
     let action: () -> Void
@@ -26,17 +41,16 @@ struct SelectorItem: View {
             action()
         } label: {
             VStack(spacing: 4) {
-                VStack {
-                    ZStack {
-                        Image(icon.rawValue)
-                            .resizable()
-                            .frame(width: 28, height: 28)
-                        
-                        Color.white.blendMode(.sourceAtop)
-                    }
-                    .frame(width: 28, height: 28)
-                    .drawingGroup(opaque: false)
+                ZStack {
+                    Image(icon.rawValue)
+                        .resizable()
+                        .frame(width: 28, height: 28)
+                    
+                    Color.white.blendMode(.sourceAtop)
                 }
+                .frame(width: 28, height: 28)
+                .drawingGroup(opaque: false)
+                
                 
                 Text(label)
                     .font(.activitySelector)
