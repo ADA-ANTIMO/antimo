@@ -149,34 +149,38 @@ struct SummaryView: View {
                     }
                     .padding(.horizontal)
                     
-                    Divider()
-                    
-                    // MARK: Weight Chart
-                    if petData.isEmpty {
-                        EmptyView()
-                    } else {
-                        VStack(alignment: .leading, spacing: 20) {
-                            Text("Weight")
-                            WeightChartView(petData: petData)
-                            Text("Weight (Kg): \(viewModel.persistWeight)")
+                    VStack(spacing: 0) {
+                        Button {
+                            viewModel.isWeightSheetPresented = true
+                        } label: {
+                            HStack {
+                                Text("Weight")
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                            }
+                            .padding()
+                            .foregroundColor(.black)
                         }
-                        .padding()
-                        .background(Color.anPrimary.opacity(0.1))
-                    }
-                    
-                    
-                    // MARK: Exercise Chart
-                    if exerciseData.isEmpty {
-                        EmptyView()
-                    } else {
-                        VStack(alignment: .leading, spacing: 20) {
-                            Text("Exercise")
-                            ExerciseChartView(exerciseData: exerciseData)
-                            Text("Time (Minute)")
+                        
+                        
+                        Divider().frame(height: 1)
+                        
+                        Button {
+                            viewModel.isExerciseSheetPresented = true
+                        } label: {
+                            HStack {
+                                Text("Exercise")
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                            }
+                            .padding()
+                            .foregroundColor(.black)
                         }
-                        .padding()
-                        .background(Color.anPrimary.opacity(0.1))
                     }
+                    .background(Color.anPrimary.opacity(0.1))
+                    .cornerRadius(8)
+                    .padding()
+                    
                 }
             }
         }
@@ -225,6 +229,61 @@ struct SummaryView: View {
             
             Spacer()
             
+        }
+        .sheet(isPresented: $viewModel.isExerciseSheetPresented, onDismiss: { viewModel.isExerciseSheetPresented = false}) {
+            // MARK: Exercise Chart
+            Group {
+                if exerciseData.isEmpty {
+                    EmptyView()
+                } else {
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Exercise")
+                        ExerciseChartView(exerciseData: exerciseData).frame(height: 250)
+                        Text("Time (Minute)")
+                    }
+                    .padding()
+                    .background(Color.anPrimary.opacity(0.1))
+                }
+            }
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
+            
+        }
+        .sheet(isPresented: $viewModel.isWeightSheetPresented, onDismiss: { viewModel.isWeightSheetPresented = false }) {
+            // MARK: Weight Chart
+            Group {
+                if petData.isEmpty {
+                    EmptyView()
+                } else {
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Weight")
+                        WeightChartView(petData: petData).frame(height: 200)
+                    }
+                    .padding()
+                    .background(Color.anPrimary.opacity(0.1))
+                    
+                    
+                    ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight", suffix: "Kg").padding(.horizontal)
+                    ANButton("Save") {
+                        do {
+                            let newPetData = Pet(context: viewContext)
+                            newPetData.id = UUID()
+                            newPetData.createdAt = Date()
+                            newPetData.weight = Int16(viewModel.weight) ?? 0
+                            try viewContext.save()
+                            viewModel.isWeightSheetPresented = false
+                        } catch {
+                            print("Failed to save")
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    
+
+                }
+            }
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
         }
     }
 }

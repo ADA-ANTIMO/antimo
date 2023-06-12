@@ -84,12 +84,11 @@ struct WeightChartView: View {
                     )
                 }
             }
-            .frame(height: 300)
             .frame(maxWidth: UIScreen.main.bounds.width)
             .chartXAxis {
                 AxisMarks(values: .stride(by: .day)) { value in
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.day(.twoDigits), centered: true)
+                    AxisValueLabel(format: .dateTime.day(.twoDigits).month(.abbreviated), centered: true)
                 }
             }
             .chartYAxis {

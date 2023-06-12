@@ -39,6 +39,8 @@ class SummaryViewModel: ObservableObject {
     
     @Published var isEditting: Bool = false
     @Published var showSnackBar: Bool = false
+    @Published var isExerciseSheetPresented: Bool = false
+    @Published var isWeightSheetPresented: Bool = false
     
     var disabledSubmit: Bool {
         return dogName.isEmpty || gender.isEmpty || breed.isEmpty || weight.isEmpty
