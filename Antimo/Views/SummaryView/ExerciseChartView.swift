@@ -31,6 +31,12 @@ struct ExerciseChartView: View {
     var body: some View {
         VStack {
             Chart {
+                RuleMark(y: .value("Average", averageWeight))
+                    .foregroundStyle(Color.anPrimary)
+                    .lineStyle(StrokeStyle(lineWidth: 2, dash: [5]))
+                    .annotation(alignment: .center) {
+                        Text("Average").font(.caption).foregroundColor(Color.anPrimary)
+                    }
                 ForEach(exerciseData, id:\.id) {
                     LineMark(
                         x: .value("Date", $0.createdAt ?? Date(), unit: .day),
@@ -44,12 +50,12 @@ struct ExerciseChartView: View {
                     )
                 }
             }
-            .frame(height: 300)
             .frame(maxWidth: UIScreen.main.bounds.width)
             .chartXAxis {
                 AxisMarks(values: .stride(by: .day)) { value in
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.day(.twoDigits), centered: true)
+                    AxisValueLabel(format: .dateTime.day(.twoDigits)
+                        .month(.abbreviated), centered: true)
                 }
             }
             .chartYAxis {
