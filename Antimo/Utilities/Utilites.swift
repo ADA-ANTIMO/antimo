@@ -84,27 +84,4 @@ struct Utilities {
         
         return Calendar.current.date(from: components) ?? Date()
     }
-    
-    static func createDateWithCustomHourAndMinute(hour: Int, minute: Int) -> Date? {
-        // Get the current date and time
-        let currentDate = Date()
-
-        // Create a calendar instance
-        var calendar = Calendar.current
-
-        // Get the components of the current date
-        let dateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
-
-        // Create a new date by setting the desired hour and minute
-        var newDateComponents = DateComponents()
-        newDateComponents.year = dateComponents.year
-        newDateComponents.month = dateComponents.month
-        newDateComponents.day = dateComponents.day
-        newDateComponents.hour = hour
-        newDateComponents.minute = minute
-
-        let newDate = calendar.date(from: newDateComponents)
-
-        return newDate
-    }
 }

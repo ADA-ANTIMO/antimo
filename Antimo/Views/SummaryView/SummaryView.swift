@@ -66,7 +66,7 @@ struct SummaryView: View {
                             .cornerRadius(8)
                         
                         HStack(spacing: 20) {
-                            EditableCircularProfileImage(viewModel: viewModel)
+                            EditableCircularProfileImage(viewModel: viewModel, width: 80, height: 80)
                             VStack(alignment: .leading, spacing: 10) {
                                 HStack {
                                     Text(viewModel.renderedDogName)
@@ -193,20 +193,33 @@ struct SummaryView: View {
                 }, title: "Edit Profile") {
                     Text("Update")
                         .font(.toolbar)
-                        .foregroundColor(Color.anNavigation)
+                        .foregroundColor(Color.anNavigation.opacity(viewModel.disabledSubmit ? 0.1 : 1))
                         .onTapGesture {
                             viewModel.saveProfileData(viewContext: viewContext)
                         }
+                        .disabled(viewModel.disabledSubmit)
                 }
                 
-                Group {
-                    ANTextField(text: $viewModel.dogName, placeholder: "", label: "Dog Name")
-                    ANTextField(text: $viewModel.gender, placeholder: "", label: "Gender")
-                    ANDatePicker(date: $viewModel.bod, label: "Birth of date")
-                    ANTextField(text: $viewModel.breed, placeholder: "", label: "Breed")
-                    ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight", suffix: "Kg")
+                ScrollView {
+                    EditableCircularProfileImage(viewModel: viewModel, width: 150, height: 180)
+                    VStack(spacing: 22) {
+                        ANTextField(text: $viewModel.dogName, placeholder: "", label: "Dog Name")
+                        HStack(spacing: 20) {
+                            Text("Dog Gender").font(.inputLabel)
+                            
+                            Picker("Dog Gender", selection: $viewModel.gender) {
+                                Text("Male").tag("Male")
+                                Text("Female").tag("Female")
+                            }
+                            .pickerStyle(.segmented)
+                        }
+
+                        ANDatePicker(date: $viewModel.bod, label: "Birth of date")
+                        ANTextField(text: $viewModel.breed, placeholder: "", label: "Breed")
+                        ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight", suffix: "Kg")
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
             }
             .padding(.vertical)
             

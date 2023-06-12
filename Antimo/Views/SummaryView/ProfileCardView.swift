@@ -11,6 +11,8 @@ import PhotosUI
 struct EditableCircularProfileImage: View {
     @ObservedObject var viewModel: SummaryViewModel
     @StateObject var imagePicker = ImagePicker()
+    let width: CGFloat
+    let height: CGFloat
     
     var uiImage: UIImage {
         if !viewModel.avatarID.isEmpty,
@@ -34,7 +36,7 @@ struct EditableCircularProfileImage: View {
         }
         .scaledToFill()
         .clipShape(Circle())
-        .frame(width: 80, height: 80)
+        .frame(width: width, height: height)
         .background {
             Circle().fill(
                 LinearGradient(
