@@ -40,6 +40,10 @@ class SummaryViewModel: ObservableObject {
     @Published var isEditting: Bool = false
     @Published var showSnackBar: Bool = false
     
+    var disabledSubmit: Bool {
+        return dogName.isEmpty || gender.isEmpty || breed.isEmpty || weight.isEmpty
+    }
+    
     private var persistBODData: Data? {
         get {
             UserDefaults.standard.data(forKey: "bod")
@@ -86,7 +90,7 @@ class SummaryViewModel: ObservableObject {
         }
         
         if let ageInYears = Calendar.current.dateComponents([.year], from: persistBOD, to: Date()).year {
-            return "\(ageInYears) years"
+            return ageInYears > 1 ? "\(ageInYears) years" : "\(ageInYears) year"
         }
         return "-"
     }
