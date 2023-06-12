@@ -9,25 +9,25 @@ import Foundation
 
 enum DeepLinkURLs: String {
     case addJournals = "add_journals"
+    case allEvents = "all_events"
 }
 
 struct RouteFinder {
-    
-//    func find(from url: URL) async -> Route? {
-//        guard let host = url.host() else { return nil }
-//        
-//        switch DeepLinkURLs(rawValue: host) {
-//        case .addExercise:
-//            return .addExercise
-//            
-//        case .addNutrition:
-//            return .addNutrition
-//            
-//        default:
-//            return nil
-//            
-//        }
-//    }
+    func find(from url: URL) async -> DeepLinkURLs? {
+        guard let host = url.host() else { return nil }
+        
+        switch DeepLinkURLs(rawValue: host) {
+        case .addJournals:
+            return .addJournals
+            
+        case .allEvents:
+            return .allEvents
+            
+        default:
+            return nil
+            
+        }
+    }
 }
 
 extension URL {

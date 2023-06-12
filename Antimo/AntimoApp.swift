@@ -13,6 +13,10 @@ struct AntimoApp: App {
     
     @StateObject var notificationManager = NotificationsManager()
     
+    @StateObject var dashboardNavigation = DashboardNavigationManager()
+    @StateObject var journalNavigation = JournalNavigationManager()
+    @StateObject var activityNavigation = ActivityNavigationManager()
+    
     @State private var selectedTab: NavigationTabs = .dashboard
     
     let persistenceController = PersistenceController.shared
@@ -25,8 +29,13 @@ struct AntimoApp: App {
             if isFirstAppOpen {
                 OnboardingView()
             } else {
-                ANTabView(selectedTab: $selectedTab)
+                ANTabView(selectedTab: $selectedTab, dashboardNavigation: dashboardNavigation, journalNavigation: journalNavigation, activityNavigation: activityNavigation)
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .onOpenURL { url in
+                        Task {
+                            await handleDeeplinking(from: url)
+                        }
+                    }
                     .onAppear {
                         appDelegate.app = self
                     }
@@ -68,17 +77,19 @@ private extension AntimoApp {
     
     func handleDeeplinking(from url: URL) async {
         
-        //Not as page anymore but a sheet
-//        let routeFinder = RouteFinder()
-//        if let route = await routeFinder.find(from: url) {
-//            switch route {
-//            case .addExercise:
-//                routerManager.push(to: route)
-//            case.addNutrition:
-//                routerManager.push(to: route)
-//            default:
-//                routerManager.push(to: route)
-//            }
-//        }
+        let routeFinder = RouteFinder()
+        if let route = await routeFinder.find(from: url) {
+            switch route {
+            case .addJournals:
+                selectedTab = .journal
+                journalNavigation.push(to: .addJournal)
+            case .allEvents:
+                selectedTab = .event
+                activityNavigation.push(to: .allEvents)
+            default:
+                selectedTab = .dashboard
+                dashboardNavigation.reset()
+            }
+        }
     }
 }

@@ -17,11 +17,10 @@ enum NavigationTabs: String {
 struct ANTabView: View {
     @Binding var selectedTab: NavigationTabs
     
-    @StateObject var journalNavigation = JournalNavigationManager()
-    @StateObject var activityNavigation = ActivityNavigationManager()
-    @StateObject var dashboardNavigation = DashboardNavigationManager()
+    @ObservedObject var dashboardNavigation: DashboardNavigationManager
+    @ObservedObject var journalNavigation: JournalNavigationManager
+    @ObservedObject var activityNavigation: ActivityNavigationManager
     
-    // TODO: Change TabBar Icons
     var body: some View {
             TabView(selection: $selectedTab) {
                 NavigationStack(path: $dashboardNavigation.dashboardPaths) {
