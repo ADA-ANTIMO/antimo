@@ -60,5 +60,8 @@ struct ANActivityPicker: View {
                 }
             }
         }
+        .onAppear {
+            selected = Medication.medicine.rawValue
+        }
     }
 }
