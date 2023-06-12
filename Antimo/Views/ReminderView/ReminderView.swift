@@ -60,7 +60,9 @@ struct ReminderView: View {
                         )
                     }
                 }
+                .scrollIndicators(.hidden)
                 .padding(.horizontal)
+                .padding(.bottom)
             }
         })
         .onAppear { notificationManager.request() }
