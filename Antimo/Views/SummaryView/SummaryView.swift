@@ -102,6 +102,8 @@ struct SummaryView: View {
                     }
                     .padding(.horizontal)
                     
+                    Divider()
+                    
                     // MARK: Latest Journal
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
@@ -110,14 +112,16 @@ struct SummaryView: View {
                         }
                         
                         if activities.isEmpty {
-                            Spacer()
+                            HStack {
+                                Spacer()
 
-                            Text("There are no journals\n available yet, let's make your\n journal soon")
-                                .font(.placeholder)
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(Color.gray)
+                                Text("There are no journals\n available yet, let's make your\n journal soon")
+                                    .font(.placeholder)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(Color.gray)
 
-                            Spacer()
+                                Spacer()
+                            }
                         } else {
                             VStack(spacing: 8) {
                                 ForEach(activities.byDate.keys, id: \.self) { key in
@@ -143,24 +147,34 @@ struct SummaryView: View {
                     }
                     .padding(.horizontal)
                     
+                    Divider()
+                    
                     // MARK: Weight Chart
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text("Weight")
-                        WeightChartView(petData: petData)
-                        Text("Weight (Kg): \(viewModel.persistWeight)")
+                    if petData.isEmpty {
+                        EmptyView()
+                    } else {
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Weight")
+                            WeightChartView(petData: petData)
+                            Text("Weight (Kg): \(viewModel.persistWeight)")
+                        }
+                        .padding()
+                        .background(Color.anPrimary.opacity(0.1))
                     }
-                    .padding()
-                    .background(Color.anPrimary.opacity(0.1))
                     
                     
                     // MARK: Exercise Chart
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text("Exercise")
-                        ExerciseChartView(exerciseData: exerciseData)
-                        Text("Time (Minute)")
+                    if exerciseData.isEmpty {
+                        EmptyView()
+                    } else {
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Exercise")
+                            ExerciseChartView(exerciseData: exerciseData)
+                            Text("Time (Minute)")
+                        }
+                        .padding()
+                        .background(Color.anPrimary.opacity(0.1))
                     }
-                    .padding()
-                    .background(Color.anPrimary.opacity(0.1))
                 }
             }
         }
