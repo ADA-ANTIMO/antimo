@@ -41,13 +41,24 @@ struct UpcomingEventView: View {
                     Spacer()
                 }
             } else {
-                ForEach(events) { event in
-                    ANEventCard(
-                        icon: vm.getIcon(event.reminder?.type ?? ""),
-                        title: event.reminder?.title ?? "",
-                        desc: event.reminder?.desc ?? "",
-                        time: vm.getRenderedHourAndMinutes(event.triggerDate ?? Date())
-                    )
+                ForEach(events.byDate.keys, id: \.self) { key in
+                    Section {
+                        ForEach(events.byDate.events[key] ?? [], id: \.self) { event in
+                            ANEventCard(
+                                icon: vm.getIcon(event.reminder?.type ?? ""),
+                                title: event.reminder?.title ?? "",
+                                desc: event.reminder?.desc ?? "",
+                                time: vm.getRenderedHourAndMinutes(event.triggerDate ?? Date())
+                            )
+                        }
+                    } header: {
+                        HStack {
+                            Text(key)
+                                .font(.date)
+                            
+                            Spacer()
+                        }
+                    }
                 }
             }
         }

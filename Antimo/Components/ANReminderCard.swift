@@ -12,8 +12,9 @@ struct ReminderIcon: View {
     
     var body: some View {
         ZStack {
-            Image(systemName: icon)
-                .font(.system(size: 29))
+            Image(icon)
+                .resizable()
+                .frame(width: 37, height: 37)
         }
         .frame(width: 48, height: 48)
         .padding(8)
