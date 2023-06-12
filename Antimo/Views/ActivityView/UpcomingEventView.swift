@@ -31,6 +31,7 @@ struct UpcomingEventView: View {
                         }
                 }
             }
+            .padding(.top)
             
             if events.isEmpty {
                 HStack {
@@ -55,7 +56,7 @@ struct UpcomingEventView: View {
                     } header: {
                         HStack {
                             Text(key)
-                                .font(.date)
+                                .font(.date).opacity(0.5)
                             
                             Spacer()
                         }

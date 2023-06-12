@@ -21,7 +21,7 @@ struct ActivityView: View {
     
     var body: some View {
         ANBaseContainer(toolbar: {
-            ANToolbar(title: "Calendar") {
+            ANToolbar(title: "Event") {
                 Text("Add Event")
                     .font(.toolbar)
                     .foregroundColor(Color.anNavigation)
