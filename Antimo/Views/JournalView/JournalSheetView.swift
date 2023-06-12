@@ -105,6 +105,9 @@ struct JournalSheetView: View {
                                 vm.submitForm(context: viewContext)
                             }
                         }
+                        .grayscale(vm.canSubmit ? 0 : 0.75)
+                        .opacity(vm.canSubmit ? 1 : 0.5)
+                        .disabled(!vm.canSubmit)
                     }
                     .padding(.horizontal, 16)
                 }

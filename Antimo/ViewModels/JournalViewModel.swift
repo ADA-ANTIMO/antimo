@@ -31,6 +31,23 @@ class JournalViewModel: ObservableObject {
     @Published public var activityType: ActivityTypes = .nutrition
     @Published public var selectedActivity: Activity? = nil
     
+    public var canSubmit: Bool {
+        let activityType = ActivityTypes.getByString(type: type)
+        
+        switch activityType {
+        case .nutrition:
+            return !title.isEmpty && !menu.isEmpty
+        case .medication:
+            return !title.isEmpty && (!vet.isEmpty || type == "Vet")
+        case .exercise:
+            return !title.isEmpty && !duration.isEmpty && !mood.isEmpty
+        case .grooming:
+            return !title.isEmpty && !salon.isEmpty && !satisfaction.isEmpty
+        default:
+            return !title.isEmpty && !note.isEmpty
+        }
+    }
+    
     public func resetState() {
         id = UUID()
         image = ""

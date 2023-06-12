@@ -172,16 +172,16 @@ struct ANActivityDetails: View {
     
     var body: some View {
         VStack() {
-            VStack() {
-                let image = FileManager().retrieveImage(with: activity.imagePath) ?? UIImage(named: "dummyImg")!
-                
-                Image(uiImage: image)
-                    .resizable()
-                       .scaledToFill()
-                       .frame(height: 200, alignment: .center)
-                       .clipped()
+            if let image = FileManager().retrieveImage(with: activity.imagePath) {
+                VStack() {
+                    Image(uiImage: image)
+                        .resizable()
+                           .scaledToFill()
+                           .frame(height: 200, alignment: .center)
+                           .clipped()
+                }
+                .frame(height: 200)
             }
-            .frame(height: 200)
             
             // Details
             VStack(alignment: .leading, spacing: 16) {
