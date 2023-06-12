@@ -29,6 +29,7 @@ struct ANTextFieldArea: View {
                         .foregroundColor(Color.gray)
                         .padding(10)
                         .zIndex(1)
+                        .allowsHitTesting(false)
                 }
                 
                 TextEditor(text: $debouncedText)
