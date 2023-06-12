@@ -152,7 +152,7 @@ struct SummaryView: View {
                     
                     VStack(spacing: 0) {
                         Button {
-                            viewModel.isWeightSheetPresented = true
+                            viewModel.openWeightSheet()
                         } label: {
                             HStack {
                                 Text("Weight")
@@ -254,7 +254,7 @@ struct SummaryView: View {
             .presentationDragIndicator(.visible)
             
         }
-        .sheet(isPresented: $viewModel.isWeightSheetPresented, onDismiss: { viewModel.isWeightSheetPresented = false }) {
+        .sheet(isPresented: $viewModel.isWeightSheetPresented, onDismiss: { viewModel.closeWeightSheet() }) {
             // MARK: Weight Chart
             Group {
                 
@@ -281,7 +281,8 @@ struct SummaryView: View {
                         newPetData.createdAt = Date()
                         newPetData.weight = Int16(viewModel.weight) ?? 0
                         try viewContext.save()
-                        viewModel.isWeightSheetPresented = false
+                        viewModel.persistWeight = viewModel.weight
+                        viewModel.closeWeightSheet()
                     } catch {
                         print("Failed to save")
                     }
