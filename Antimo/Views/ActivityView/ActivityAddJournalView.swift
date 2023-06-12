@@ -28,23 +28,23 @@ struct ActivityAddJournalView: View {
             }, title: "Add Journal")
         } children: {
             VStack {
-                ActivityOption(icon:"carrot.fill", label: "Nutrition") {
+                ActivityOption(icon: .nutrition, label: "Nutrition") {
                     vm.openActivityForm(selectedActivityType: .nutrition)
                 }
                 
-                ActivityOption(icon:"cross.case.fill", label: "Medication") {
+                ActivityOption(icon: .medication, label: "Medication") {
                     vm.openActivityForm(selectedActivityType: .medication)
                 }
                 
-                ActivityOption(icon:"tennisball.fill", label: "Exercise") {
+                ActivityOption(icon: .exercise, label: "Exercise") {
                     vm.openActivityForm(selectedActivityType: .exercise)
                 }
                 
-                ActivityOption(icon:"comb.fill", label: "Grooming") {
+                ActivityOption(icon: .grooming, label: "Grooming") {
                     vm.openActivityForm(selectedActivityType: .grooming)
                 }
                 
-                ActivityOption(icon:"heart.fill", label: "Other") {
+                ActivityOption(icon: .other, label: "Other") {
                     vm.openActivityForm(selectedActivityType: .other)
                 }
             }
