@@ -10,7 +10,7 @@ import UserNotifications
 
 @MainActor
 class NotificationsManager: ObservableObject {
-    
+    // TODO: Decide whether to use a singleton or not
     @Published private(set) var hasPermission = false
     
     init() {
@@ -36,13 +36,12 @@ class NotificationsManager: ObservableObject {
     func getAuthStatus() async {
         let status = await UNUserNotificationCenter.current().notificationSettings()
         switch status.authorizationStatus {
-            
-        case .authorized,
-             .provisional,
-             .ephemeral:
-            hasPermission = true
-        default:
-            hasPermission = false
+            case    .authorized,
+                    .provisional,
+                    .ephemeral:
+                hasPermission = true
+            default:
+                hasPermission = false
         }
     }
     

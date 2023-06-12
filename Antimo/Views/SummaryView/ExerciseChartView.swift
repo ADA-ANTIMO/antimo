@@ -20,62 +20,28 @@ struct ExerciseData: Identifiable {
 }
 
 struct ExerciseChartView: View {
-    var lastTwoWeeksWeightData: [WeightData] {
-        return getLastTwoWeeksWeightData()
-    }
-    
-    var chartData = [
-        (name: "Time (minute)", weightData: [
-            WeightData(year: 2023, month: 6, day: 1, weight: 19.0),
-            WeightData(year: 2023, month: 6, day: 2, weight: 17.0),
-            WeightData(year: 2023, month: 6, day: 3, weight: 17.0),]),
-        (name: "Average", weightData: [
-            WeightData(year: 2023, month: 6, day: 1, weight: 16.7),
-            WeightData(year: 2023, month: 6, day: 2, weight: 16.7),
-            WeightData(year: 2023, month: 6, day: 3, weight: 16.7),]),
-    ]
-    
-    
-    func getLastTwoWeeksWeightData() -> [WeightData] {
-        var out: [WeightData] = []
-        
-        let today = Date()
-        let calendar = Calendar.current
-        
-        for i in 0..<14 {
-            guard let date = calendar.date(byAdding: .day, value: -i, to: today) else {
-                continue
-            }
-            
-            let weight = Double.random(in: 50...100)
-            
-            let weightData = WeightData(year: calendar.component(.year, from: date), month: calendar.component(.month, from: date), day: calendar.component(.day, from: date), weight: weight)
+    var exerciseData: FetchedResults<Activity>
 
-            out.append(weightData)
-        }
-        
-        return out
-    }
-
-    var averageWeight: Double {
-        let totalWeight = lastTwoWeeksWeightData.reduce(0) { $0 + $1.weight }
-        let numberOfDataPoints = Double(lastTwoWeeksWeightData.count)
+    var averageWeight: Int32 {
+        let totalWeight = exerciseData.reduce(0) { $0 + ($1.exercise?.duration ?? 0) }
+        let numberOfDataPoints = Int32(exerciseData.count)
         return totalWeight / numberOfDataPoints
     }
     
     var body: some View {
         VStack {
             Chart {
-                ForEach(chartData, id:\.name) { item in
-                    ForEach(item.weightData) { v in
-                        LineMark(
-                            x: .value("Date", v.date),
-                            y: .value("Weight", v.weight)
-                        )
-                    }
-                    .foregroundStyle(by: .value("average", item.name))
-                    .symbol(by: .value("average", item.name))
+                ForEach(exerciseData, id:\.id) {
+                    LineMark(
+                        x: .value("Date", $0.createdAt ?? Date(), unit: .day),
+                        y: .value("Time", $0.exercise?.duration ?? 0)
+                    )
                     .interpolationMethod(.cardinal)
+                    
+                    PointMark(
+                        x: .value("Date", $0.createdAt ?? Date(), unit: .day),
+                        y: .value("Weight", $0.exercise?.duration ?? 0)
+                    )
                 }
             }
             .frame(height: 300)
@@ -83,15 +49,11 @@ struct ExerciseChartView: View {
             .chartXAxis {
                 AxisMarks(values: .stride(by: .day)) { value in
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.day(.twoDigits))
+                    AxisValueLabel(format: .dateTime.day(.twoDigits), centered: true)
                 }
             }
             .chartYAxis {
                 AxisMarks(position: .leading)
-            }
-            .chartPlotStyle { plotArea in
-                plotArea
-                    .background(Color.anPrimaryLight.opacity(0.5))
             }
         }
     }

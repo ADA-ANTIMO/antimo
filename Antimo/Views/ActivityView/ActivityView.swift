@@ -9,7 +9,10 @@ import SwiftUI
 
 struct ActivityView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)]) private var events: FetchedResults<Event>
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)])
+    private var events: FetchedResults<Event>
+    
     @EnvironmentObject private var activityNavigation: ActivityNavigationManager
     @StateObject var vm = ActivityViewModel()
     @StateObject var notificationManager = NotificationsManager()
@@ -33,9 +36,20 @@ struct ActivityView: View {
             .padding()
             
         })
-        .sheet(isPresented: $vm.isEventSheetPresented) { AddEventSheetView(vm: vm, onSubmit: {
-            vm.addEvent(viewContext: viewContext, notificationManager: notificationManager)
-        }) }
+        .onAppear {
+            if !notificationManager.hasPermission {
+                print(notificationManager.hasPermission)
+                notificationManager.request()
+            }
+        }
+        .sheet(isPresented: $vm.isEventSheetPresented) {
+            AddEventSheetView(
+                vm: vm,
+                onSubmit: {
+                    vm.addEvent(viewContext: viewContext, notificationManager: notificationManager)
+                }
+            )
+        }
     }
 }
 

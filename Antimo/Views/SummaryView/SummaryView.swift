@@ -7,9 +7,46 @@
 
 import SwiftUI
 import PhotosUI
+import CoreData
 
 struct SummaryView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)])
+    private var petData: FetchedResults<Pet>
+    
+    @FetchRequest(sortDescriptors: [])
+    private var exerciseData: FetchedResults<Activity>
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)])
+    private var events: FetchedResults<Event>
+    
+    @FetchRequest var activities: FetchedResults<Activity>
+    
     @StateObject var viewModel = SummaryViewModel()
+    @StateObject var eventVM = ActivityViewModel()
+    
+    init () {
+        let lastWeek = Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? Date.now
+        let startDate = Calendar.current.startOfDay(for: lastWeek)
+        let endDate = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: Date.now) ?? Date.now
+        
+        let request: NSFetchRequest<Activity> = Activity.fetchRequest()
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "createdAt", ascending: false)
+        ]
+        request.predicate = NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@) AND (type == %@)", startDate as CVarArg, endDate as CVarArg, "Exercise")
+        
+        let activityRequest: NSFetchRequest<Activity> = Activity.fetchRequest()
+        activityRequest.sortDescriptors = [
+            NSSortDescriptor(key: "createdAt", ascending: false)
+        ]
+        activityRequest.predicate = NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, endDate as CVarArg)
+
+        _activities = FetchRequest(fetchRequest: activityRequest)
+
+        _exerciseData = FetchRequest(fetchRequest: request)
+    }
     
     var body: some View {
         ANBaseContainer {
@@ -19,6 +56,9 @@ struct SummaryView: View {
         } children: {
             ScrollView {
                 VStack(spacing: 25) {
+                    // TODO: Activity recommendation system
+                    
+                    // MARK: Profile Card
                     ZStack {
                         Rectangle()
                             .fill(Color.anPrimaryLight)
@@ -56,21 +96,71 @@ struct SummaryView: View {
                     .padding(.horizontal)
                     .frame(width: UIScreen.main.bounds.width)
                     
+                    // MARK: Upcoming Event
                     VStack (alignment: .leading, spacing: 10) {
-                        Text("Last Visit")
-                        HStack (spacing: 10) {
-                            LastVisitCard(activityType: "Veterinary", icon: "person", name: "Veterinary Name", date: Date())
-                            LastVisitCard(activityType: "Grooming", icon: "comb.fill", name: "Groomer Name", date: Date())
-                        }
-                        LastVisitCard(activityType: "Medication", icon: "person", name:"Medicine", date: Date())
+                        UpcomingEventView(vm: eventVM, events: events)
                     }
                     .padding(.horizontal)
                     
-                    WeightChartView()
-                        .padding(.horizontal)
+                    // MARK: Latest Journal
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Text("Latest Journal").font(.sectionHeading)
+                            Spacer()
+                        }
+                        
+                        if activities.isEmpty {
+                            Spacer()
+
+                            Text("There are no journals\n available yet, let's make your\n journal soon")
+                                .font(.placeholder)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Color.gray)
+
+                            Spacer()
+                        } else {
+                            VStack(spacing: 8) {
+                                ForEach(activities.byDate.keys, id: \.self) { key in
+                                    Section {
+                                        ForEach(activities.byDate.activities[key] ?? [], id: \.self) { activity in
+                                            let editAction = Action(id: UUID(), type: .Edit) {}
+                                            
+                                            let deleteAction = Action(id: UUID(), type: .Delete) {}
+                                            
+                                            ANActivityDetails(activity: activity, actions: [editAction, deleteAction])
+                                        }
+                                    } header: {
+                                        HStack {
+                                            Text(key)
+                                                .font(.date)
+                                            
+                                            Spacer()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
                     
-                    ExerciseChartView()
-                        .padding(.horizontal)
+                    // MARK: Weight Chart
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Weight")
+                        WeightChartView(petData: petData)
+                        Text("Weight (Kg): \(viewModel.persistWeight)")
+                    }
+                    .padding()
+                    .background(Color.anPrimary.opacity(0.1))
+                    
+                    
+                    // MARK: Exercise Chart
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Exercise")
+                        ExerciseChartView(exerciseData: exerciseData)
+                        Text("Time (Minute)")
+                    }
+                    .padding()
+                    .background(Color.anPrimary.opacity(0.1))
                 }
             }
         }
@@ -89,7 +179,7 @@ struct SummaryView: View {
                         .font(.toolbar)
                         .foregroundColor(Color.anNavigation)
                         .onTapGesture {
-                            viewModel.saveProfileData()
+                            viewModel.saveProfileData(viewContext: viewContext)
                         }
                 }
                 
@@ -101,10 +191,6 @@ struct SummaryView: View {
                     ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight", suffix: "Kg")
                 }
                 .padding(.horizontal)
-                
-                VStack {
-                    
-                }
             }
             .padding(.vertical)
             

@@ -20,6 +20,8 @@ struct WeightData: Identifiable {
 }
 
 struct WeightChartView: View {
+    var petData: FetchedResults<Pet>
+    
     var lastTwoWeeksWeightData: [WeightData] {
         return getLastTwoWeeksWeightData()
     }
@@ -66,16 +68,20 @@ struct WeightChartView: View {
     var body: some View {
         VStack {
             Chart {
-                ForEach(chartData, id:\.name) { item in
-                    ForEach(item.weightData) { v in
-                        LineMark(
-                            x: .value("Date", v.date),
-                            y: .value("Weight", v.weight)
-                        )
-                    }
-                    .foregroundStyle(by: .value("average", item.name))
-                    .symbol(by: .value("average", item.name))
+                ForEach(petData) {
+                    let date = $0.createdAt ?? Date()
+                    let weight = $0.weight
+                    
+                    LineMark(
+                        x: .value("Date", date, unit: .day),
+                        y: .value("Weight", weight)
+                    )
                     .interpolationMethod(.cardinal)
+                    
+                    PointMark(
+                        x: .value("Date", date, unit: .day),
+                        y: .value("Weight", weight)
+                    )
                 }
             }
             .frame(height: 300)
@@ -83,15 +89,11 @@ struct WeightChartView: View {
             .chartXAxis {
                 AxisMarks(values: .stride(by: .day)) { value in
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.day(.twoDigits))
+                    AxisValueLabel(format: .dateTime.day(.twoDigits), centered: true)
                 }
             }
             .chartYAxis {
                 AxisMarks(position: .leading)
-            }
-            .chartPlotStyle { plotArea in
-                plotArea
-                    .background(Color.anPrimaryLight.opacity(0.5))
             }
         }
     }
