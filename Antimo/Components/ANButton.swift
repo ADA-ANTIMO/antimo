@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum ButtonType {
-    case Fill, Outline
+    case Fill, Outline, Circle
 }
 
 struct FillButton: View {
@@ -30,6 +30,28 @@ struct FillButton: View {
                 .padding(.vertical, 14)
                 .background(Color.anPrimary)
                 .cornerRadius(8)
+        }
+    }
+}
+
+struct CircleButton: View {
+    private let text: String
+    private let action: () -> Void
+    
+    init(_ text: String, action: @escaping () -> Void) {
+        self.text = text
+        self.action = action
+    }
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Text(text)
+                .foregroundColor(Color.white)
+                .frame(width: 35, height: 35)
+                .background(Color.anPrimary)
+                .cornerRadius(100)
         }
     }
 }
@@ -82,6 +104,10 @@ struct ANButton: View {
                     action()
                 }
                 .font(.button)
+        case .Circle:
+            CircleButton(text) {
+                action()
+            }
         }
     }
 }

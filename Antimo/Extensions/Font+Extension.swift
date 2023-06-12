@@ -42,7 +42,7 @@ extension Font {
     static let placeholder = Font.system(size: 16, weight: .semibold, design: .rounded)
     static let toolbar = Font.system(size: 16, weight: .medium)
     static let navigation = Font.system(size: 14, weight: .regular, design: .rounded)
-    static let date = Font.system(size: 14, weight: .regular, design: .rounded)
+    static let date = Font.system(size: 16, weight: .semibold, design: .rounded)
     static let tab = Font.system(size: 10, weight: .medium, design: .default)
     static let activitySelector = Font.system(size: 10, weight: .regular, design: .rounded)
     static let content = Font.system(size: 14, weight: .regular, design: .rounded)

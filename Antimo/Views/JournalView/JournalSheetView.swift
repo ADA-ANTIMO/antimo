@@ -49,6 +49,7 @@ struct GroomingInputs: View {
 struct JournalSheetView: View {
     @EnvironmentObject var vm: JournalViewModel
     @Environment(\.managedObjectContext) private var viewContext
+    @FocusState private var keyboardVisible: Bool
     
     var body: some View {
         ANBaseContainer {
@@ -63,45 +64,60 @@ struct JournalSheetView: View {
             }, title: vm.activityType.rawValue)
             .padding(.vertical)
         } children: {
-            VStack(spacing: 12) {
-                if vm.activityType == .medication {
-                    ANActivityPicker(selected: $vm.title, label: "Activity:")
-                } else {
-                    ANTextField(text: $vm.title, placeholder: "Activity name", label: "Activity Name")
-                }
-                
-                ANDatePicker(date: $vm.date, label: "Date")
-                
-                ANTimePicker(time: $vm.time, label: "Time")
-                
-                switch vm.activityType {
-                case .nutrition:
-                    NutritionInputs()
-                case .medication:
-                    if vm.title == "Vet" {
-                        ANTextField(text: $vm.vet, placeholder: "Vet name", label: "Vet")
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(spacing: 12) {
+                        if vm.activityType == .medication {
+                            ANActivityPicker(selected: $vm.title, label: "Activity:")
+                        } else {
+                            ANTextField(text: $vm.title, placeholder: "Activity name", label: "Activity Name")
+                        }
+                        
+                        ANDatePicker(date: $vm.date, label: "Date")
+                        
+                        ANTimePicker(time: $vm.time, label: "Time")
+                        
+                        switch vm.activityType {
+                        case .nutrition:
+                            NutritionInputs()
+                        case .medication:
+                            if vm.title == "Vet" {
+                                ANTextField(text: $vm.vet, placeholder: "Vet name", label: "Vet")
+                            }
+                        case .exercise:
+                            ExerciseInputs()
+                        case .grooming:
+                            GroomingInputs()
+                        default:
+                            EmptyView()
+                        }
+                        
+                        ANTextFieldArea(text: $vm.note, label: "Note (optional)", placeholder: "Activity note...")
+                            .id("note")
+                            .focused($keyboardVisible)
+                        
+                        ANImageUploader(imagePicker: vm.imagePicker, label: "\(vm.activityType.rawValue) photo (optional)")
+                        
+                        ANButton("Submit") {
+                            if vm.selectedActivity != nil {
+                                vm.submitEditForm(context: viewContext)
+                            } else {
+                                vm.submitForm(context: viewContext)
+                            }
+                        }
                     }
-                case .exercise:
-                    ExerciseInputs()
-                case .grooming:
-                    GroomingInputs()
-                default:
-                    EmptyView()
+                    .padding(.horizontal, 16)
                 }
-                
-                ANTextFieldArea(text: $vm.note, label: "Note (optional)", placeholder: "Activity note...")
-                
-                ANImageUploader(imagePicker: vm.imagePicker, label: "\(vm.activityType.rawValue) photo (optional)")
-                
-                ANButton("Submit") {    
-                    if vm.selectedActivity != nil {
-                        vm.submitEditForm(context: viewContext)
-                    } else {
-                        vm.submitForm(context: viewContext)
+                .onChange(of: keyboardVisible) { _ in
+                    if keyboardVisible {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            withAnimation(.easeInOut(duration: 1)) {
+                                proxy.scrollTo("note")
+                            }
+                        }
                     }
                 }
             }
-            .padding(.horizontal, 16)
         }
         .onAppear {
             if let selectedActivity = vm.selectedActivity {

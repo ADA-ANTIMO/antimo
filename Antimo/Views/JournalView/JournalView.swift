@@ -43,10 +43,16 @@ struct JournalView: View {
             if activities.isEmpty {
                 Spacer()
 
-                Text("There are no journals\n available yet, let's make your\n journal soon")
-                    .font(.placeholder)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(Color.gray)
+                VStack {
+                    Text("There are no journals\n available yet, let's make your\n journal soon")
+                        .font(.placeholder)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color.gray)
+                    
+                    ANButton("+", buttonType: .Circle) {
+                        journalNavigation.push(to: .addJournal)
+                    }
+                }
 
                 Spacer()
             } else {
