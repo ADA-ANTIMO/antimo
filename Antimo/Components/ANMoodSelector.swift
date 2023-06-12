@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Mood: String, CaseIterable{
-    case veryLow = "verylow"
+    case veryLow = "veryLow"
     case low = "low"
     case medium = "medium"
     case high = "high"
@@ -21,8 +21,9 @@ struct MoodButton: View {
     var body: some View {
         VStack {
             ZStack {
-                Image(systemName: icon)
-                    .font(.system(size: 20))
+                Image(icon)
+                    .resizable()
+                    .frame(width: 20, height: 20)
             }
             .padding(14)
             .background(Color.white)
@@ -47,7 +48,7 @@ struct ANMoodSelector: View {
             
             HStack(alignment: .center) {
                 ForEach(Mood.allCases, id: \.self) { mood in
-                    MoodButton(icon: "face.smiling")
+                    MoodButton(icon: "mood\(mood.rawValue.capitalizedFirstLetter)")
                         .opacity(selectedMood == mood.rawValue ? 1 : 0.25)
                         .onTapGesture {
                             withAnimation {

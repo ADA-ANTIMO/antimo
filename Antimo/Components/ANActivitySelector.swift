@@ -8,11 +8,11 @@
 import SwiftUI
 
 enum AcitivityIcons: String {
-    case nutrition = "carrot.fill"
-    case medication = "cross.case.fill"
-    case exercise = "tennisball.fill"
-    case grooming = "comb.fill"
-    case other = "heart.fill"
+    case nutrition = "nutritionIcon"
+    case medication = "medicationIcon"
+    case exercise = "exerciseIcon"
+    case grooming = "groomingIcon"
+    case other = "otherIcon"
 }
 
 struct SelectorItem: View {
@@ -26,23 +26,30 @@ struct SelectorItem: View {
             action()
         } label: {
             VStack(spacing: 4) {
-                Image(systemName: icon.rawValue)
-                    .font(.system(size: 20))
-                
-                // hack for changing color svg
-                //                .overlay(Rectangle().background(.red).blendMode(.overlay))
+                VStack {
+                    ZStack {
+                        Image(icon.rawValue)
+                            .resizable()
+                            .frame(width: 28, height: 28)
+                        
+                        Color.white.blendMode(.sourceAtop)
+                    }
+                    .frame(width: 28, height: 28)
+                    .drawingGroup(opaque: false)
+                }
                 
                 Text(label)
                     .font(.activitySelector)
             }
             .frame(width: 60, height: 60)
             .background(
-                Color.anPrimary.opacity(isSelected ? 1 : 0.5)
+                Color.anPrimary
             )
+            .grayscale(isSelected ? 0 : 0.75)
+            .opacity(isSelected ? 1 : 0.6)
             .foregroundColor(Color.white)
             .cornerRadius(8)
         }
-        
     }
 }
 

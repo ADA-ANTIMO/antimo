@@ -196,11 +196,11 @@ struct ANCalendar:View {
                     switch(direction) {
                     case .left:
                         withAnimation {
-                            currentMonth -= 1
+                            currentMonth += 1
                         }
                     case .right:
                         withAnimation {
-                            currentMonth += 1
+                            currentMonth -= 1
                         }
                     default:
                         print("no clue")
