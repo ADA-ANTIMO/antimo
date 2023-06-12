@@ -51,8 +51,10 @@ struct SummaryView: View {
     
     var body: some View {
         ANBaseContainer {
-            ANToolbar(title: "Summary") {
-                Text("")
+            ANToolbar(title: "Dashboard") {
+                CircularProfileImage(viewModel: viewModel).onTapGesture {
+                    viewModel.openProfileForm()
+                }
             }
         } children: {
             ScrollView {
@@ -60,42 +62,42 @@ struct SummaryView: View {
                     // TODO: Activity recommendation system
                     
                     // MARK: Profile Card
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.anPrimaryLight)
-                            .cornerRadius(8)
-                        
-                        HStack(spacing: 20) {
-                            EditableCircularProfileImage(viewModel: viewModel, width: 80, height: 80)
-                            VStack(alignment: .leading, spacing: 10) {
-                                HStack {
-                                    Text(viewModel.renderedDogName)
-                                    Spacer()
-                                    HStack {
-                                        Text("Edit").font(.toolbar).foregroundColor(.anNavigation)
-                                        Image(systemName: "square.and.pencil").foregroundColor(.anNavigation)
-                                    }
-                                    .onTapGesture {
-                                        viewModel.openProfileForm()
-                                    }
-                                }
-                                HStack {
-                                    Text(viewModel.renderedBOD)
-                                    Spacer()
-                                    Text(viewModel.renderedAge)
-                                }
-                                
-                                HStack {
-                                    Text(viewModel.renderedBreed)
-                                    Spacer()
-                                    Text(viewModel.renderedWeight)
-                                }
-                            }
-                        }
-                        .padding()
-                    }
-                    .padding(.horizontal)
-                    .frame(width: UIScreen.main.bounds.width)
+//                    ZStack {
+//                        Rectangle()
+//                            .fill(Color.anPrimaryLight)
+//                            .cornerRadius(8)
+//
+//                        HStack(spacing: 20) {
+//                            EditableCircularProfileImage(viewModel: viewModel, width: 80, height: 80)
+//                            VStack(alignment: .leading, spacing: 10) {
+//                                HStack {
+//                                    Text(viewModel.renderedDogName)
+//                                    Spacer()
+//                                    HStack {
+//                                        Text("Edit").font(.toolbar).foregroundColor(.anNavigation)
+//                                        Image(systemName: "square.and.pencil").foregroundColor(.anNavigation)
+//                                    }
+//                                    .onTapGesture {
+//                                        viewModel.openProfileForm()
+//                                    }
+//                                }
+//                                HStack {
+//                                    Text(viewModel.renderedBOD)
+//                                    Spacer()
+//                                    Text(viewModel.renderedAge)
+//                                }
+//
+//                                HStack {
+//                                    Text(viewModel.renderedBreed)
+//                                    Spacer()
+//                                    Text(viewModel.renderedWeight)
+//                                }
+//                            }
+//                        }
+//                        .padding()
+//                    }
+//                    .padding(.horizontal)
+//                    .frame(width: UIScreen.main.bounds.width)
                     
                     // MARK: Upcoming Event
                     VStack (alignment: .leading, spacing: 10) {
@@ -103,8 +105,6 @@ struct SummaryView: View {
                             dashboardNavigation.push(to: .allEvents) })
                     }
                     .padding(.horizontal)
-                    
-                    Divider()
                     
                     // MARK: Latest Journal
                     VStack(alignment: .leading, spacing: 10) {
@@ -133,12 +133,13 @@ struct SummaryView: View {
                                             
                                             let deleteAction = Action(id: UUID(), type: .Delete) {}
                                             
-                                            ANActivityDetails(activity: activity, actions: [editAction, deleteAction])
+                                            ANActivityDetails(activity: activity, actions: [editAction, deleteAction], showAction: false)
                                         }
                                     } header: {
                                         HStack {
                                             Text(key)
                                                 .font(.date)
+                                                .opacity(0.5)
                                             
                                             Spacer()
                                         }
@@ -234,7 +235,11 @@ struct SummaryView: View {
             // MARK: Exercise Chart
             Group {
                 if exerciseData.isEmpty {
-                    EmptyView()
+                    Spacer()
+                    Text("There is no exercise data yet. Let's add some")
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color.gray)
+                    Spacer()
                 } else {
                     VStack(alignment: .leading, spacing: 20) {
                         Text("Exercise")
@@ -252,35 +257,36 @@ struct SummaryView: View {
         .sheet(isPresented: $viewModel.isWeightSheetPresented, onDismiss: { viewModel.isWeightSheetPresented = false }) {
             // MARK: Weight Chart
             Group {
-                if petData.isEmpty {
-                    EmptyView()
-                } else {
+                
+                 if !petData.isEmpty {
                     VStack(alignment: .leading, spacing: 20) {
                         Text("Weight")
                         WeightChartView(petData: petData).frame(height: 200)
                     }
                     .padding()
                     .background(Color.anPrimary.opacity(0.1))
-                    
-                    
-                    ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight", suffix: "Kg").padding(.horizontal)
-                    ANButton("Save") {
-                        do {
-                            let newPetData = Pet(context: viewContext)
-                            newPetData.id = UUID()
-                            newPetData.createdAt = Date()
-                            newPetData.weight = Int16(viewModel.weight) ?? 0
-                            try viewContext.save()
-                            viewModel.isWeightSheetPresented = false
-                        } catch {
-                            print("Failed to save")
-                        }
+                 } else {
+                     Spacer()
+                     Text("There is no weight data yet. Let's add some")
+                         .multilineTextAlignment(.center)
+                         .foregroundColor(Color.gray)
+                     Spacer()
+                 }
+                
+                ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight", suffix: "Kg").padding(.horizontal)
+                ANButton("Save") {
+                    do {
+                        let newPetData = Pet(context: viewContext)
+                        newPetData.id = UUID()
+                        newPetData.createdAt = Date()
+                        newPetData.weight = Int16(viewModel.weight) ?? 0
+                        try viewContext.save()
+                        viewModel.isWeightSheetPresented = false
+                    } catch {
+                        print("Failed to save")
                     }
-                    .padding(.horizontal)
-                    
-                    
-
                 }
+                .padding(.horizontal)
             }
             .presentationDetents([.medium])
             .presentationDragIndicator(.visible)

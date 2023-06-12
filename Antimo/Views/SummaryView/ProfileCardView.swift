@@ -8,6 +8,44 @@
 import SwiftUI
 import PhotosUI
 
+struct CircularProfileImage: View {
+    @ObservedObject var viewModel: SummaryViewModel
+    
+    var uiImage: UIImage {
+        if !viewModel.avatarID.isEmpty,
+           let image = FileManager().retrieveImage(with: viewModel.avatarID) {
+            return image
+        } else {
+            return UIImage(systemName: "exclamationmark.triangle.fill")!
+        }
+    }
+    
+    var body: some View {
+        Group {
+            if !viewModel.avatarID.isEmpty {
+                Image(uiImage: uiImage)
+                    .resizable()
+            } else {
+                Image(uiImage: uiImage)
+                    .font(.system(size: 20))
+                    .foregroundColor(.white)
+            }
+        }
+        .scaledToFill()
+        .clipShape(Circle())
+        .frame(width: 40, height: 40)
+        .background {
+            Circle().fill(
+                LinearGradient(
+                    colors: [.yellow, .orange],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+        }
+    }
+}
+
 struct EditableCircularProfileImage: View {
     @ObservedObject var viewModel: SummaryViewModel
     @StateObject var imagePicker = ImagePicker()

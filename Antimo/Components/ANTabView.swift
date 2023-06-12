@@ -8,9 +8,9 @@
 import SwiftUI
 
 enum NavigationTabs: String {
-    case summary = "Summary"
+    case dashboard = "Dashboard"
     case journal = "Journal"
-    case activity = "Activity"
+    case event = "Event"
     case reminder = "Reminder"
 }
 
@@ -37,13 +37,13 @@ struct ANTabView: View {
                 
                 .tabItem {
                     Label {
-                        Text("Summary")
+                        Text("Dashboard")
                             .font(.tab)
                     } icon: {
-                        Image(systemName: "chart.bar.xaxis")
+                        Image(systemName: "rectangle.3.group.fill")
                     }
                 }
-                .tag(NavigationTabs.summary)
+                .tag(NavigationTabs.dashboard)
                 .environmentObject(dashboardNavigation)
                 
                 NavigationStack(path: $journalNavigation.journalPaths) {
@@ -84,13 +84,13 @@ struct ANTabView: View {
                 }
                 .tabItem {
                     Label {
-                        Text("Activity")
+                        Text("Event")
                             .font(.tab)
                     } icon: {
                         Image(systemName: "calendar")
                     }
                 }
-                .tag(NavigationTabs.activity)
+                .tag(NavigationTabs.event)
                 .environmentObject(activityNavigation)
                 
                 ReminderView()

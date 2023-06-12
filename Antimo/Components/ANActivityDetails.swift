@@ -100,6 +100,7 @@ struct ActivityMeta: View {
 struct ActivityHeading: View {
     let actions:[Action]
     let title: String
+    let showAction: Bool
     
     @State var showSheet: Bool = false
     
@@ -110,21 +111,24 @@ struct ActivityHeading: View {
                 
                 Spacer()
                 
-                Button {
-                    showSheet = true
-                } label: {
-                    Image(systemName: "ellipsis")
-                        .foregroundColor(.blue)
-                }
-                .confirmationDialog("Select Action", isPresented: $showSheet) {
-                    ForEach(actions) { action in
-                        Button(role: action.type.buttonRole()) {
-                            action.action()
-                        } label: {
-                            Text(action.type.rawValue)
+                if showAction {
+                    Button {
+                        showSheet = true
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .foregroundColor(.blue)
+                    }
+                    .confirmationDialog("Select Action", isPresented: $showSheet) {
+                        ForEach(actions) { action in
+                            Button(role: action.type.buttonRole()) {
+                                action.action()
+                            } label: {
+                                Text(action.type.rawValue)
+                            }
                         }
                     }
                 }
+                
             }
     }
 }
@@ -170,6 +174,15 @@ struct ANActivityDetails: View {
     let activity:Activity
     let actions:[Action]
     
+    let showAction: Bool
+    
+    
+    init(activity: Activity, actions: [Action], showAction: Bool = true) {
+        self.activity = activity
+        self.actions = actions
+        self.showAction = showAction
+    }
+    
     var body: some View {
         VStack() {
             if let image = FileManager().retrieveImage(with: activity.imagePath) {
@@ -185,7 +198,7 @@ struct ANActivityDetails: View {
             
             // Details
             VStack(alignment: .leading, spacing: 16) {
-                ActivityHeading(actions: actions, title: activity.title!)
+                ActivityHeading(actions: actions, title: activity.title!, showAction: showAction)
                 
                 ActivityMeta(activity: activity)
                 
