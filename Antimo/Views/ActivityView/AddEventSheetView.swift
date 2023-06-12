@@ -31,7 +31,7 @@ struct AddEventSheetView: View {
                 ANTextFieldArea(text: $vm.eventDesc, label: "Description", placeholder: "Add Event Description")
                     .frame(height: 200)
                 
-                ANDatePicker(date: $vm.eventDate, label: "Date")
+                ANDatePicker(date: $vm.eventDate, label: "Date", endDate: false)
                 
                 ANTimePicker(time: $vm.eventTime, label: "Time")
             }

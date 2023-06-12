@@ -25,6 +25,7 @@ struct SummaryView: View {
     
     @StateObject var viewModel = SummaryViewModel()
     @StateObject var eventVM = ActivityViewModel()
+    @EnvironmentObject private var dashboardNavigation: DashboardNavigationManager
     
     init () {
         let lastWeek = Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? Date.now
@@ -98,7 +99,8 @@ struct SummaryView: View {
                     
                     // MARK: Upcoming Event
                     VStack (alignment: .leading, spacing: 10) {
-                        UpcomingEventView(vm: eventVM, events: events)
+                        UpcomingEventView(vm: eventVM, events: events, onShowAll: {
+                            dashboardNavigation.push(to: .allEvents) })
                     }
                     .padding(.horizontal)
                     
@@ -217,40 +219,5 @@ struct SummaryView: View {
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
         SummaryView()
-    }
-}
-
-struct LastVisitCard: View {
-    var activityType: String
-    var icon: String
-    var name: String
-    var date: Date
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text(activityType)
-                .font(.cardActivity)
-            
-            HStack(alignment: .top, spacing: 8) {
-                Image(systemName: icon)
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .background { Rectangle().fill(.white).cornerRadius(8) }
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(name)
-                        .font(.cardActivity)
-                    Text(Utilities.formattedDate(from: date))
-                        .font(.cardActivity)
-                }
-                
-            }
-        }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
-        .background(
-            Color.anPrimaryLight
-        )
-        .cornerRadius(8)
     }
 }
