@@ -27,20 +27,20 @@ struct ReminderView: View {
             
             ScrollView {
                 ForEach(routines) { routine in
-                    ANReminderCard(icon: vm.getIcon(routine.reminder?.type ?? ""),
-                                   title: routine.reminder?.title ?? "",
-                                   time: vm.getRenderedHourAndMinutes(routine.getWeekdays.first?.time ?? Date()),
-                                   frequency: vm.getRenderedFrequency(
-                                    vm.convertWeekDaysObjIntoInt(routine.getWeekdays)),
-                                   isOn: routine.reminder?.isActive ?? false,
-                                   onToggle: { newValue in
-                        vm.toggleActivation(
-                            reminder: routine.reminder!,
-                            viewContext: viewContext,
-                            notificationManager: notificationManager,
-                            newValue: newValue
-                        )
-                    }
+                    ANReminderCard(
+                        icon: vm.getIcon(routine.reminder?.type ?? ""),
+                        title: routine.reminder?.title ?? "",
+                        time: vm.getRenderedHourAndMinutes(routine.getWeekdays.first?.time ?? Date()),
+                        frequency: vm.getRenderedFrequency(vm.convertWeekDaysObjIntoInt(routine.getWeekdays)),
+                        isOn: routine.reminder?.isActive ?? false,
+                        onToggle: { newValue in
+                            vm.toggleActivation(
+                                reminder: routine.reminder!,
+                                viewContext: viewContext,
+                                notificationManager: notificationManager,
+                                newValue: newValue
+                            )
+                        }
                     )
                 }
             }
@@ -48,9 +48,12 @@ struct ReminderView: View {
         })
         .onAppear { notificationManager.request() }
         .sheet(isPresented: $vm.isReminderFormPresented) {
-            ReminderFormView(vm: vm, onSubmit: {
-                vm.addReminder(viewContext: viewContext, notificationManager: notificationManager)
-            })
+            ReminderFormView(
+                vm: vm,
+                onSubmit: {
+                    vm.addReminder(viewContext: viewContext, notificationManager: notificationManager)
+                }
+            )
         }
     }
 }

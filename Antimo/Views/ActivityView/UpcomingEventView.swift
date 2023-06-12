@@ -15,7 +15,7 @@ struct UpcomingEventView: View {
     var body: some View {
         VStack(spacing: 8) {
             HStack {
-                Text("Upcoming Events")
+                Text("Upcoming Events").font(.sectionHeading)
                 
                 Spacer()
                 

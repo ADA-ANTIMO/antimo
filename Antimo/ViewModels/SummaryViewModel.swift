@@ -17,6 +17,7 @@ import SwiftUI
 import SwiftUI
 import PhotosUI
 import CoreTransferable
+import CoreData
 
 @MainActor
 class SummaryViewModel: ObservableObject {
@@ -98,16 +99,29 @@ class SummaryViewModel: ObservableObject {
     
     // MARK: - Profile Image
     
-    func saveProfileData() {
+    func saveProfileData(viewContext: NSManagedObjectContext) {
         persistDogName = dogName
         persistGender = gender
         persistBreed = breed
         persistAge = age
         persistWeight = weight
         persistBOD = bod
-        resetForm()
-        closeProfileForm()
-        showSnackBar.toggle()
+        
+        do {
+            let newPetData = Pet(context: viewContext)
+            newPetData.id = UUID()
+            newPetData.createdAt = Date()
+            newPetData.weight = Int16(weight) ?? 0
+            try viewContext.save()
+            
+            
+            resetForm()
+            closeProfileForm()
+            showSnackBar.toggle()
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
     }
     
     func resetForm() {

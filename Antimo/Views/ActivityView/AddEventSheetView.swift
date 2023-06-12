@@ -22,15 +22,14 @@ struct AddEventSheetView: View {
                 Text("Save")
                     .font(.toolbar)
                     .foregroundColor(Color.anNavigation)
-                    .onTapGesture {
-                        onSubmit()
-                    }
+                    .onTapGesture { onSubmit() }
             }
             
             VStack {
                 ANActivitySelector(selected: $vm.selectedActivityType)
                 ANTextField(text: $vm.eventTitle, placeholder: "Add Event Title", label: "Title")
-                ANTextFieldArea(text: $vm.eventDesc, label: "Description", placeholder: "Add Event Description").frame(height: 200)
+                ANTextFieldArea(text: $vm.eventDesc, label: "Description", placeholder: "Add Event Description")
+                    .frame(height: 200)
                 
                 ANDatePicker(date: $vm.eventDate, label: "Date")
                 

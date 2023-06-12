@@ -22,9 +22,7 @@ struct ReminderFormView: View {
                 Text("Save")
                     .font(.toolbar)
                     .foregroundColor(Color.anNavigation)
-                    .onTapGesture {
-                        onSubmit()
-                    }
+                    .onTapGesture { onSubmit() }
             }
             
             VStack {
@@ -46,8 +44,7 @@ struct ReminderFormView: View {
                             Text(vm.getRenderedFrequency(vm.selectedDays().map{ $0.value }))
                         }
                     }
-                    
-                        .onTapGesture { vm.openDaysSelectorForm() }
+                    .onTapGesture { vm.openDaysSelectorForm() }
                 }
             }
             .padding()
@@ -65,8 +62,6 @@ struct ReminderFormView: View {
 
 struct ReminderFormView_Previews: PreviewProvider {
     static var previews: some View {
-        ReminderFormView(vm: ReminderViewModel(), onSubmit:  {
-            
-        })
+        ReminderFormView(vm: ReminderViewModel(), onSubmit: {})
     }
 }

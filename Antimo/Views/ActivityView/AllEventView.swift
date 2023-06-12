@@ -10,7 +10,8 @@ import SwiftUI
 struct AllEventView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)]) private var events: FetchedResults<Event>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)])
+    private var events: FetchedResults<Event>
     
     @EnvironmentObject private var activityNavigation: ActivityNavigationManager
     @StateObject var vm = ActivityViewModel()
@@ -40,10 +41,14 @@ struct AllEventView: View {
             }
             .padding(.horizontal)
         })
-        // TODO: Pass onSubmit
-        .sheet(isPresented: $vm.isEventSheetPresented) { AddEventSheetView(vm: vm, onSubmit: {
-            vm.addEvent(viewContext: viewContext, notificationManager: notificationManager)
-        }) }
+        .sheet(isPresented: $vm.isEventSheetPresented) {
+            AddEventSheetView(
+                vm: vm,
+                onSubmit: {
+                    vm.addEvent(viewContext: viewContext, notificationManager: notificationManager)
+                }
+            )
+        }
     }
 }
 
