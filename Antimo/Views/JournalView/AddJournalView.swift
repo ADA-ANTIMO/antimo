@@ -61,6 +61,7 @@ struct ActivityOption: View {
                 
                 Text(label)
                     .font(.addActivity)
+                    .foregroundColor(Color.black)
                 
                 Spacer()
             }
