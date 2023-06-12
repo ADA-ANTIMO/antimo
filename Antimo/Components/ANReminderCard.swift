@@ -82,7 +82,7 @@ struct ANReminderCard: View {
             ReminderDetails(title: title, time: time)
             
             Spacer()
-            VStack {
+            VStack(alignment: .trailing) {
                 ReminderToggle(isOn: $localIsOn)
                 Text(frequency)
                     .font(.reminderFrequency)
