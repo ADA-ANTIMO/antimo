@@ -21,11 +21,12 @@ struct AddEventSheetView: View {
             }, title: "Add Event") {
                 Text("Save")
                     .font(.toolbar)
-                    .foregroundColor(Color.anNavigation)
+                    .foregroundColor(Color.anNavigation.opacity(vm.disableAddEventSubmission ? 0.1 : 1))
                     .onTapGesture { onSubmit() }
+                    .disabled(vm.disableAddEventSubmission)
             }
             
-            VStack {
+            ScrollView {
                 ANActivitySelector(selected: $vm.selectedActivityType)
                 ANTextField(text: $vm.eventTitle, placeholder: "Add Event Title", label: "Title")
                 ANTextFieldArea(text: $vm.eventDesc, label: "Description", placeholder: "Add Event Description")
@@ -35,6 +36,7 @@ struct AddEventSheetView: View {
                 
                 ANTimePicker(time: $vm.eventTime, label: "Time")
             }
+            .scrollIndicators(.hidden)
             .padding()
             
             Spacer()

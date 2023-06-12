@@ -18,7 +18,7 @@ struct SummaryView: View {
     @FetchRequest(sortDescriptors: [])
     private var exerciseData: FetchedResults<Activity>
     
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)])
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "triggerDate", ascending: true)])
     private var events: FetchedResults<Event>
     
     @FetchRequest var activities: FetchedResults<Activity>

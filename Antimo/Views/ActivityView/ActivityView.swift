@@ -10,7 +10,7 @@ import SwiftUI
 struct ActivityView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)])
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "triggerDate", ascending: true)])
     private var events: FetchedResults<Event>
     
     @EnvironmentObject private var activityNavigation: ActivityNavigationManager
