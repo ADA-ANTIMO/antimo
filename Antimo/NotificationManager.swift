@@ -54,7 +54,7 @@ class NotificationsManager: ObservableObject {
                 content.sound = UNNotificationSound.default
                 
                 // TODO: define proper deeplinks
-                let deepLinkURL = URL(string: "antimo://\(DeepLinkURLs.addJournals.rawValue)")!
+                let deepLinkURL = URL(string: "antimo://\(DeepLinkURLs.allEvents.rawValue)")!
                 content.userInfo = ["link": deepLinkURL.absoluteString]
                 
                 var dateComponents = DateComponents()
