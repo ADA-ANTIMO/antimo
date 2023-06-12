@@ -163,11 +163,13 @@ struct ANCalendar:View {
                 
                 Button {
                     withAnimation {
-                        currentMonth += 1
+                        currentMonth += currentMonth < 0 ? 1 : 0
                     }
                 } label: {
                     Image(systemName: "chevron.right")
                 }
+                .grayscale(currentMonth == 0 ? 0.5 : 0)
+                .disabled(currentMonth == 0)
             }
             
             
@@ -196,7 +198,7 @@ struct ANCalendar:View {
                     switch(direction) {
                     case .left:
                         withAnimation {
-                            currentMonth += 1
+                            currentMonth += currentMonth < 0 ? 1 : 0
                         }
                     case .right:
                         withAnimation {
