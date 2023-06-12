@@ -31,14 +31,28 @@ struct AllEventView: View {
                     .onTapGesture { vm.isEventSheetPresented = true }
             }
         }, children: {
-            ForEach(events) { event in
-                ANEventCard(
-                    icon: vm.getIcon(event.reminder?.type ?? ""),
-                    title: event.reminder?.title ?? "",
-                    desc: event.reminder?.desc ?? "",
-                    time: vm.getRenderedHourAndMinutes(event.triggerDate ?? Date())
-                )
+            ScrollView {
+                ForEach(events.byDate.keys, id: \.self) { key in
+                    Section {
+                        ForEach(events.byDate.events[key] ?? [], id: \.self) { event in
+                            ANEventCard(
+                                icon: vm.getIcon(event.reminder?.type ?? ""),
+                                title: event.reminder?.title ?? "",
+                                desc: event.reminder?.desc ?? "",
+                                time: vm.getRenderedHourAndMinutes(event.triggerDate ?? Date())
+                            )
+                        }
+                    } header: {
+                        HStack {
+                            Text(key)
+                                .font(.date)
+                            
+                            Spacer()
+                        }
+                    }
+                }
             }
+            .scrollIndicators(.hidden)
             .padding(.horizontal)
         })
         .sheet(isPresented: $vm.isEventSheetPresented) {

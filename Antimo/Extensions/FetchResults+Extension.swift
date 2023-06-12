@@ -46,7 +46,7 @@ extension FetchedResults<Event> {
         var keyOfDict = [String]()
         
         for event in self {
-            let key = Utilities.formattedDate(from: event.reminder?.createdAt ?? Date(), format: "EEEE, d MMM yyyy")
+            let key = Utilities.formattedDate(from: event.triggerDate ?? Date(), format: "EEEE, d MMM yyyy")
             
             if var dict = dictOfEvents[key] {
                 dict.append(event)

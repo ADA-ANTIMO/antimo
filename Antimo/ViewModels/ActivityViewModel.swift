@@ -19,6 +19,10 @@ class ActivityViewModel: ObservableObject {
     @Published var isEventSheetPresented: Bool = false
     @Published var isShowSnackBar: Bool = false
     
+    var disableAddEventSubmission: Bool {
+        return eventTitle.isEmpty
+    }
+    
     func openEventSheet() {
         isEventSheetPresented = true
     }

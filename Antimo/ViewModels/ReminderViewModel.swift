@@ -30,6 +30,10 @@ class ReminderViewModel: ObservableObject {
     
     @Published var reminderDays: [ReminderDay]
     
+    var disabledAddRoutineSubmission: Bool {
+        return title.isEmpty || selectedDays().isEmpty
+    }
+    
     init() {
         let days: [ReminderDay] = [
             ReminderDay(value: 1, label: "Every Sunday"),

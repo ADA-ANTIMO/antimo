@@ -21,11 +21,12 @@ struct ReminderFormView: View {
             }, title: "Add Reminder") {
                 Text("Save")
                     .font(.toolbar)
-                    .foregroundColor(Color.anNavigation)
+                    .foregroundColor(Color.anNavigation.opacity(vm.disabledAddRoutineSubmission ? 0.1 : 1))
                     .onTapGesture { onSubmit() }
+                    .disabled(vm.disabledAddRoutineSubmission)
             }
             
-            VStack {
+            ScrollView {
                 ANActivitySelector(selected: $vm.selectedActivityType)
                 ANTextField(text: $vm.title, placeholder: "Add reminder title...", label: "Title")
                 
@@ -47,6 +48,7 @@ struct ReminderFormView: View {
                     .onTapGesture { vm.openDaysSelectorForm() }
                 }
             }
+            .scrollIndicators(.hidden)
             .padding()
             
             Spacer()
