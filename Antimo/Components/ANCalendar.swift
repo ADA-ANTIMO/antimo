@@ -10,7 +10,6 @@ import CoreData
 
 // Extending Date to get Current Month Dates...
 extension Date {
-    
     func getAllDates() -> [Date] {
         
         let calendar = Calendar.current

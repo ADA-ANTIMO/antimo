@@ -287,6 +287,7 @@ struct SummaryView: View {
                         print("Failed to save")
                     }
                 }
+                .buttonStyle(.fill)
                 .padding(.horizontal)
             }
             .presentationDetents([.medium])

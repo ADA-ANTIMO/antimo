@@ -12,14 +12,6 @@ struct CardStyleKey: EnvironmentKey {
   static var defaultValue = AnyCardStyle(style: DefaultCardStyle())
 }
 
-// TODO: create reusable custom style
-protocol CardStyle {
-    associatedtype Body: View
-    typealias Configuration = CardStyleConfiguration
-    
-    func makeBody(configuration: Self.Configuration) -> Self.Body
-}
-
 struct CardStyleConfiguration {
   /// A type-erased label of a Card.
   struct Label: View {
@@ -33,6 +25,13 @@ struct CardStyleConfiguration {
   let label: CardStyleConfiguration.Label
 }
 
+// TODO: create reusable custom style
+protocol CardStyle {
+    associatedtype Body: View
+    typealias Configuration = CardStyleConfiguration
+    
+    func makeBody(configuration: Self.Configuration) -> Self.Body
+}
 
 struct RoundedRectangleCardStyle: CardStyle {
   func makeBody(configuration: Configuration) -> some View {

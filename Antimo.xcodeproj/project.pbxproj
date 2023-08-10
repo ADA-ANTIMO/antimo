@@ -47,6 +47,7 @@
 		4EBB3C632A348CB000F87DBC /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBB3C4D2A348CB000F87DBC /* Event+CoreDataProperties.swift */; };
 		4EBB3C642A348CB000F87DBC /* MedicationActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBB3C4E2A348CB000F87DBC /* MedicationActivity+CoreDataClass.swift */; };
 		4EBB3C652A348CB000F87DBC /* MedicationActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBB3C4F2A348CB000F87DBC /* MedicationActivity+CoreDataProperties.swift */; };
+		4EBF9AFE2A387D2E00FFA9B5 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBF9AFD2A387D2E00FFA9B5 /* ButtonStyles.swift */; };
 		4EC3C6B92A35AC0E00BBF3CF /* FetchResults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC3C6B82A35AC0E00BBF3CF /* FetchResults+Extension.swift */; };
 		4EC3C6BB2A35F76900BBF3CF /* ActivityDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC3C6BA2A35F76900BBF3CF /* ActivityDetailsView.swift */; };
 		4EEB02E22A274F260093D088 /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB02E12A274F260093D088 /* StatefulPreviewWrapper.swift */; };
@@ -139,6 +140,7 @@
 		4EBB3C4D2A348CB000F87DBC /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4EBB3C4E2A348CB000F87DBC /* MedicationActivity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4EBB3C4F2A348CB000F87DBC /* MedicationActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedicationActivity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4EBF9AFD2A387D2E00FFA9B5 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		4EC3C6B82A35AC0E00BBF3CF /* FetchResults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FetchResults+Extension.swift"; sourceTree = "<group>"; };
 		4EC3C6BA2A35F76900BBF3CF /* ActivityDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailsView.swift; sourceTree = "<group>"; };
 		4EEB02E12A274F260093D088 /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
@@ -256,6 +258,14 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		4EBF9AFC2A387D0300FFA9B5 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				4EBF9AFD2A387D2E00FFA9B5 /* ButtonStyles.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
 		6131A5252A2D063D007BF2F7 /* SummaryView */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,6 +318,7 @@
 		61A98B562A24FEA000152C87 /* Antimo */ = {
 			isa = PBXGroup;
 			children = (
+				4EBF9AFC2A387D0300FFA9B5 /* Styles */,
 				4EB9EAC62A29970700777B11 /* Protocols */,
 				4E41F5BB2A26F08F003C0A25 /* Models */,
 				61A98B6F2A24FFDB00152C87 /* Utilities */,
@@ -523,6 +534,7 @@
 				6131A4B32A293523007BF2F7 /* OnboardingView.swift in Sources */,
 				4EBB3C5B2A348CB000F87DBC /* OtherActivity+CoreDataProperties.swift in Sources */,
 				61A98B832A25026100152C87 /* ReminderViewModel.swift in Sources */,
+				4EBF9AFE2A387D2E00FFA9B5 /* ButtonStyles.swift in Sources */,
 				4EBB3C512A348CB000F87DBC /* ExerciseActivity+CoreDataProperties.swift in Sources */,
 				61A98B892A2502BE00152C87 /* Color+Extension.swift in Sources */,
 				61A98B612A24FEA000152C87 /* Persistence.swift in Sources */,
@@ -719,9 +731,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Antimo/Preview Content\"";
-				DEVELOPMENT_TEAM = BBJ66M42MQ;
+				DEVELOPMENT_TEAM = 578BJN6MM7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Cannote;
@@ -755,9 +767,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Antimo/Preview Content\"";
-				DEVELOPMENT_TEAM = BBJ66M42MQ;
+				DEVELOPMENT_TEAM = 578BJN6MM7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Cannote;

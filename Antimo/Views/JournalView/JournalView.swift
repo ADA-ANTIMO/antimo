@@ -49,9 +49,10 @@ struct JournalView: View {
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.gray)
                     
-                    ANButton("+", buttonType: .Circle) {
+                    ANButton("+") {
                         journalNavigation.push(to: .addJournal)
                     }
+                    .buttonStyle(.circle)
                 }
 
                 Spacer()

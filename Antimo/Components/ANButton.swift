@@ -7,109 +7,42 @@
 
 import SwiftUI
 
-enum ButtonType {
-    case Fill, Outline, Circle
-}
-
-struct FillButton: View {
-    private let text: String
-    private let action: () -> Void
-    
-    init(_ text: String, action: @escaping () -> Void) {
-        self.text = text
-        self.action = action
-    }
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(text)
-                .foregroundColor(Color.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(Color.anPrimary)
-                .cornerRadius(8)
-        }
-    }
-}
-
-struct CircleButton: View {
-    private let text: String
-    private let action: () -> Void
-    
-    init(_ text: String, action: @escaping () -> Void) {
-        self.text = text
-        self.action = action
-    }
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(text)
-                .foregroundColor(Color.white)
-                .frame(width: 35, height: 35)
-                .background(Color.anPrimary)
-                .cornerRadius(100)
-        }
-    }
-}
-
-struct OutlineButton: View {
-    private let text: String
-    private let action: () -> Void
-    
-    init(_ text: String, action: @escaping () -> Void) {
-        self.text = text
-        self.action = action
-    }
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(text)
-                .foregroundColor(Color.anPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.anPrimary, lineWidth: 1)
-                )
-        }
-    }
-}
-
 struct ANButton: View {
     private let text: String
-    private let buttonType: ButtonType
+    private let role: ButtonRole?
     private let action: () -> Void
     
-    init(_ text: String, buttonType:ButtonType = .Fill, action: @escaping () -> Void) {
+    init(_ text: String, role:ButtonRole? = nil, action: @escaping () -> Void) {
         self.text = text
-        self.buttonType = buttonType
+        self.role = role
         self.action = action
     }
     
     var body: some View {
-        switch buttonType {
-            case .Fill:
-                FillButton(text) {
-                    action()
-                }
-                .font(.button)
-            case .Outline:
-                OutlineButton(text) {
-                    action()
-                }
-                .font(.button)
-        case .Circle:
-            CircleButton(text) {
-                action()
-            }
+        Button(role: role) {
+            action()
+        } label: {
+            Text(text)
         }
     }
 }
 
-
+struct ANButton_Previews: PreviewProvider {
+    static var previews: some View {
+        ANButton("+") {
+            
+        }
+        .buttonStyle(.circle)
+    
+        
+        ANButton("Submit") {
+            
+        }
+        .buttonStyle(.fill)
+        
+        ANButton("Submit") {
+            
+        }
+        .buttonStyle(.outline)
+    }
+}

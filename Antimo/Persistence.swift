@@ -30,7 +30,10 @@ struct PersistenceController {
                  */
                 fatalError("Unresolved error \(error), \(error.localizedDescription)")
             }
+            
+            
         })
+        
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
 }
