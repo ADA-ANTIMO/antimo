@@ -14,156 +14,158 @@ import SwiftUI
 //  Created by Roli Bernanda on 29/05/23.
 //
 
-import SwiftUI
-import PhotosUI
-import CoreTransferable
 import CoreData
+import CoreTransferable
+import PhotosUI
 
 @MainActor
 class SummaryViewModel: ObservableObject {
-    // MARK: - Profile Details
-    
-    @AppStorage("dogName") var persistDogName: String = ""
-    @AppStorage("gender") var persistGender: String = ""
-    @AppStorage("breed") var persistBreed: String = ""
-    @AppStorage("age") var persistAge: String = ""
-    @AppStorage("weight") var persistWeight: String = ""
-    @AppStorage("avatarID") var avatarID = ""
-    
-    @Published var dogName: String = ""
-    @Published var gender: String = ""
-    @Published var breed: String = ""
-    @Published var age: String = ""
-    @Published var weight: String = ""
-    @Published var bod: Date = Date()
-    
-    @Published var isEditting: Bool = false
-    @Published var showSnackBar: Bool = false
-    @Published var isExerciseSheetPresented: Bool = false
-    @Published var isWeightSheetPresented: Bool = false
-    
-    var disabledSubmit: Bool {
-        return dogName.isEmpty || gender.isEmpty || breed.isEmpty || weight.isEmpty
+
+  // MARK: Internal
+
+  // MARK: - Profile Details
+
+  @AppStorage("dogName") var persistDogName = ""
+  @AppStorage("gender") var persistGender = ""
+  @AppStorage("breed") var persistBreed = ""
+  @AppStorage("age") var persistAge = ""
+  @AppStorage("weight") var persistWeight = ""
+  @AppStorage("avatarID") var avatarID = ""
+
+  @Published var dogName = ""
+  @Published var gender = ""
+  @Published var breed = ""
+  @Published var age = ""
+  @Published var weight = ""
+  @Published var bod: Date = .init()
+
+  @Published var isEditting = false
+  @Published var showSnackBar = false
+  @Published var isExerciseSheetPresented = false
+  @Published var isWeightSheetPresented = false
+
+  var disabledSubmit: Bool {
+    dogName.isEmpty || gender.isEmpty || breed.isEmpty || weight.isEmpty
+  }
+
+  var persistBOD: Date {
+    get {
+      guard
+        let persistBODData,
+        let date = try? JSONDecoder().decode(Date.self, from: persistBODData)
+      else {
+        return Date()
+      }
+      return date
     }
-    
-    private var persistBODData: Data? {
-        get {
-            UserDefaults.standard.data(forKey: "bod")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "bod")
-        }
+    set {
+      if let data = try? JSONEncoder().encode(newValue) {
+        persistBODData = data
+      }
     }
-    
-    var persistBOD: Date {
-        get {
-            guard let persistBODData = persistBODData,
-                  let date = try? JSONDecoder().decode(Date.self, from: persistBODData)
-            else {
-                return Date()
-            }
-            return date
-        }
-        set {
-            if let data = try? JSONEncoder().encode(newValue) {
-                persistBODData = data
-            }
-        }
+  }
+
+  var renderedDogName: String {
+    !persistDogName.isEmpty ? "\(persistDogName) \(persistGender)" : "-"
+  }
+
+  var renderedBOD: String {
+    if persistBODData == nil {
+      return "-"
     }
-    
-    var renderedDogName: String {
-        return !persistDogName.isEmpty ? "\(persistDogName) \(persistGender)" : "-"
+    return Utilities.formattedDate(from: persistBOD)
+  }
+
+  var renderedBreed: String {
+    !persistBreed.isEmpty ? persistBreed : "-"
+  }
+
+  var renderedAge: String {
+    if persistBODData == nil {
+      return "-"
     }
-    
-    var renderedBOD: String {
-        if persistBODData == nil {
-                return "-"
-        }
-        return Utilities.formattedDate(from: persistBOD)
+
+    if let ageInYears = Calendar.current.dateComponents([.year], from: persistBOD, to: Date()).year {
+      return ageInYears > 1 ? "\(ageInYears) years" : "\(ageInYears) year"
     }
-    
-    var renderedBreed: String {
-        return !persistBreed.isEmpty ? persistBreed : "-"
+    return "-"
+  }
+
+  var renderedWeight: String {
+    let weightInKilograms = Float(persistWeight) ?? 0.0
+    let formattedWeight = String(format: "%.2f KG", weightInKilograms)
+    return !persistWeight.isEmpty ? formattedWeight : "-"
+  }
+
+  // MARK: - Profile Image
+
+  func saveProfileData(viewContext: NSManagedObjectContext) {
+    persistDogName = dogName
+    persistGender = gender
+    persistBreed = breed
+    persistAge = age
+    persistWeight = weight
+    persistBOD = bod
+
+    do {
+      let newPetData = Pet(context: viewContext)
+      newPetData.id = UUID()
+      newPetData.createdAt = Date()
+      newPetData.weight = Int16(weight) ?? 0
+      try viewContext.save()
+
+      resetForm()
+      closeProfileForm()
+      showSnackBar.toggle()
+    } catch {
+      let nsError = error as NSError
+      fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
     }
-    
-    var renderedAge: String {
-        if persistBODData == nil {
-            return "-"
-        }
-        
-        if let ageInYears = Calendar.current.dateComponents([.year], from: persistBOD, to: Date()).year {
-            return ageInYears > 1 ? "\(ageInYears) years" : "\(ageInYears) year"
-        }
-        return "-"
+  }
+
+  func resetForm() {
+    dogName = ""
+    gender = ""
+    breed = ""
+    age = ""
+    weight = ""
+    bod = Date()
+  }
+
+  func openProfileForm() {
+    dogName = persistDogName
+    gender = persistGender
+    breed = persistBreed
+    age = persistAge
+    weight = persistWeight
+    bod = persistBOD
+    isEditting = true
+  }
+
+  func closeProfileForm() {
+    isEditting = false
+    resetForm()
+  }
+
+  func closeWeightSheet() {
+    weight = ""
+    isWeightSheetPresented = false
+  }
+
+  func openWeightSheet() {
+    weight = persistWeight
+    isWeightSheetPresented = true
+  }
+
+  // MARK: Private
+
+  private var persistBODData: Data? {
+    get {
+      UserDefaults.standard.data(forKey: "bod")
     }
-    
-    var renderedWeight: String {
-        let weightInKilograms = Float(persistWeight) ?? 0.0
-        let formattedWeight = String(format: "%.2f KG", weightInKilograms)
-        return !persistWeight.isEmpty ? formattedWeight : "-"
+    set {
+      UserDefaults.standard.set(newValue, forKey: "bod")
     }
-    
-    // MARK: - Profile Image
-    
-    func saveProfileData(viewContext: NSManagedObjectContext) {
-        persistDogName = dogName
-        persistGender = gender
-        persistBreed = breed
-        persistAge = age
-        persistWeight = weight
-        persistBOD = bod
-        
-        do {
-            let newPetData = Pet(context: viewContext)
-            newPetData.id = UUID()
-            newPetData.createdAt = Date()
-            newPetData.weight = Int16(weight) ?? 0
-            try viewContext.save()
-            
-            
-            resetForm()
-            closeProfileForm()
-            showSnackBar.toggle()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-    }
-    
-    func resetForm() {
-        dogName = ""
-        gender = ""
-        breed = ""
-        age = ""
-        weight = ""
-        bod = Date()
-    }
-    
-    func openProfileForm() {
-        dogName = persistDogName
-        gender = persistGender
-        breed =  persistBreed
-        age = persistAge
-        weight = persistWeight
-        bod = persistBOD
-        isEditting = true
-    }
-    
-    func closeProfileForm() {
-        isEditting = false
-        resetForm()
-    }
-    
-    func closeWeightSheet() {
-        weight = ""
-        isWeightSheetPresented = false
-    }
-    
-    func openWeightSheet() {
-        weight = persistWeight
-        isWeightSheetPresented = true
-    }
+  }
+
 }
-
-
-

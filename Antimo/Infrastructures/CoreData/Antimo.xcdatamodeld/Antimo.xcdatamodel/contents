@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="NSActivity" representedClassName="NSActivity" syncable="YES">
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSExerciseActivity" inverseName="activity" inverseEntity="NSExerciseActivity"/>
+        <relationship name="grooming" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSGroomingActivity" inverseName="activity" inverseEntity="NSGroomingActivity"/>
+        <relationship name="medication" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSMedicationActivity" inverseName="activity" inverseEntity="NSMedicationActivity"/>
+        <relationship name="nutrition" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSNutritionActivity" inverseName="activity" inverseEntity="NSNutritionActivity"/>
+        <relationship name="other" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSOtherActivity" inverseName="activity" inverseEntity="NSOtherActivity"/>
+    </entity>
+    <entity name="NSEvent" representedClassName="NSEvent" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="triggerDate" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSReminder" inverseName="event" inverseEntity="NSReminder"/>
+    </entity>
+    <entity name="NSExerciseActivity" representedClassName="NSExerciseActivity" syncable="YES">
+        <attribute name="duration" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="mood" attributeType="String"/>
+        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSActivity" inverseName="exercise" inverseEntity="NSActivity"/>
+    </entity>
+    <entity name="NSGroomingActivity" representedClassName="NSGroomingActivity" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="salon" attributeType="String"/>
+        <attribute name="satisfaction" attributeType="String"/>
+        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSActivity" inverseName="grooming" inverseEntity="NSActivity"/>
+    </entity>
+    <entity name="NSMedicationActivity" representedClassName="NSMedicationActivity" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="vet" attributeType="String"/>
+        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSActivity" inverseName="medication" inverseEntity="NSActivity"/>
+    </entity>
+    <entity name="NSNutritionActivity" representedClassName="NSNutritionActivity" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isEatenUp" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="menu" attributeType="String"/>
+        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSActivity" inverseName="nutrition" inverseEntity="NSActivity"/>
+    </entity>
+    <entity name="NSOtherActivity" representedClassName="NSOtherActivity" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSActivity" inverseName="other" inverseEntity="NSActivity"/>
+    </entity>
+    <entity name="NSPet" representedClassName="NSPet" syncable="YES">
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="weight" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="NSReminder" representedClassName="NSReminder" syncable="YES">
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isActive" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSEvent" inverseName="reminder" inverseEntity="NSEvent"/>
+        <relationship name="routine" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSRoutine" inverseName="reminder" inverseEntity="NSRoutine"/>
+    </entity>
+    <entity name="NSRoutine" representedClassName="NSRoutine" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NSReminder" inverseName="routine" inverseEntity="NSReminder"/>
+        <relationship name="weekdays" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="NSWeekday" inverseName="routine" inverseEntity="NSWeekday"/>
+    </entity>
+    <entity name="NSWeekday" representedClassName="NSWeekday" syncable="YES">
+        <attribute name="day" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="time" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="routine" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="NSRoutine" inverseName="weekdays" inverseEntity="NSRoutine"/>
+    </entity>
+</model>
