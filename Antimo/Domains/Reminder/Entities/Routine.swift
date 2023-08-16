@@ -18,4 +18,5 @@ struct Routine: Reminder {
 
   // MARK: Routine
   var routineId: UUID = UUID()
+  var weekdays: [Weekday]
 }

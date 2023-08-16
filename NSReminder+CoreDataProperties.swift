@@ -2,7 +2,7 @@
 //  NSReminder+CoreDataProperties.swift
 //  Antimo
 //
-//  Created by Bisma Mahendra I Dewa Gede on 15/08/23.
+//  Created by Bisma Mahendra I Dewa Gede on 16/08/23.
 //
 //
 
@@ -22,6 +22,7 @@ extension NSReminder {
     @NSManaged public var isActive: Bool
     @NSManaged public var title: String?
     @NSManaged public var type: String?
+    @NSManaged public var updatedAt: Date?
     @NSManaged public var event: NSEvent?
     @NSManaged public var routine: NSRoutine?
 

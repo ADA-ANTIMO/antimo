@@ -2,7 +2,7 @@
 //  NSActivity+CoreDataProperties.swift
 //  Antimo
 //
-//  Created by Bisma Mahendra I Dewa Gede on 15/08/23.
+//  Created by Bisma Mahendra I Dewa Gede on 16/08/23.
 //
 //
 
@@ -22,6 +22,7 @@ extension NSActivity {
     @NSManaged public var note: String?
     @NSManaged public var title: String?
     @NSManaged public var type: String?
+    @NSManaged public var updatedAt: Date?
     @NSManaged public var exercise: NSExerciseActivity?
     @NSManaged public var grooming: NSGroomingActivity?
     @NSManaged public var medication: NSMedicationActivity?

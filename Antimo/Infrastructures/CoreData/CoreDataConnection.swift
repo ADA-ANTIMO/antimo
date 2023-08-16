@@ -7,11 +7,11 @@
 
 import CoreData
 
-struct PersistenceController {
-  static let shared = PersistenceController()
+struct CoreDataConnection {
+  static let shared = CoreDataConnection()
   let container: NSPersistentContainer
 
-  var managedObjectContext: NSManagedObjectContext {
+  var context: NSManagedObjectContext {
     container.viewContext
   }
 

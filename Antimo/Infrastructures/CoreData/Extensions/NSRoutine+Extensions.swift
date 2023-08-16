@@ -8,8 +8,8 @@
 import Foundation
 
 extension NSRoutine {
-  public var getWeekdays: [Weekday] {
-    let setOfWeekdays = weekdays as? Set<Weekday> ?? []
+  public var getWeekdays: [NSWeekday] {
+    let setOfWeekdays = weekdays as? Set<NSWeekday> ?? []
 
     return Array(setOfWeekdays)
   }
