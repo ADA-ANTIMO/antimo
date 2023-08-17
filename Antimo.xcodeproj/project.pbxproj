@@ -21,6 +21,10 @@
 		4E4ADAB72A2B57910069C167 /* ANTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4ADAB62A2B57910069C167 /* ANTag.swift */; };
 		4E52FFD62A2F768F00E8388B /* JournalSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E52FFD52A2F768F00E8388B /* JournalSheetView.swift */; };
 		4E5AC2152A2CF76E00090ED5 /* ANToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5AC2142A2CF76E00090ED5 /* ANToolbar.swift */; };
+		4E5E3EBC2A8E03D3002273AF /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5E3EBB2A8E03D3002273AF /* ReminderService.swift */; };
+		4E5E3EBF2A8E07C2002273AF /* ActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5E3EBE2A8E07C2002273AF /* ActivityRepository.swift */; };
+		4E5E3EC12A8E0A01002273AF /* ActivityCoreDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5E3EC02A8E0A01002273AF /* ActivityCoreDataAdapter.swift */; };
+		4E5E3EC32A8E1F43002273AF /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5E3EC22A8E1F43002273AF /* ActivityService.swift */; };
 		4E64599C2A360DF80092719D /* ActivityAddJournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E64599B2A360DF80092719D /* ActivityAddJournalView.swift */; };
 		4E6994982A2D7F70004D8D98 /* ANDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6994972A2D7F70004D8D98 /* ANDatePicker.swift */; };
 		4E69949A2A2D866F004D8D98 /* ANTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6994992A2D866F004D8D98 /* ANTimePicker.swift */; };
@@ -124,6 +128,10 @@
 		4E4ADAB62A2B57910069C167 /* ANTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTag.swift; sourceTree = "<group>"; };
 		4E52FFD52A2F768F00E8388B /* JournalSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalSheetView.swift; sourceTree = "<group>"; };
 		4E5AC2142A2CF76E00090ED5 /* ANToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANToolbar.swift; sourceTree = "<group>"; };
+		4E5E3EBB2A8E03D3002273AF /* ReminderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderService.swift; sourceTree = "<group>"; };
+		4E5E3EBE2A8E07C2002273AF /* ActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRepository.swift; sourceTree = "<group>"; };
+		4E5E3EC02A8E0A01002273AF /* ActivityCoreDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCoreDataAdapter.swift; sourceTree = "<group>"; };
+		4E5E3EC22A8E1F43002273AF /* ActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
 		4E64599B2A360DF80092719D /* ActivityAddJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityAddJournalView.swift; sourceTree = "<group>"; };
 		4E6994972A2D7F70004D8D98 /* ANDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANDatePicker.swift; sourceTree = "<group>"; };
 		4E6994992A2D866F004D8D98 /* ANTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTimePicker.swift; sourceTree = "<group>"; };
@@ -238,9 +246,10 @@
 		4E0642672A8BC67B00B0107D /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				61A98B6D2A24FFA900152C87 /* ViewModels */,
 				61A98B6E2A24FFC800152C87 /* Extensions */,
 				4EBF9AFC2A387D0300FFA9B5 /* Styles */,
-				61A98B6C2A24FF9F00152C87 /* Views */,
+				61A98B6C2A24FF9F00152C87 /* Screens */,
 				61A98B6A2A24FF8300152C87 /* Components */,
 				6138BC582A28B47E0017BE63 /* Routes */,
 			);
@@ -279,6 +288,7 @@
 		4E06426C2A8BDC9000B0107D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4E5E3EC22A8E1F43002273AF /* ActivityService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -286,6 +296,8 @@
 		4E06426D2A8BDC9500B0107D /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				4E5E3EBE2A8E07C2002273AF /* ActivityRepository.swift */,
+				4E5E3EC02A8E0A01002273AF /* ActivityCoreDataAdapter.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -306,6 +318,7 @@
 		4E06426F2A8BDCA700B0107D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4E5E3EBB2A8E03D3002273AF /* ReminderService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -420,14 +433,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		4E69949B2A2D8994004D8D98 /* JournalView */ = {
+		4E69949B2A2D8994004D8D98 /* Journal */ = {
 			isa = PBXGroup;
 			children = (
 				61A98B752A25016500152C87 /* JournalView.swift */,
 				4E69949C2A2D89DB004D8D98 /* AddJournalView.swift */,
 				4E52FFD52A2F768F00E8388B /* JournalSheetView.swift */,
 			);
-			path = JournalView;
+			path = Journal;
 			sourceTree = "<group>";
 		};
 		4E79B5C02A317E6F00285A80 /* TestCalendar */ = {
@@ -460,14 +473,14 @@
 			path = SummaryView;
 			sourceTree = "<group>";
 		};
-		6131A52E2A2D8D79007BF2F7 /* ReminderView */ = {
+		6131A52E2A2D8D79007BF2F7 /* Reminder */ = {
 			isa = PBXGroup;
 			children = (
 				61A98B772A25017100152C87 /* ReminderView.swift */,
 				6131A5332A2FAE52007BF2F7 /* ReminderFormView.swift */,
 				6131A5352A2FAE76007BF2F7 /* DaysSelectorView.swift */,
 			);
-			path = ReminderView;
+			path = Reminder;
 			sourceTree = "<group>";
 		};
 		6138BC582A28B47E0017BE63 /* Routes */ = {
@@ -505,7 +518,6 @@
 				4E0642672A8BC67B00B0107D /* Application */,
 				4E0642682A8BC68600B0107D /* Infrastructures */,
 				61A98B6F2A24FFDB00152C87 /* Utilities */,
-				61A98B6D2A24FFA900152C87 /* ViewModels */,
 				61A98B572A24FEA000152C87 /* AntimoApp.swift */,
 				61A98B5B2A24FEA000152C87 /* Assets.xcassets */,
 				61A98B5D2A24FEA000152C87 /* Preview Content */,
@@ -548,16 +560,16 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		61A98B6C2A24FF9F00152C87 /* Views */ = {
+		61A98B6C2A24FF9F00152C87 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				4E69949B2A2D8994004D8D98 /* JournalView */,
-				6131A52E2A2D8D79007BF2F7 /* ReminderView */,
+				4E69949B2A2D8994004D8D98 /* Journal */,
+				6131A52E2A2D8D79007BF2F7 /* Reminder */,
 				6131A5252A2D063D007BF2F7 /* SummaryView */,
-				61AD59E52A30CA7E00BC5780 /* ActivityView */,
+				61AD59E52A30CA7E00BC5780 /* Activity */,
 				61AD59E62A30CA8800BC5780 /* OnboardingView */,
 			);
-			path = Views;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		61A98B6D2A24FFA900152C87 /* ViewModels */ = {
@@ -592,7 +604,7 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		61AD59E52A30CA7E00BC5780 /* ActivityView */ = {
+		61AD59E52A30CA7E00BC5780 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
 				61A98B7A2A2501D100152C87 /* ActivityView.swift */,
@@ -602,7 +614,7 @@
 				4EC3C6BA2A35F76900BBF3CF /* ActivityDetailsView.swift */,
 				4E64599B2A360DF80092719D /* ActivityAddJournalView.swift */,
 			);
-			path = ActivityView;
+			path = Activity;
 			sourceTree = "<group>";
 		};
 		61AD59E62A30CA8800BC5780 /* OnboardingView */ = {
@@ -724,6 +736,7 @@
 				6131A5322A2F90C6007BF2F7 /* ANNumberField.swift in Sources */,
 				6131A4B12A28FE54007BF2F7 /* RouteFinder.swift in Sources */,
 				6131A4B32A293523007BF2F7 /* OnboardingView.swift in Sources */,
+				4E5E3EBF2A8E07C2002273AF /* ActivityRepository.swift in Sources */,
 				61A98B832A25026100152C87 /* ReminderViewModel.swift in Sources */,
 				4EBF9AFE2A387D2E00FFA9B5 /* ButtonStyles.swift in Sources */,
 				4E0642D92A8BE3BA00B0107D /* Routine.swift in Sources */,
@@ -797,12 +810,15 @@
 				4E0642E02A8BE42900B0107D /* ExerciseActivity.swift in Sources */,
 				4EB9EAC52A29925400777B11 /* ANActivityDetails.swift in Sources */,
 				61AD59F42A30EEF900BC5780 /* AllEventView.swift in Sources */,
+				4E5E3EBC2A8E03D3002273AF /* ReminderService.swift in Sources */,
 				61AD59FE2A3121A500BC5780 /* ActivityRoutes.swift in Sources */,
 				61A98B872A2502B000152C87 /* Font+Extension.swift in Sources */,
 				4EE0E00F2A8C75AA006CAE7B /* NSPet+CoreDataClass.swift in Sources */,
+				4E5E3EC32A8E1F43002273AF /* ActivityService.swift in Sources */,
 				4E79B5C22A317E8900285A80 /* DateValue.swift in Sources */,
 				4E2F5AAE2A277C9F0083610C /* ANMoodSelector.swift in Sources */,
 				61A98B742A25011900152C87 /* ANButton.swift in Sources */,
+				4E5E3EC12A8E0A01002273AF /* ActivityCoreDataAdapter.swift in Sources */,
 				4EE0E0192A8C75AA006CAE7B /* NSGroomingActivity+CoreDataClass.swift in Sources */,
 				4E6994982A2D7F70004D8D98 /* ANDatePicker.swift in Sources */,
 				4E4ADAB72A2B57910069C167 /* ANTag.swift in Sources */,

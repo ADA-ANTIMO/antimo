@@ -37,7 +37,6 @@ struct ANTabView: View {
             }
           }
       }
-
       .tabItem {
         Label {
           Text("Dashboard")

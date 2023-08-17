@@ -10,8 +10,7 @@ import SwiftUI
 // MARK: - ReminderFormView
 
 struct ReminderFormView: View {
-  @ObservedObject var viewModel: ReminderViewModel
-  var onSubmit: () -> Void
+  @EnvironmentObject var viewModel: ReminderViewModel
 
   var body: some View {
     VStack {
@@ -24,7 +23,9 @@ struct ReminderFormView: View {
         Text("Save")
           .font(.toolbar)
           .foregroundColor(Color.anNavigation.opacity(viewModel.disabledAddRoutineSubmission ? 0.1 : 1))
-          .onTapGesture { onSubmit() }
+          .onTapGesture {
+            viewModel.createNewRoutine()
+          }
           .disabled(viewModel.disabledAddRoutineSubmission)
       }
 
@@ -39,7 +40,9 @@ struct ReminderFormView: View {
 
         HStack {
           Text("Repeat")
+
           Spacer()
+
           Group {
             if viewModel.selectedDays().isEmpty {
               Text("Choose Frequency")
@@ -65,6 +68,6 @@ struct ReminderFormView: View {
 
 struct ReminderFormView_Previews: PreviewProvider {
   static var previews: some View {
-    ReminderFormView(viewModel: ReminderViewModel(), onSubmit: { })
+    ReminderFormView()
   }
 }

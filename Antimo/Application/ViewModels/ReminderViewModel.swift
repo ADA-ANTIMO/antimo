@@ -21,6 +21,11 @@ struct ReminderDay: Identifiable, Hashable {
 
 @MainActor
 class ReminderViewModel: ObservableObject {
+  @Published var events: [Event] = []
+  @Published var routines: [Routine] = []
+
+  private var reminderService = ReminderService(reminderRepository: ReminderCoreDataAdapter())
+  private var notificationManager = NotificationsManager.shared
 
   // MARK: Lifecycle
 
@@ -35,9 +40,20 @@ class ReminderViewModel: ObservableObject {
       ReminderDay(value: 7, label: "Every Saturday"),
     ]
     reminderDays = days
+
+    fetchReminders()
   }
 
   // MARK: Internal
+  private func fetchReminders() {
+    events = reminderService.getAllEvents().sorted {
+      $0.createdAt < $1.createdAt
+    }
+
+    routines = reminderService.getAllRoutines().sorted {
+      $0.createdAt < $1.createdAt
+    }
+  }
 
   // MARK: Properties
 
@@ -50,13 +66,17 @@ class ReminderViewModel: ObservableObject {
   @Published var isReminderFormPresented = false
   @Published var isDaysSelectorPresented = false
 
-  @Published var reminderDays: [ReminderDay]
+  @Published var reminderDays: [ReminderDay] = []
 
   var disabledAddRoutineSubmission: Bool {
     title.isEmpty || selectedDays().isEmpty
   }
 
   // MARK: Methods
+
+  func requestNotificationPermission() {
+    notificationManager.request()
+  }
 
   func toggleSelection(for day: ReminderDay) {
     if let index = reminderDays.firstIndex(where: { $0.id == day.id }) {
@@ -174,95 +194,75 @@ class ReminderViewModel: ObservableObject {
     }
   }
 
-  func toggleActivation(
-    reminder: Reminder,
-    viewContext: NSManagedObjectContext,
-    notificationManager: NotificationsManager,
-    newValue: Bool)
-  {
-    reminder.isActive = newValue
-    do {
-      try viewContext.save()
-      if newValue == true {
-        let weekdays = reminder.routine?.getWeekdays
-        let dateComponentWithSelectedTime = Utilities.getTime(date: weekdays?.first?.time ?? Date())
-
-        let selectedHour = dateComponentWithSelectedTime.hour
-        let selectedMinute = dateComponentWithSelectedTime.minute
-        var selectedReminderDayInInt: [Int] = []
-        if let weekdays {
-          weekdays.forEach {
-            selectedReminderDayInInt.append(Int($0.day))
-          }
-        }
-        notificationManager.scheduleReminderNotification(
-          identifier: reminder.id!.uuidString,
-          title: reminder.title ?? "",
-          subtitle: reminder.description,
-          weekdays: selectedReminderDayInInt,
-          hour: selectedHour!,
-          minute: selectedMinute!)
-      } else {
-        notificationManager.removeScheduledNotification([reminder.id?.uuidString ?? ""])
-      }
-    } catch {
-      let nsError = error as NSError
-      print("Unresolved error \(nsError), \(nsError.userInfo)")
+  func updateRoutineIsActiveStatus(id: UUID, newStatus: Bool) {
+    guard let updatedRoutine = reminderService.updateRoutineIsActiveStatus(id: id, newStatus: newStatus) else {
+      print("Failed updating routine is active status")
+      return
     }
-  }
 
-  func addReminder(viewContext: NSManagedObjectContext, notificationManager: NotificationsManager) {
-    withAnimation {
-      let newReminder = Reminder(context: viewContext)
+    if let index = routines.firstIndex(where: { $0.id == id }) {
+      routines[index] = updatedRoutine
+    }
 
-      newReminder.id = UUID()
-      newReminder.type = selectedActivityType.rawValue
-      newReminder.title = title
-      newReminder.desc = desc
-      newReminder.isActive = true
-      newReminder.createdAt = Date()
-
-      let newRoutine = Routine(context: viewContext)
-      newRoutine.id = UUID()
-      newRoutine.reminder = newReminder
-
-      let dateComponentWithSelectedTime = Utilities.getTime(date: time)
+    if newStatus {
+      let weekdays = updatedRoutine.weekdays
+      let dateComponentWithSelectedTime = Utilities.getTime(date: weekdays.first?.time ?? Date())
 
       let selectedHour = dateComponentWithSelectedTime.hour
       let selectedMinute = dateComponentWithSelectedTime.minute
+      var selectedReminderDayInInt: [Int] = []
 
-      let selectedReminderDayInInt = selectedDays().map { day in
-        day.value
+      weekdays.forEach {
+        selectedReminderDayInInt.append(Int($0.day))
       }
 
-      for reminderDay in selectedReminderDayInInt {
-        let day = Weekday(context: viewContext)
-        day.id = UUID()
-        day.day = Int16(reminderDay)
-        day.time = time
-        day.routine = newRoutine
-
-        newRoutine.addToWeekdays(day)
-      }
-
-      do {
-        try viewContext.save()
-
-        notificationManager.scheduleReminderNotification(
-          identifier: newReminder.id!.uuidString,
-          title: title,
-          subtitle: desc,
-          weekdays: selectedReminderDayInInt,
-          hour: selectedHour!,
-          minute: selectedMinute!)
-
-        closeReminderForm()
-      } catch {
-        // Replace this implementation with code to handle the error appropriately.
-        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        let nsError = error as NSError
-        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-      }
+      notificationManager.scheduleReminderNotification(
+        identifier: updatedRoutine.id.uuidString,
+        title: updatedRoutine.title,
+        subtitle: updatedRoutine.description,
+        weekdays: selectedReminderDayInInt,
+        hour: selectedHour!,
+        minute: selectedMinute!
+      )
     }
+
+    if !newStatus {
+      notificationManager.removeScheduledNotification([updatedRoutine.id.uuidString])
+    }
+  }
+
+  func createNewRoutine() {
+    // MARK: Create Weekdays
+    let dateComponentWithSelectedTime = Utilities.getTime(date: time)
+
+    let selectedHour = dateComponentWithSelectedTime.hour
+    let selectedMinute = dateComponentWithSelectedTime.minute
+
+    let selectedReminderDayInInt = selectedDays().map { day in
+      day.value
+    }
+
+    let weekdays = selectedReminderDayInInt.map { Weekday(day: $0, time: time) }
+    let newRoutine = Routine(description: self.desc, isActive: true, title: self.title, activityType: self.selectedActivityType, weekdays: weekdays)
+
+    guard let routine = reminderService.createNewRoutine(newRoutine: newRoutine) else {
+      print("Failed creating routine")
+
+      return
+    }
+
+    withAnimation {
+      routines.append(routine)
+    }
+
+    notificationManager.scheduleReminderNotification(
+      identifier: routine.id.uuidString,
+      title: title,
+      subtitle: desc,
+      weekdays: selectedReminderDayInInt,
+      hour: selectedHour!,
+      minute: selectedMinute!)
+
+    closeReminderForm()
   }
 }

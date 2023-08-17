@@ -13,6 +13,7 @@ protocol ReminderRepository {
   func getAllEvents() -> [Event]
   func getEventById(id: UUID) -> Event?
   func updateEventById(id: UUID, newEvent: Event) -> Event?
+  func updateEventIsActiveStatus(id: UUID, newStatus: Bool) -> Event?
   func deleteEventById(id: UUID) -> Event?
 
   // MARK: Routine
@@ -20,5 +21,6 @@ protocol ReminderRepository {
   func getAllRoutines() -> [Routine]
   func getRoutineById(id: UUID) -> Routine?
   func updateRoutineById(id: UUID, newRoutine: Routine) -> Routine?
+  func updateRoutineIsActiveStatus(id: UUID, newStatus: Bool) -> Routine?
   func deleteRoutineById(id: UUID) -> Routine?
 }

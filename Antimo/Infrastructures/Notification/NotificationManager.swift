@@ -10,9 +10,9 @@ import UserNotifications
 
 @MainActor
 class NotificationsManager: ObservableObject {
+  static let shared = NotificationsManager()
 
   // MARK: Lifecycle
-
   init() {
     Task {
       await getAuthStatus()
@@ -108,7 +108,6 @@ class NotificationsManager: ObservableObject {
         content.sound = UNNotificationSound.default
 
         // MARK: Trigger Calendar, based on date and time values
-
         let deepLinkURL = URL(string: "antimo://\(DeepLinkURLs.addJournals.rawValue)")!
         content.userInfo = ["link": deepLinkURL.absoluteString]
 

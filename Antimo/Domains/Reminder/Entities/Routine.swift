@@ -13,8 +13,8 @@ struct Routine: Reminder {
   var isActive: Bool
   var title: String
   var activityType: ActivityTypes
-  var createdAt: Date
-  var updatedAt: Date
+  var createdAt: Date = Date()
+  var updatedAt: Date = Date()
 
   // MARK: Routine
   var routineId: UUID = UUID()

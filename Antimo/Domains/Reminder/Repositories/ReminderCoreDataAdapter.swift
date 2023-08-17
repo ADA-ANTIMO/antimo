@@ -130,6 +130,32 @@ class ReminderCoreDataAdapter: ReminderRepository {
     }
   }
 
+  func updateEventIsActiveStatus(id: UUID, newStatus: Bool) -> Event? {
+    let request: NSFetchRequest<NSEvent> = NSEvent.fetchRequest()
+    request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+
+    do {
+      let events = try coreDataContext.fetch(request)
+
+      guard let event = events.first else {
+        print("No event is found with the provided ID.")
+        return nil
+      }
+
+      event.reminder?.isActive = newStatus
+      event.reminder?.updatedAt = Date()
+
+      try coreDataContext.save()
+
+      return normalizeNSEventEntity(event: event)
+    } catch {
+      print("Failed getting event with the provided ID")
+      print("Error: \(error.localizedDescription)")
+
+      return nil
+    }
+  }
+
   func deleteEventById(id: UUID) -> Event? {
     let request: NSFetchRequest<NSEvent> = NSEvent.fetchRequest()
     request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
@@ -280,6 +306,32 @@ class ReminderCoreDataAdapter: ReminderRepository {
       return newRoutine
     } catch {
       print("Failed updating routine")
+      print("Error: \(error.localizedDescription)")
+
+      return nil
+    }
+  }
+
+  func updateRoutineIsActiveStatus(id: UUID, newStatus: Bool) -> Routine? {
+    let request: NSFetchRequest<NSRoutine> = NSRoutine.fetchRequest()
+    request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+
+    do {
+      let routines = try coreDataContext.fetch(request)
+
+      guard let routine = routines.first else {
+        print("No routine is found with the provided ID.")
+        return nil
+      }
+
+      routine.reminder?.isActive = newStatus
+      routine.reminder?.updatedAt = Date()
+
+      try coreDataContext.save()
+
+      return normalizeNSRoutineEntity(routine: routine)
+    } catch {
+      print("Failed getting routine with the provided ID")
       print("Error: \(error.localizedDescription)")
 
       return nil

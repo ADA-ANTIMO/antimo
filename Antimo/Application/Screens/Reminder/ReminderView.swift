@@ -10,14 +10,7 @@ import SwiftUI
 // MARK: - ReminderView
 
 struct ReminderView: View {
-  @Environment(\.managedObjectContext) private var viewContext
-
-  @FetchRequest(sortDescriptors: [NSSortDescriptor(
-    key: "reminder.createdAt",
-    ascending: false)]) private var routines: FetchedResults<Routine>
-
-  @StateObject var viewModel = ReminderViewModel()
-  @StateObject var notificationManager = NotificationsManager()
+  @EnvironmentObject var viewModel = ReminderViewModel()
 
   var body: some View {
     ANBaseContainer(toolbar: {
@@ -28,7 +21,7 @@ struct ReminderView: View {
           .onTapGesture { viewModel.openReminderForm() }
       }
     }, children: {
-      if routines.isEmpty {
+      if viewModel.routines.isEmpty {
         Spacer()
 
         VStack(spacing: 10) {
@@ -46,19 +39,15 @@ struct ReminderView: View {
         Spacer()
       } else {
         ScrollView {
-          ForEach(routines) { routine in
+          ForEach(viewModel.routines) { routine in
             ANReminderCard(
               icon: viewModel.getIcon(routine.reminder?.type ?? ""),
               title: routine.reminder?.title ?? "",
               time: viewModel.getRenderedHourAndMinutes(routine.getWeekdays.first?.time ?? Date()),
               frequency: viewModel.getRenderedFrequency(viewModel.convertWeekDaysObjIntoInt(routine.getWeekdays)),
               isOn: routine.reminder?.isActive ?? false,
-              onToggle: { newValue in
-                viewModel.toggleActivation(
-                  reminder: routine.reminder!,
-                  viewContext: viewContext,
-                  notificationManager: notificationManager,
-                  newValue: newValue)
+              onToggle: { newStatus in
+                viewModel.updateRoutineIsActiveStatus(id: routine.id, newStatus: newStatus)
               })
           }
         }
@@ -67,13 +56,11 @@ struct ReminderView: View {
         .padding(.bottom)
       }
     })
-    .onAppear { notificationManager.request() }
+    .onAppear {
+      viewModel.requestNotificationPermission()
+    }
     .sheet(isPresented: $viewModel.isReminderFormPresented) {
-      ReminderFormView(
-        viewModel: viewModel,
-        onSubmit: {
-          viewModel.addReminder(viewContext: viewContext, notificationManager: notificationManager)
-        })
+      ReminderFormView()
     }
   }
 }

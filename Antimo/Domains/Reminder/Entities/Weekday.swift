@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Weekday {
+struct Weekday: Identifiable {
   var id: UUID = UUID()
   var day: Int
   var time: Date
