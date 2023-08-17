@@ -24,13 +24,3 @@ protocol Activity: Identifiable {
   var createdAt: Date { get set }
   var updatedAt: Date { get set }
 }
-
-struct BaseActivity: Activity {
-  var id: UUID = UUID()
-  var title: String
-  var image: String
-  var note: String
-  var activityType: ActivityTypes
-  var createdAt: Date = Date()
-  var updatedAt: Date = Date()
-}

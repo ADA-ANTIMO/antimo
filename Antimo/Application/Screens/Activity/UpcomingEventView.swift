@@ -9,9 +9,7 @@ import SwiftUI
 
 struct UpcomingEventView: View {
   @EnvironmentObject private var activityNavigation: ActivityNavigationManager
-  var viewModel: ActivityViewModel
-  var events: FetchedResults<Event>
-  var onShowAll: () -> Void
+  @EnvironmentObject private var viewModel: ReminderViewModel
 
   var body: some View {
     VStack(spacing: 10) {
@@ -20,20 +18,20 @@ struct UpcomingEventView: View {
 
         Spacer()
 
-        if events.isEmpty {
+        if viewModel.events.isEmpty {
           EmptyView()
         } else {
           Text("Show All")
             .font(.toolbar)
             .foregroundColor(Color.anNavigation)
             .onTapGesture {
-              onShowAll()
+              activityNavigation.push(to: .allEvents)
             }
         }
       }
       .padding(.top)
 
-      if events.isEmpty {
+      if viewModel.events.isEmpty {
         HStack {
           Spacer()
           Text("There are no upcoming events yet")
@@ -43,14 +41,15 @@ struct UpcomingEventView: View {
           Spacer()
         }
       } else {
-        ForEach(events.byDate.keys, id: \.self) { key in
+        ForEach(viewModel.eventsByDate.keys, id: \.self) { key in
           Section {
-            ForEach(events.byDate.events[key] ?? [], id: \.self) { event in
+            ForEach(viewModel.eventsByDate.events[key] ?? []) { event in
               ANEventCard(
-                icon: viewModel.getIcon(event.reminder?.type ?? ""),
-                title: event.reminder?.title ?? "",
-                desc: event.reminder?.desc ?? "",
-                time: viewModel.getRenderedHourAndMinutes(event.triggerDate ?? Date()))
+                icon: viewModel.getIcon(event.activityType.rawValue),
+                title: event.title,
+                desc: event.description,
+                time: viewModel.getRenderedHourAndMinutes(event.triggerDate)
+              )
             }
           } header: {
             HStack {
@@ -65,9 +64,3 @@ struct UpcomingEventView: View {
     }
   }
 }
-
-// struct UpcomingEventView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UpcomingEventView(viewModel: ActivityViewModel(), events: [])
-//    }
-// }

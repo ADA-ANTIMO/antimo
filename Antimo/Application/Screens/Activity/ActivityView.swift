@@ -10,16 +10,11 @@ import SwiftUI
 // MARK: - ActivityView
 
 struct ActivityView: View {
-  @Environment(\.managedObjectContext) private var viewContext
-
-  @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "triggerDate", ascending: true)])
-  private var events: FetchedResults<Event>
-
   @EnvironmentObject private var activityNavigation: ActivityNavigationManager
-  @StateObject var viewModel = ActivityViewModel()
-  @StateObject var notificationManager = NotificationsManager()
-  @State var currentDate = Date.now
-  @State var currentMonth = 0
+  @EnvironmentObject private var viewModel: ReminderViewModel
+
+  @State private var currentDate = Date.now
+  @State private var currentMonth = 0
 
   var body: some View {
     ANBaseContainer(toolbar: {
@@ -32,24 +27,19 @@ struct ActivityView: View {
     }, children: {
       ScrollView {
         ANCalendar(currentDate: $currentDate, currentMonth: $currentMonth)
-        UpcomingEventView(viewModel: viewModel, events: events, onShowAll: { activityNavigation.push(to: .allEvents) })
+        UpcomingEventView()
       }
       .scrollIndicators(.hidden)
       .padding()
 
     })
     .onAppear {
-      if !notificationManager.hasPermission {
-        print(notificationManager.hasPermission)
-        notificationManager.request()
+      if !viewModel.hasNotificationPermission {
+        viewModel.requestNotificationPermission()
       }
     }
     .sheet(isPresented: $viewModel.isEventSheetPresented) {
-      AddEventSheetView(
-        viewModel: viewModel,
-        onSubmit: {
-          viewModel.addEvent(viewContext: viewContext, notificationManager: notificationManager)
-        })
+      AddEventSheetView()
     }
   }
 }

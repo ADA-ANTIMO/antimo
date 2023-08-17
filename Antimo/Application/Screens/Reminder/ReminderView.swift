@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - ReminderView
 
 struct ReminderView: View {
-  @EnvironmentObject var viewModel = ReminderViewModel()
+  @EnvironmentObject private var viewModel: ReminderViewModel
 
   var body: some View {
     ANBaseContainer(toolbar: {
@@ -41,11 +41,11 @@ struct ReminderView: View {
         ScrollView {
           ForEach(viewModel.routines) { routine in
             ANReminderCard(
-              icon: viewModel.getIcon(routine.reminder?.type ?? ""),
-              title: routine.reminder?.title ?? "",
-              time: viewModel.getRenderedHourAndMinutes(routine.getWeekdays.first?.time ?? Date()),
-              frequency: viewModel.getRenderedFrequency(viewModel.convertWeekDaysObjIntoInt(routine.getWeekdays)),
-              isOn: routine.reminder?.isActive ?? false,
+              icon: viewModel.getIcon(routine.activityType.rawValue),
+              title: routine.title,
+              time: viewModel.getRenderedHourAndMinutes(routine.weekdays.first?.time ?? Date()),
+              frequency: viewModel.getRenderedFrequency(viewModel.convertWeekDaysObjIntoInt(routine.weekdays)),
+              isOn: routine.isActive,
               onToggle: { newStatus in
                 viewModel.updateRoutineIsActiveStatus(id: routine.id, newStatus: newStatus)
               })

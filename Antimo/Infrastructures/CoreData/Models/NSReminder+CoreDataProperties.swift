@@ -2,7 +2,7 @@
 //  NSReminder+CoreDataProperties.swift
 //  Antimo
 //
-//  Created by Bisma Mahendra I Dewa Gede on 16/08/23.
+//  Created by Bisma Mahendra I Dewa Gede on 17/08/23.
 //
 //
 

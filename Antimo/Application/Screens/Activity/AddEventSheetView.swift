@@ -10,8 +10,7 @@ import SwiftUI
 // MARK: - AddEventSheetView
 
 struct AddEventSheetView: View {
-  @ObservedObject var viewModel: ActivityViewModel
-  var onSubmit: () -> Void
+  @EnvironmentObject var viewModel: ReminderViewModel
 
   var body: some View {
     VStack {
@@ -24,12 +23,14 @@ struct AddEventSheetView: View {
         Text("Save")
           .font(.toolbar)
           .foregroundColor(Color.anNavigation.opacity(viewModel.disableAddEventSubmission ? 0.1 : 1))
-          .onTapGesture { onSubmit() }
+          .onTapGesture {
+            viewModel.createNewEvent()
+          }
           .disabled(viewModel.disableAddEventSubmission)
       }
 
       ScrollView {
-        ANActivitySelector(selected: $viewModel.selectedActivityType)
+        ANActivitySelector(selected: $viewModel.eventActivityType)
         ANTextField(text: $viewModel.eventTitle, placeholder: "Add Event Title", label: "Title")
         ANTextFieldArea(text: $viewModel.eventDesc, label: "Description", placeholder: "Add Event Description")
           .frame(height: 200)
@@ -52,6 +53,6 @@ struct AddEventSheetView: View {
 
 struct AddEventSheetView_Previews: PreviewProvider {
   static var previews: some View {
-    AddEventSheetView(viewModel: ActivityViewModel(), onSubmit: { })
+    AddEventSheetView()
   }
 }

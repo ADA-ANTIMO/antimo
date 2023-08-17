@@ -10,14 +10,8 @@ import SwiftUI
 // MARK: - AllEventView
 
 struct AllEventView: View {
-  @Environment(\.managedObjectContext) private var viewContext
-
-  @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)])
-  private var events: FetchedResults<Event>
-
   @EnvironmentObject private var activityNavigation: ActivityNavigationManager
-  @StateObject var viewModel = ActivityViewModel()
-  @StateObject var notificationManager = NotificationsManager()
+  @EnvironmentObject private var viewModel: ReminderViewModel
 
   var body: some View {
     ANBaseContainer(toolbar: {
@@ -34,14 +28,15 @@ struct AllEventView: View {
       }
     }, children: {
       ScrollView {
-        ForEach(events.byDate.keys, id: \.self) { key in
+        ForEach(viewModel.eventsByDate.keys, id: \.self) { key in
           Section {
-            ForEach(events.byDate.events[key] ?? [], id: \.self) { event in
+            ForEach(viewModel.eventsByDate.events[key] ?? []) { event in
               ANEventCard(
-                icon: viewModel.getIcon(event.reminder?.type ?? ""),
-                title: event.reminder?.title ?? "",
-                desc: event.reminder?.desc ?? "",
-                time: viewModel.getRenderedHourAndMinutes(event.triggerDate ?? Date()))
+                icon: viewModel.getIcon(event.activityType.rawValue),
+                title: event.title,
+                desc: event.description,
+                time: viewModel.getRenderedHourAndMinutes(event.triggerDate)
+              )
             }
           } header: {
             HStack {
@@ -57,11 +52,7 @@ struct AllEventView: View {
       .padding(.horizontal)
     })
     .sheet(isPresented: $viewModel.isEventSheetPresented) {
-      AddEventSheetView(
-        viewModel: viewModel,
-        onSubmit: {
-          viewModel.addEvent(viewContext: viewContext, notificationManager: notificationManager)
-        })
+      AddEventSheetView()
     }
   }
 }

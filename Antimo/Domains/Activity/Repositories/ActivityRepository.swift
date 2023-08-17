@@ -13,4 +13,5 @@ protocol ActivityRepository {
   func createNewMedicationActivity(activity: MedicationActivity) -> MedicationActivity?
   func createNewGroomingActivity(activity: GroomingActivity) -> GroomingActivity?
   func createNewOtherActivity(activity: OtherActivity) -> OtherActivity?
+  func getAllActivitiesByDateRange(startDate: Date, endDate: Date) -> [any Activity]
 }

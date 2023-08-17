@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 class ActivityCoreDataAdapter: ActivityRepository {
   private let coreDataContext = CoreDataConnection.shared.context
@@ -21,6 +22,91 @@ class ActivityCoreDataAdapter: ActivityRepository {
     NSActivity.createdAt = activity.createdAt
 
     return NSActivity
+  }
+
+  func normalizeActivity(activity: NSActivity) -> any Activity {
+    let id = activity.id ?? UUID()
+    let title = activity.title ?? ""
+    let image = activity.image ?? ""
+    let note = activity.note ?? ""
+    let activityType = ActivityTypes(rawValue: activity.type!)!
+    let createdAt = activity.createdAt ?? Date()
+    let updatedAt = activity.updatedAt ?? Date()
+
+    switch activityType {
+      case .exercise:
+        let exercise = activity.exercise!
+
+        return ExerciseActivity(
+          id: id,
+          title: title,
+          image: image,
+          note: note,
+          activityType: activityType,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          exerciseId: exercise.id ?? UUID(),
+          duration: exercise.duration.toInt,
+          mood: Mood(rawValue: exercise.mood!)!
+        )
+      case .grooming:
+        let grooming = activity.grooming!
+
+        return GroomingActivity(
+          id: id,
+          title: title,
+          image: image,
+          note: note,
+          activityType: activityType,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          groomingId: grooming.id ?? UUID(),
+          salon: grooming.salon ?? "",
+          satisfaction: grooming.satisfaction ?? ""
+        )
+      case .medication:
+        let medication = activity.medication!
+
+        return MedicationActivity(
+          id: id,
+          title: title,
+          image: image,
+          note: note,
+          activityType: activityType,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          medicationId: medication.id ?? UUID(),
+          vet: medication.vet ?? ""
+        )
+      case .nutrition:
+        let nutrition = activity.nutrition!
+
+        return NutritionActivity(
+          id: id,
+          title: title,
+          image: image,
+          note: note,
+          activityType: activityType,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          nutritionId: nutrition.id ?? UUID(),
+          isEatenUp: nutrition.isEatenUp,
+          menu: nutrition.menu ?? ""
+        )
+      case .other:
+        let other = activity.other!
+
+        return OtherActivity(
+          id: id,
+          title: title,
+          image: image,
+          note: note,
+          activityType: activityType,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          otherId: other.id ?? UUID()
+        )
+    }
   }
 
   func createNewExerciseActivity(activity: ExerciseActivity) -> ExerciseActivity? {
@@ -122,6 +208,36 @@ class ActivityCoreDataAdapter: ActivityRepository {
       print("Error: \(error.localizedDescription)")
 
       return nil
+    }
+  }
+
+  func getAllActivitiesByDateRange(startDate: Date, endDate: Date) -> [any Activity] {
+    var activities: [any Activity] = []
+
+    let request: NSFetchRequest<NSActivity> = NSActivity.fetchRequest()
+    request.sortDescriptors = [
+      NSSortDescriptor(key: "createdAt", ascending: false),
+    ]
+    request.predicate = NSPredicate(
+      format: "(createdAt >= %@) AND (createdAt <= %@)",
+      startDate as CVarArg,
+      endDate as CVarArg)
+
+    do {
+      let NSActivities = try coreDataContext.fetch(request)
+
+      for NSActivity in NSActivities {
+        let activity = normalizeActivity(activity: NSActivity)
+
+        activities.append(activity)
+      }
+
+      return activities
+    } catch {
+      print("Failed getting all routines")
+      print("Error: \(error.localizedDescription)")
+
+      return []
     }
   }
 }
