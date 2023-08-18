@@ -10,6 +10,29 @@ import SwiftUI
 
 @MainActor
 class JournalViewModel: ObservableObject {
+  @Published var activities: [any Activity] = []
+  @Published var exerciseActivities: [ExerciseActivity] = []
+
+  var activitiesByDate: OrderedActivity {
+    var dictOfActivities = [String: [any Activity]]()
+    var keyOfDict = [String]()
+
+    for activity in activities {
+      let key = Utilities.formattedDate(from: activity.createdAt, format: "EEEE, d MMM yyyy")
+
+      if var dict = dictOfActivities[key] {
+        dict.append(activity)
+
+        dictOfActivities[key] = dict
+      } else {
+        keyOfDict.append(key)
+        dictOfActivities[key] = [activity]
+      }
+    }
+
+    return OrderedActivity(activities: dictOfActivities, keys: keyOfDict)
+  }
+
   @Published public var id: UUID = .init()
   @Published public var image = ""
   @Published public var note = ""
@@ -29,22 +52,155 @@ class JournalViewModel: ObservableObject {
   @Published public var imagePicker = ImagePicker()
   @Published public var isSheetPresented = false
   @Published public var activityType: ActivityTypes = .nutrition
-  @Published public var selectedActivity: Activity?
+  @Published public var isUpdating = false
 
-  public var canSubmit: Bool {
-    let activityType = ActivityTypes.getByString(type: type)
+  private var activityService = ActivityService(activityRepository: ActivityCoreDataAdapter())
+
+  public func fetchActivityByDateRange(startDate: Date, endDate: Date) {
+    activities = activityService.getAllActivitiesByDateRange(startDate: startDate, endDate: endDate)
+
+    print(activities)
+  }
+
+  public func fetchAllExerciseActivitiesByDateRange(startDate: Date, endDate: Date) {
+    exerciseActivities = activityService.getAllExerciseActivitiesByDateRange(startDate: startDate, endDate: endDate)
+  }
+
+  public func deleteActivityById(id: UUID) {
+    guard let activity = activityService.deleteActivityById(id: id) else {
+      print("Failed deleting activity")
+      return
+    }
+
+    activities = activities.filter { $0.id != activity.id }
+  }
+
+  public func updateSelectedActivity() {
+    let date = Utilities.getDate(date: date)
+    let time = Utilities.getTime(date: time)
+    let newDate = Utilities.createDate(date: date, time: time)
+
+    if let uiImage = imagePicker.uiImage {
+      let imageId = UUID().uuidString
+      FileManager().saveImage(with: imageId, image: uiImage)
+      image = imageId
+    }
 
     switch activityType {
-    case .nutrition:
-      return !title.isEmpty && !menu.isEmpty
-    case .medication:
-      return !title.isEmpty && (!vet.isEmpty || type == "Vet")
-    case .exercise:
-      return !title.isEmpty && !duration.isEmpty && !mood.isEmpty
-    case .grooming:
-      return !title.isEmpty && !salon.isEmpty && !satisfaction.isEmpty
-    default:
-      return !title.isEmpty && !note.isEmpty
+      case .nutrition:
+        let nutrition = NutritionActivity(
+          title: title, image: image, note: note,
+          activityType: ActivityTypes(rawValue: type) ?? .nutrition,
+          isEatenUp: isEatenUp, menu: menu
+        )
+
+        activityService.updateNutritionActivityById(id: id, activity: nutrition)
+      case .exercise:
+        let exercise = ExerciseActivity(
+          title: title, image: image, note: note,
+          activityType: ActivityTypes(rawValue: type) ?? .nutrition,
+          duration: Int(duration) ?? 0,
+          mood: Mood(rawValue: mood) ?? .low
+        )
+
+        activityService.updateExerciseActivityById(id: id, activity: exercise)
+      case .medication:
+        let medication = MedicationActivity(
+          title: title, image: image, note: note,
+          activityType: ActivityTypes(rawValue: type) ?? .nutrition,
+          vet: vet
+        )
+
+        activityService.updateMedicationActivityById(id: id, activity: medication)
+      case .grooming:
+        let grooming = GroomingActivity(
+          title: title, image: image, note: note,
+          activityType: ActivityTypes(rawValue: type) ?? .nutrition,
+          salon: salon,
+          satisfaction: satisfaction
+        )
+
+        activityService.updateGroomingActivityById(id: id, activity: grooming)
+      case .other:
+        let other = OtherActivity(
+          title: title, image: image, note: note,
+          activityType: ActivityTypes(rawValue: type) ?? .nutrition
+        )
+
+        activityService.updateOtherActivityById(id: id, activity: other)
+    }
+  }
+
+  public func createNewActivity() {
+    let date = Utilities.getDate(date: date)
+    let time = Utilities.getTime(date: time)
+    let newDate = Utilities.createDate(date: date, time: time)
+
+    if let uiImage = imagePicker.uiImage {
+      let imageId = UUID().uuidString
+      FileManager().saveImage(with: imageId, image: uiImage)
+      image = imageId
+    }
+
+    switch activityType {
+      case .nutrition:
+        let nutrition = NutritionActivity(
+          title: title, image: image, note: note,
+          activityType: ActivityTypes(rawValue: type) ?? .nutrition,
+          isEatenUp: isEatenUp, menu: menu
+        )
+
+        activityService.createNewNutritionActivity(activity: nutrition)
+      case .exercise:
+        let exercise = ExerciseActivity(
+          title: title, image: image, note: note,
+          activityType: ActivityTypes(rawValue: type) ?? .nutrition,
+          duration: Int(duration) ?? 0,
+          mood: Mood(rawValue: mood) ?? .low
+        )
+
+        activityService.createNewExerciseActivity(activity: exercise)
+      case .medication:
+        let medication = MedicationActivity(
+          title: title, image: image, note: note,
+          activityType: ActivityTypes(rawValue: type) ?? .nutrition,
+          vet: vet
+        )
+
+        activityService.createNewMedicationActivity(activity: medication)
+      case .grooming:
+        let grooming = GroomingActivity(
+          title: title, image: image, note: note,
+          activityType: ActivityTypes(rawValue: type) ?? .nutrition,
+          salon: salon,
+          satisfaction: satisfaction
+        )
+
+        activityService.createNewGroomingActivity(activity: grooming)
+      case .other:
+        let other = OtherActivity(
+          title: title, image: image, note: note,
+          activityType: ActivityTypes(rawValue: type) ?? .nutrition
+        )
+
+        activityService.createNewOtherActivity(activity: other)
+    }
+  }
+
+  public var canSubmit: Bool {
+    let activityType = ActivityTypes(rawValue: type)
+
+    switch activityType {
+      case .nutrition:
+        return !title.isEmpty && !menu.isEmpty
+      case .medication:
+        return !title.isEmpty && (!vet.isEmpty || type == "Vet")
+      case .exercise:
+        return !title.isEmpty && !duration.isEmpty && !mood.isEmpty
+      case .grooming:
+        return !title.isEmpty && !salon.isEmpty && !satisfaction.isEmpty
+      default:
+        return !title.isEmpty && !note.isEmpty
     }
   }
 
@@ -64,21 +220,38 @@ class JournalViewModel: ObservableObject {
     date = Date()
     time = Date()
     imagePicker = ImagePicker()
+    isUpdating = false
   }
 
-  public func setState(activity: Activity) {
-    id = activity.id ?? UUID()
-    image = activity.imagePath
-    note = activity.note ?? ""
-    title = activity.title ?? ""
-    type = activity.type ?? ""
-    mood = activity.exercise?.mood ?? ""
-    duration = activity.exercise?.duration.formatted() ?? ""
-    isEatenUp = activity.nutrition?.isEatenUp ?? false
-    menu = activity.nutrition?.menu ?? ""
-    satisfaction = activity.grooming?.satisfaction ?? ""
-    salon = activity.grooming?.salon ?? ""
-    createdAt = activity.createdAt ?? Date()
+  public func setState(activity: any Activity) {
+    switch activity.activityType {
+      case .exercise:
+        let exercise = activity as! ExerciseActivity // swiftlint:disable:this force_cast
+
+        mood = exercise.mood.rawValue
+        duration = exercise.duration.formatted()
+      case .grooming:
+        let grooming = activity as! GroomingActivity // swiftlint:disable:this force_cast
+
+        satisfaction = grooming.satisfaction
+        salon = grooming.salon
+      case .medication:
+        print("Empty")
+      case .nutrition:
+        let nutrition = activity as! NutritionActivity // swiftlint:disable:this force_cast
+
+        isEatenUp = nutrition.isEatenUp
+        menu = nutrition.menu
+      case .other:
+        print("Empty")
+    }
+
+    id = activity.id
+    image = activity.image
+    note = activity.note
+    title = activity.title
+    type = activity.activityType.rawValue
+    createdAt = activity.createdAt
 
     date = createdAt
     time = createdAt
@@ -88,6 +261,8 @@ class JournalViewModel: ObservableObject {
       imagePicker.uiImage = FileManager().retrieveImage(with: image)
       imagePicker.image = Image(uiImage: imagePicker.uiImage!)
     }
+
+    isUpdating = true
   }
 
   public func openActivityForm(selectedActivityType: ActivityTypes) {
@@ -101,119 +276,15 @@ class JournalViewModel: ObservableObject {
     isSheetPresented = false
   }
 
-  public func submitEditForm(context: NSManagedObjectContext) {
-    let date = Utilities.getDate(date: date)
-    let time = Utilities.getTime(date: time)
-    let newDate = Utilities.createDate(date: date, time: time)
+  public func submitEditForm() {
+    updateSelectedActivity()
 
-    if let uiImage = imagePicker.uiImage {
-      let imageId = UUID().uuidString
-      FileManager().saveImage(with: imageId, image: uiImage)
-      image = imageId
-    }
-
-    guard let selectedActivity else {
-      return
-    }
-
-    selectedActivity.id = id
-    selectedActivity.title = title
-    selectedActivity.type = type
-    selectedActivity.note = note
-    selectedActivity.image = image
-    selectedActivity.createdAt = newDate
-
-    switch activityType {
-    case .nutrition:
-      selectedActivity.nutrition?.isEatenUp = isEatenUp
-      selectedActivity.nutrition?.menu = menu
-
-    case .exercise:
-      selectedActivity.exercise?.mood = mood
-      selectedActivity.exercise?.duration = Int32(duration) ?? 0
-
-    case .medication:
-      selectedActivity.medication?.vet = vet
-
-    case .grooming:
-      selectedActivity.grooming?.salon = salon
-      selectedActivity.grooming?.satisfaction = satisfaction
-
-    case .other:
-      print("Empty")
-    }
-
-    do {
-      try context.save()
-
-      closeActivityForm()
-    } catch {
-      let nsError = error as NSError
-      debugPrint("Unresolved error \(nsError), \(nsError.userInfo)")
-    }
+    closeActivityForm()
   }
 
-  public func submitForm(context: NSManagedObjectContext) {
-    let date = Utilities.getDate(date: date)
-    let time = Utilities.getTime(date: time)
-    let newDate = Utilities.createDate(date: date, time: time)
+  public func submitForm() {
+    createNewActivity()
 
-    if let uiImage = imagePicker.uiImage {
-      let imageId = UUID().uuidString
-      FileManager().saveImage(with: imageId, image: uiImage)
-      image = imageId
-    }
-
-    let newActivity = Activity(context: context)
-
-    newActivity.id = id
-    newActivity.title = title
-    newActivity.type = type
-    newActivity.note = note
-    newActivity.image = image
-    newActivity.createdAt = newDate
-
-    switch activityType {
-    case .nutrition:
-      let newNutrition = NutritionActivity(context: context)
-      newNutrition.id = UUID()
-      newNutrition.isEatenUp = isEatenUp
-      newNutrition.menu = menu
-      newNutrition.activity = newActivity
-
-    case .exercise:
-      let newExercise = ExerciseActivity(context: context)
-      newExercise.id = UUID()
-      newExercise.mood = mood
-      newExercise.duration = Int32(duration) ?? 0
-      newExercise.activity = newActivity
-
-    case .medication:
-      let newMedication = MedicationActivity(context: context)
-      newMedication.id = UUID()
-      newMedication.vet = vet
-      newMedication.activity = newActivity
-
-    case .grooming:
-      let newGrooming = GroomingActivity(context: context)
-      newGrooming.id = UUID()
-      newGrooming.salon = salon
-      newGrooming.satisfaction = satisfaction
-      newGrooming.activity = newActivity
-
-    case .other:
-      let newOther = OtherActivity(context: context)
-      newOther.id = UUID()
-      newOther.activity = newActivity
-    }
-
-    do {
-      try context.save()
-
-      closeActivityForm()
-    } catch {
-      let nsError = error as NSError
-      debugPrint("Unresolved error \(nsError), \(nsError.userInfo)")
-    }
+    closeActivityForm()
   }
 }

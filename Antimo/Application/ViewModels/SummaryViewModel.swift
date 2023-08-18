@@ -20,8 +20,14 @@ import PhotosUI
 
 @MainActor
 class SummaryViewModel: ObservableObject {
+  @Published var petDatas: [Pet] = []
+
+  init() {
+    fetchPetDatas()
+  }
 
   // MARK: Internal
+  private var petService = PetService(petRepository: PetCoreDataAdapter())
 
   // MARK: - Profile Details
 
@@ -43,6 +49,20 @@ class SummaryViewModel: ObservableObject {
   @Published var showSnackBar = false
   @Published var isExerciseSheetPresented = false
   @Published var isWeightSheetPresented = false
+
+  func fetchPetDatas() {
+    petDatas = petService.getAllPetDatas()
+  }
+
+  func createNewPetData(petData: Pet) {
+    guard let petData = petService.createNewPetData(petData: petData) else {
+      print("Failed creating pet data")
+
+      return
+    }
+
+    petDatas.append(petData)
+  }
 
   var disabledSubmit: Bool {
     dogName.isEmpty || gender.isEmpty || breed.isEmpty || weight.isEmpty
@@ -99,7 +119,7 @@ class SummaryViewModel: ObservableObject {
 
   // MARK: - Profile Image
 
-  func saveProfileData(viewContext: NSManagedObjectContext) {
+  func saveProfileData() {
     persistDogName = dogName
     persistGender = gender
     persistBreed = breed
@@ -107,20 +127,12 @@ class SummaryViewModel: ObservableObject {
     persistWeight = weight
     persistBOD = bod
 
-    do {
-      let newPetData = Pet(context: viewContext)
-      newPetData.id = UUID()
-      newPetData.createdAt = Date()
-      newPetData.weight = Int16(weight) ?? 0
-      try viewContext.save()
+    let petData = Pet(weight: Int(weight) ?? 0)
 
-      resetForm()
-      closeProfileForm()
-      showSnackBar.toggle()
-    } catch {
-      let nsError = error as NSError
-      fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-    }
+    createNewPetData(petData: petData)
+    resetForm()
+    closeProfileForm()
+    showSnackBar.toggle()
   }
 
   func resetForm() {
@@ -167,5 +179,4 @@ class SummaryViewModel: ObservableObject {
       UserDefaults.standard.set(newValue, forKey: "bod")
     }
   }
-
 }

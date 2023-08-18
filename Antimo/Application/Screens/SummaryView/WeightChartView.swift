@@ -24,7 +24,7 @@ struct WeightData: Identifiable {
 // MARK: - WeightChartView
 
 struct WeightChartView: View {
-  var petData: FetchedResults<Pet>
+  var petDatas: [Pet]
 
   var chartData = [
     (name: "Weight", weightData: [
@@ -50,8 +50,8 @@ struct WeightChartView: View {
   var body: some View {
     VStack {
       Chart {
-        ForEach(petData) {
-          let date = $0.createdAt ?? Date()
+        ForEach(petDatas) {
+          let date = $0.createdAt
           let weight = $0.weight
 
           LineMark(

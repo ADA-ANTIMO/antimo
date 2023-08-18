@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - CircularProfileImage
 
 struct CircularProfileImage: View {
-  @ObservedObject var viewModel: SummaryViewModel
+  @EnvironmentObject private var viewModel: SummaryViewModel
 
   var uiImage: UIImage {
     if
@@ -51,8 +51,9 @@ struct CircularProfileImage: View {
 // MARK: - EditableCircularProfileImage
 
 struct EditableCircularProfileImage: View {
-  @ObservedObject var viewModel: SummaryViewModel
-  @StateObject var imagePicker = ImagePicker()
+  @EnvironmentObject private var viewModel: SummaryViewModel
+  @StateObject private var imagePicker = ImagePicker()
+
   let width: CGFloat
   let height: CGFloat
 
@@ -105,8 +106,10 @@ struct EditableCircularProfileImage: View {
       if let newImage {
         let id = UUID().uuidString
         FileManager().saveImage(with: id, image: newImage)
+
         let currentAvatarId = viewModel.avatarID
         viewModel.avatarID = id
+
         FileManager().deleteImage(with: currentAvatarId)
       }
     }

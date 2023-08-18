@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - AddEventSheetView
 
 struct AddEventSheetView: View {
-  @EnvironmentObject var viewModel: ReminderViewModel
+  @EnvironmentObject private var viewModel: ReminderViewModel
 
   var body: some View {
     VStack {

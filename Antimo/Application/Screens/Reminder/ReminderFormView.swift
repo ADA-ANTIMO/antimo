@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - ReminderFormView
 
 struct ReminderFormView: View {
-  @EnvironmentObject var viewModel: ReminderViewModel
+  @EnvironmentObject private var viewModel: ReminderViewModel
 
   var body: some View {
     VStack {
@@ -59,7 +59,7 @@ struct ReminderFormView: View {
       Spacer()
     }
     .padding(.vertical)
-    .sheet(isPresented: $viewModel.isDaysSelectorPresented) { DaysSelectorView(viewModel: viewModel) }
+    .sheet(isPresented: $viewModel.isDaysSelectorPresented) { DaysSelectorView() }
     .onDisappear { viewModel.resetForm() }
   }
 }

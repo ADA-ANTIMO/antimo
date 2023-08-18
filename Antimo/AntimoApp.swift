@@ -13,15 +13,15 @@ import SwiftUI
 struct AntimoApp: App {
   @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
 
-  @StateObject var notificationManager = NotificationsManager()
+  @StateObject var journalViewModel = JournalViewModel()
+  @StateObject var summaryViewModel = SummaryViewModel()
+  @StateObject var reminderViewModel = ReminderViewModel()
 
   @StateObject var dashboardNavigation = DashboardNavigationManager()
   @StateObject var journalNavigation = JournalNavigationManager()
   @StateObject var activityNavigation = ActivityNavigationManager()
 
   @State private var selectedTab: NavigationTabs = .dashboard
-
-  let persistenceController = PersistenceController.shared
 
   // TODO: use @AppStorage
   @State var isFirstAppOpen = false
@@ -31,12 +31,13 @@ struct AntimoApp: App {
       if isFirstAppOpen {
         OnboardingView()
       } else {
-        ANTabView(
-          selectedTab: $selectedTab,
-          dashboardNavigation: dashboardNavigation,
-          journalNavigation: journalNavigation,
-          activityNavigation: activityNavigation)
-          .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        ANTabView(selectedTab: $selectedTab)
+          .environmentObject(dashboardNavigation)
+          .environmentObject(journalNavigation)
+          .environmentObject(activityNavigation)
+          .environmentObject(journalViewModel)
+          .environmentObject(summaryViewModel)
+          .environmentObject(reminderViewModel)
           .onOpenURL { url in
             Task {
               await handleDeeplinking(from: url)

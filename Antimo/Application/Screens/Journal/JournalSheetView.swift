@@ -57,8 +57,7 @@ struct GroomingInputs: View {
 struct JournalSheetView: View {
 
   // MARK: Internal
-
-  @EnvironmentObject var viewModel: JournalViewModel
+  @EnvironmentObject private var viewModel: JournalViewModel
 
   var body: some View {
     ANBaseContainer {
@@ -110,10 +109,10 @@ struct JournalSheetView: View {
               label: "\(viewModel.activityType.rawValue) photo (optional)")
 
             ANButton("Submit") {
-              if viewModel.selectedActivity != nil {
-                viewModel.submitEditForm(context: viewContext)
+              if viewModel.isUpdating {
+                viewModel.submitEditForm()
               } else {
-                viewModel.submitForm(context: viewContext)
+                viewModel.submitForm()
               }
             }
             .buttonStyle(.fill)
@@ -134,16 +133,8 @@ struct JournalSheetView: View {
         }
       }
     }
-    .onAppear {
-      if let selectedActivity = viewModel.selectedActivity {
-        viewModel.setState(activity: selectedActivity)
-      }
-    }
   }
 
   // MARK: Private
-
-  @Environment(\.managedObjectContext) private var viewContext
   @FocusState private var keyboardVisible: Bool
-
 }

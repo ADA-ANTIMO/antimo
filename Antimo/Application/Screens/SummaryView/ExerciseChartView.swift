@@ -24,11 +24,11 @@ struct ExerciseData: Identifiable {
 // MARK: - ExerciseChartView
 
 struct ExerciseChartView: View {
-  var exerciseData: FetchedResults<Activity>
+  var exerciseData: [ExerciseActivity]
 
-  var averageWeight: Int32 {
-    let totalWeight = exerciseData.reduce(0) { $0 + ($1.exercise?.duration ?? 0) }
-    let numberOfDataPoints = Int32(exerciseData.count)
+  var averageWeight: Int {
+    let totalWeight = exerciseData.reduce(0) { $0 + ($1.duration) }
+    let numberOfDataPoints = exerciseData.count
     return totalWeight / numberOfDataPoints
   }
 
@@ -41,15 +41,17 @@ struct ExerciseChartView: View {
           .annotation(alignment: .center) {
             Text("Average").font(.caption).foregroundColor(Color.anPrimary)
           }
-        ForEach(exerciseData, id: \.id) {
+
+        ForEach(exerciseData) { exercise in
           LineMark(
-            x: .value("Date", $0.createdAt ?? Date(), unit: .day),
-            y: .value("Time", $0.exercise?.duration ?? 0))
-            .interpolationMethod(.cardinal)
+            x: .value("Date", exercise.createdAt, unit: .day),
+            y: .value("Time", exercise.duration)
+          )
 
           PointMark(
-            x: .value("Date", $0.createdAt ?? Date(), unit: .day),
-            y: .value("Weight", $0.exercise?.duration ?? 0))
+            x: .value("Date", exercise.createdAt, unit: .day),
+            y: .value("Weight", exercise.duration)
+          )
         }
       }
       .frame(maxWidth: UIScreen.main.bounds.width)

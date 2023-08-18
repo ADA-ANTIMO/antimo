@@ -15,10 +15,10 @@ enum ActivityActions: String, CaseIterable {
 
   func buttonRole() -> ButtonRole? {
     switch self {
-    case .delete:
-      return ButtonRole.destructive
-    case .edit:
-      return nil
+      case .delete:
+        return ButtonRole.destructive
+      case .edit:
+        return nil
     }
   }
 }
@@ -34,7 +34,7 @@ enum ExtraIcons: String, CaseIterable {
 // MARK: - Action
 
 struct Action: Identifiable {
-  let id: UUID
+  let id: UUID = UUID()
   let type: ActivityActions
   let action: () -> Void
 }
@@ -42,32 +42,40 @@ struct Action: Identifiable {
 // MARK: - ActivityMeta
 
 struct ActivityMeta: View {
-  let activity: Activity
+  let activity: any Activity
 
   var body: some View {
     HStack(alignment: .top) {
       VStack(alignment: .leading) {
-        if activity.type != ActivityTypes.other.rawValue {
-          switch activity.type {
-          case ActivityTypes.nutrition.rawValue:
-            ActivityExtra(
-              icon: .forkKnife,
-              extra: "\(activity.nutrition!.menu!) (\(activity.nutrition!.isEatenUp ? "Eaten Up" : "Has Leftover"))")
-          case ActivityTypes.medication.rawValue:
-            if let vet = activity.medication?.vet, !vet.isEmpty {
-              ActivityExtra(icon: .mappin, extra: "\(vet)")
-            }
-          case ActivityTypes.exercise.rawValue:
-            ActivityExtra(icon: .timer, extra: "\(activity.exercise!.duration) Minutes")
-          case ActivityTypes.grooming.rawValue:
-            ActivityExtra(icon: .mappin, extra: "\(activity.grooming!.salon!)")
-          default:
-            EmptyView()
+        if activity.activityType != ActivityTypes.other {
+          switch activity.activityType {
+            case ActivityTypes.nutrition:
+              let nutrition = activity as! NutritionActivity // swiftlint:disable:this force_cast
+
+              ActivityExtra(
+                icon: .forkKnife,
+                extra: "\(nutrition.menu) (\(nutrition.isEatenUp ? "Eaten Up" : "Has Leftover"))")
+            case ActivityTypes.medication:
+              let medication = activity as! MedicationActivity // swiftlint:disable:this force_cast
+
+              if !medication.vet.isEmpty {
+                ActivityExtra(icon: .mappin, extra: "\(medication.vet)")
+              }
+            case ActivityTypes.exercise:
+              let exercise = activity as! ExerciseActivity // swiftlint:disable:this force_cast
+
+              ActivityExtra(icon: .timer, extra: "\(exercise.duration) Minutes")
+            case ActivityTypes.grooming:
+              let grooming = activity as! GroomingActivity // swiftlint:disable:this force_cast
+
+              ActivityExtra(icon: .mappin, extra: "\(grooming.salon)")
+            default:
+              EmptyView()
           }
         }
 
         HStack {
-          let timeComponents = Utilities.getTime(date: activity.createdAt!)
+          let timeComponents = Utilities.getTime(date: activity.createdAt)
 
           Text(String(format: "%02d:%02d", timeComponents.hour!, timeComponents.minute!))
             .font(.cardTime)
@@ -83,7 +91,7 @@ struct ActivityMeta: View {
 
       ZStack {
         VStack(spacing: 0) {
-          let type = activity.type ?? ""
+          let type = activity.activityType.rawValue
           let icon = ActivityIcons.getActivityIcon(type: type)
 
           Image(icon.rawValue)
@@ -186,7 +194,7 @@ struct ANActivityDetails: View {
 
   // MARK: Lifecycle
 
-  init(activity: Activity, actions: [Action], showAction: Bool = true) {
+  init(activity: any Activity, actions: [Action], showAction: Bool = true) {
     self.activity = activity
     self.actions = actions
     self.showAction = showAction
@@ -194,14 +202,14 @@ struct ANActivityDetails: View {
 
   // MARK: Internal
 
-  let activity: Activity
+  let activity: any Activity
   let actions: [Action]
 
   let showAction: Bool
 
   var body: some View {
     VStack {
-      if let image = FileManager().retrieveImage(with: activity.imagePath) {
+      if let image = FileManager().retrieveImage(with: activity.image) {
         VStack {
           Image(uiImage: image)
             .resizable()
@@ -214,13 +222,13 @@ struct ANActivityDetails: View {
 
       // Details
       VStack(alignment: .leading, spacing: 16) {
-        ActivityHeading(actions: actions, title: activity.title!, showAction: showAction)
+        ActivityHeading(actions: actions, title: activity.title, showAction: showAction)
 
         ActivityMeta(activity: activity)
 
         // Desc
         HStack(alignment: .top) {
-          Text(activity.note!)
+          Text(activity.note)
             .font(.cardContent)
             .frame(maxWidth: .infinity, alignment: .leading)
 

@@ -21,9 +21,9 @@ enum NavigationTabs: String {
 struct ANTabView: View {
   @Binding var selectedTab: NavigationTabs
 
-  @ObservedObject var dashboardNavigation: DashboardNavigationManager
-  @ObservedObject var journalNavigation: JournalNavigationManager
-  @ObservedObject var activityNavigation: ActivityNavigationManager
+  @EnvironmentObject private var dashboardNavigation: DashboardNavigationManager
+  @EnvironmentObject private var journalNavigation: JournalNavigationManager
+  @EnvironmentObject private var activityNavigation: ActivityNavigationManager
 
   var body: some View {
     TabView(selection: $selectedTab) {
@@ -46,7 +46,6 @@ struct ANTabView: View {
         }
       }
       .tag(NavigationTabs.dashboard)
-      .environmentObject(dashboardNavigation)
 
       NavigationStack(path: $journalNavigation.journalPaths) {
         JournalView()
@@ -67,7 +66,6 @@ struct ANTabView: View {
         }
       }
       .tag(NavigationTabs.journal)
-      .environmentObject(journalNavigation)
 
       NavigationStack(path: $activityNavigation.activityPaths) {
         ActivityView()
@@ -92,7 +90,6 @@ struct ANTabView: View {
         }
       }
       .tag(NavigationTabs.event)
-      .environmentObject(activityNavigation)
 
       ReminderView()
         .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -8,6 +8,12 @@
 import CoreData
 import SwiftUI
 
+struct DateValue: Identifiable {
+  var id = UUID().uuidString
+  var day: Int
+  var date: Date
+}
+
 // Extending Date to get Current Month Dates...
 extension Date {
   func getAllDates() -> [Date] {
@@ -29,38 +35,24 @@ extension Date {
 // MARK: - ANCalendar
 
 struct ANCalendar: View {
+  // MARK: Internal
+  @EnvironmentObject private var viewModel: JournalViewModel
+  @Binding var currentDate: Date
+  @Binding var currentMonth: Int
 
-  // MARK: Lifecycle
-
-  init(currentDate: Binding<Date>, currentMonth: Binding<Int>) {
-    _currentDate = currentDate
-    _currentMonth = currentMonth
-
-    let startDate = Calendar.current.date(from: Calendar.current.dateComponents(
+  var startDate: Date {
+    Calendar.current.date(from: Calendar.current.dateComponents(
       [.year, .month],
-      from: currentDate.wrappedValue))!
+      from: currentDate))!
+  }
+
+  var endDate: Date {
+    let startDate = self.startDate
     let range = Calendar.current.range(of: .day, in: .month, for: startDate)!
     let endDate = Calendar.current.date(bySetting: .day, value: range.count, of: startDate)!
 
-    let request: NSFetchRequest<Activity> = Activity.fetchRequest()
-    request.sortDescriptors = [
-      NSSortDescriptor(key: "createdAt", ascending: false),
-    ]
-    request.predicate = NSPredicate(
-      format: "(createdAt >= %@) AND (createdAt <= %@)",
-      startDate as CVarArg,
-      endDate as CVarArg)
-
-    _activities = FetchRequest(fetchRequest: request)
+    return endDate
   }
-
-  // MARK: Internal
-
-  @FetchRequest var activities: FetchedResults<Activity>
-  @Binding var currentDate: Date
-
-  // State for displaying month and change when button chevron clicked
-  @Binding var currentMonth: Int
 
   var body: some View {
     VStack(spacing: 20) {
@@ -158,8 +150,10 @@ struct ANCalendar: View {
       Spacer()
     }
     .onChange(of: currentMonth) { _ in
-      // updating Month
       currentDate = getCurrentMonth()
+    }
+    .onAppear {
+      viewModel.fetchActivityByDateRange(startDate: startDate, endDate: endDate)
     }
   }
 
@@ -207,7 +201,7 @@ struct ANCalendar: View {
   @ViewBuilder
   func dateItem(date: DateValue) -> some View {
     let key = Utilities.formattedDate(from: date.date, format: "EEEE, d MMM yyyy")
-    let activityInDay = activities.byDate.activities[key]?.count ?? 0
+    let activityInDay = viewModel.activitiesByDate.activities[key]?.count ?? 0
     let hasNoActivity = activityInDay == 0
     let isNotDayOfMonth = date.day != -1
 

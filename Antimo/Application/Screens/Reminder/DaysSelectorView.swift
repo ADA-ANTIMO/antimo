@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - DaysSelectorView
 
 struct DaysSelectorView: View {
-  @EnvironmentObject var viewModel: ReminderViewModel
+  @EnvironmentObject private var viewModel: ReminderViewModel
 
   var body: some View {
     VStack {

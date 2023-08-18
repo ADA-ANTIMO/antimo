@@ -24,3 +24,8 @@ protocol Activity: Identifiable {
   var createdAt: Date { get set }
   var updatedAt: Date { get set }
 }
+
+struct OrderedActivity {
+  var activities = [String: [any Activity]]()
+  var keys = [String]()
+}

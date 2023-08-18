@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ActivityAddJournalView: View {
   @EnvironmentObject private var activityNavigation: ActivityNavigationManager
-  @StateObject var viewModel = JournalViewModel()
+  @EnvironmentObject private var viewModel: JournalViewModel
 
   var body: some View {
     ANBaseContainer {
@@ -54,7 +54,6 @@ struct ActivityAddJournalView: View {
       viewModel.resetState()
     } content: {
       JournalSheetView()
-        .environmentObject(viewModel)
     }
   }
 }

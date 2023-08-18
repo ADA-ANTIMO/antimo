@@ -9,30 +9,19 @@ import CoreData
 import SwiftUI
 
 struct JournalView: View {
+  // MARK: Internal
+  @EnvironmentObject private var viewModel: JournalViewModel
 
-  // MARK: Lifecycle
-
-  init() {
+  var startDate: Date {
     let lastWeek = Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? Date.now
     let startDate = Calendar.current.startOfDay(for: lastWeek)
-    let endDate = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: Date.now) ?? Date.now
 
-    let request: NSFetchRequest<Activity> = Activity.fetchRequest()
-    request.sortDescriptors = [
-      NSSortDescriptor(key: "createdAt", ascending: false),
-    ]
-    request.predicate = NSPredicate(
-      format: "(createdAt >= %@) AND (createdAt <= %@)",
-      startDate as CVarArg,
-      endDate as CVarArg)
-
-    _activities = FetchRequest(fetchRequest: request)
+    return startDate
   }
 
-  // MARK: Internal
-
-  @FetchRequest var activities: FetchedResults<Activity>
-  @StateObject var viewModel = JournalViewModel()
+  var endDate: Date {
+    Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: Date.now) ?? Date.now
+  }
 
   var body: some View {
     ANBaseContainer(toolbar: {
@@ -46,7 +35,7 @@ struct JournalView: View {
         }
       }
     }, children: {
-      if activities.isEmpty {
+      if viewModel.activities.isEmpty {
         Spacer()
 
         VStack {
@@ -65,26 +54,16 @@ struct JournalView: View {
       } else {
         ScrollView {
           VStack(spacing: 8) {
-            ForEach(activities.byDate.keys, id: \.self) { key in
+            ForEach(viewModel.activitiesByDate.keys, id: \.self) { key in
               Section {
-                ForEach(activities.byDate.activities[key] ?? [], id: \.self) { activity in
-                  let editAction = Action(id: UUID(), type: .edit) {
-                    viewModel.selectedActivity = activity
-                    viewModel
-                      .openActivityForm(
-                        selectedActivityType: ActivityTypes
-                          .getByString(type: activity.type ?? ""))
+                ForEach(viewModel.activitiesByDate.activities[key] ?? [], id: \.self.id) { activity in
+                  let editAction = Action(type: .edit) {
+                    viewModel.setState(activity: activity)
+                    viewModel.openActivityForm(selectedActivityType: activity.activityType)
                   }
 
-                  let deleteAction = Action(id: UUID(), type: .delete) {
-                    viewContext.delete(activity)
-
-                    do {
-                      try viewContext.save()
-                    } catch {
-                      let nsError = error as NSError
-                      debugPrint("Unresolved error \(nsError), \(nsError.userInfo)")
-                    }
+                  let deleteAction = Action(type: .delete) {
+                    viewModel.deleteActivityById(id: activity.id)
                   }
 
                   ANActivityDetails(activity: activity, actions: [editAction, deleteAction])
@@ -110,12 +89,13 @@ struct JournalView: View {
       viewModel.resetState()
     }) {
       JournalSheetView()
-        .environmentObject(viewModel)
+    }
+    .onAppear {
+      viewModel.fetchActivityByDateRange(startDate: startDate, endDate: endDate)
     }
   }
 
   // MARK: Private
 
-  @Environment(\.managedObjectContext) private var viewContext
   @EnvironmentObject private var journalNavigation: JournalNavigationManager
 }

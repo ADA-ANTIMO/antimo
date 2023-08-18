@@ -12,50 +12,24 @@ import SwiftUI
 // MARK: - SummaryView
 
 struct SummaryView: View {
-
-  // MARK: Lifecycle
-
-  init() {
-    let lastWeek = Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? Date.now
-    let startDate = Calendar.current.startOfDay(for: lastWeek)
-    let endDate = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: Date.now) ?? Date.now
-
-    let request: NSFetchRequest<Activity> = Activity.fetchRequest()
-    request.sortDescriptors = [
-      NSSortDescriptor(key: "createdAt", ascending: false),
-    ]
-    request.predicate = NSPredicate(
-      format: "(createdAt >= %@) AND (createdAt <= %@) AND (type == %@)",
-      startDate as CVarArg,
-      endDate as CVarArg,
-      "Exercise")
-
-    let activityRequest: NSFetchRequest<Activity> = Activity.fetchRequest()
-    activityRequest.sortDescriptors = [
-      NSSortDescriptor(key: "createdAt", ascending: false),
-    ]
-    activityRequest.predicate = NSPredicate(
-      format: "(createdAt >= %@) AND (createdAt <= %@)",
-      startDate as CVarArg,
-      endDate as CVarArg)
-
-    _activities = FetchRequest(fetchRequest: activityRequest)
-
-    _exerciseData = FetchRequest(fetchRequest: request)
-  }
-
   // MARK: Internal
 
-  @FetchRequest var activities: FetchedResults<Activity>
+  var startDate: Date {
+    let lastWeek = Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? Date.now
 
-  @StateObject var viewModel = SummaryViewModel()
-  @StateObject var eventVM = ActivityViewModel()
+    return Calendar.current.startOfDay(for: lastWeek)
+  }
+
+  var endDate: Date {
+    Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: Date.now) ?? Date.now
+  }
 
   var body: some View {
     ANBaseContainer {
       ANToolbar(title: "Dashboard") {
-        CircularProfileImage(viewModel: viewModel).onTapGesture {
-          viewModel.openProfileForm()
+        CircularProfileImage()
+          .onTapGesture {
+          summaryVM.openProfileForm()
         }
       }
     } children: {
@@ -105,9 +79,7 @@ struct SummaryView: View {
           // MARK: Upcoming Event
 
           VStack(alignment: .leading, spacing: 10) {
-            UpcomingEventView(viewModel: eventVM, events: events, onShowAll: {
-              dashboardNavigation.push(to: .allEvents)
-            })
+            UpcomingEventView()
           }
           .padding(.horizontal)
 
@@ -119,7 +91,7 @@ struct SummaryView: View {
               Spacer()
             }
 
-            if activities.isEmpty {
+            if activityVM.activities.isEmpty {
               HStack {
                 Spacer()
 
@@ -132,12 +104,12 @@ struct SummaryView: View {
               }
             } else {
               VStack(spacing: 8) {
-                ForEach(activities.byDate.keys, id: \.self) { key in
+                ForEach(activityVM.activitiesByDate.keys, id: \.self) { key in
                   Section {
-                    ForEach(activities.byDate.activities[key] ?? [], id: \.self) { activity in
-                      let editAction = Action(id: UUID(), type: .edit) { }
+                    ForEach(activityVM.activitiesByDate.activities[key] ?? [], id: \.self.id) { activity in
+                      let editAction = Action(type: .edit) { }
 
-                      let deleteAction = Action(id: UUID(), type: .delete) { }
+                      let deleteAction = Action(type: .delete) { }
 
                       ANActivityDetails(
                         activity: activity,
@@ -161,7 +133,7 @@ struct SummaryView: View {
 
           VStack(spacing: 0) {
             Button {
-              viewModel.openWeightSheet()
+              summaryVM.openWeightSheet()
             } label: {
               HStack {
                 Text("Weight")
@@ -175,7 +147,7 @@ struct SummaryView: View {
             Divider().frame(height: 1)
 
             Button {
-              viewModel.isExerciseSheetPresented = true
+              summaryVM.isExerciseSheetPresented = true
             } label: {
               HStack {
                 Text("Exercise")
@@ -192,43 +164,43 @@ struct SummaryView: View {
         }
       }
     }
-    .snackbar(isPresented: $viewModel.showSnackBar, text: "Dog profile has been updated", type: .success)
-    .sheet(isPresented: $viewModel.isEditting) {
+    .snackbar(isPresented: $summaryVM.showSnackBar, text: "Dog profile has been updated", type: .success)
+    .sheet(isPresented: $summaryVM.isEditting) {
       VStack {
         ANToolbar(leading: {
           Text("Cancel")
             .font(.toolbar)
             .foregroundColor(Color.anNavigation)
             .onTapGesture {
-              viewModel.closeProfileForm()
+              summaryVM.closeProfileForm()
             }
         }, title: "Edit Profile") {
           Text("Update")
             .font(.toolbar)
-            .foregroundColor(Color.anNavigation.opacity(viewModel.disabledSubmit ? 0.1 : 1))
+            .foregroundColor(Color.anNavigation.opacity(summaryVM.disabledSubmit ? 0.1 : 1))
             .onTapGesture {
-              viewModel.saveProfileData(viewContext: viewContext)
+              summaryVM.saveProfileData()
             }
-            .disabled(viewModel.disabledSubmit)
+            .disabled(summaryVM.disabledSubmit)
         }
 
         ScrollView {
-          EditableCircularProfileImage(viewModel: viewModel, width: 150, height: 180)
+          EditableCircularProfileImage(width: 150, height: 180)
           VStack(spacing: 22) {
-            ANTextField(text: $viewModel.dogName, placeholder: "", label: "Dog Name")
+            ANTextField(text: $summaryVM.dogName, placeholder: "", label: "Dog Name")
             HStack(spacing: 20) {
               Text("Dog Gender").font(.inputLabel)
 
-              Picker("Dog Gender", selection: $viewModel.gender) {
+              Picker("Dog Gender", selection: $summaryVM.gender) {
                 Text("Male").tag("Male")
                 Text("Female").tag("Female")
               }
               .pickerStyle(.segmented)
             }
 
-            ANDatePicker(date: $viewModel.bod, label: "Birth of date")
-            ANTextField(text: $viewModel.breed, placeholder: "", label: "Breed")
-            ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight", suffix: "Kg")
+            ANDatePicker(date: $summaryVM.bod, label: "Birth of date")
+            ANTextField(text: $summaryVM.breed, placeholder: "", label: "Breed")
+            ANNumberField(text: $summaryVM.weight, placeholder: "", label: "Weight", suffix: "Kg")
           }
           .padding(.horizontal)
         }
@@ -237,11 +209,11 @@ struct SummaryView: View {
 
       Spacer()
     }
-    .sheet(isPresented: $viewModel.isExerciseSheetPresented, onDismiss: { viewModel.isExerciseSheetPresented = false }) {
+    .sheet(isPresented: $summaryVM.isExerciseSheetPresented, onDismiss: { summaryVM.isExerciseSheetPresented = false }) {
       // MARK: Exercise Chart
 
       Group {
-        if exerciseData.isEmpty {
+        if activityVM.exerciseActivities.isEmpty {
           Spacer()
           Text("There is no exercise data yet. Let's add some")
             .multilineTextAlignment(.center)
@@ -250,7 +222,7 @@ struct SummaryView: View {
         } else {
           VStack(alignment: .leading, spacing: 20) {
             Text("Exercise")
-            ExerciseChartView(exerciseData: exerciseData).frame(height: 250)
+            ExerciseChartView(exerciseData: activityVM.exerciseActivities).frame(height: 250)
             Text("Time (Minute)")
           }
           .padding()
@@ -260,14 +232,14 @@ struct SummaryView: View {
       .presentationDetents([.medium])
       .presentationDragIndicator(.visible)
     }
-    .sheet(isPresented: $viewModel.isWeightSheetPresented, onDismiss: { viewModel.closeWeightSheet() }) {
+    .sheet(isPresented: $summaryVM.isWeightSheetPresented, onDismiss: { summaryVM.closeWeightSheet() }) {
       // MARK: Weight Chart
 
       Group {
-        if !petData.isEmpty {
+        if !summaryVM.petDatas.isEmpty {
           VStack(alignment: .leading, spacing: 20) {
             Text("Weight")
-            WeightChartView(petData: petData).frame(height: 200)
+            WeightChartView(petDatas: summaryVM.petDatas).frame(height: 200)
           }
           .padding()
           .background(Color.anPrimary.opacity(0.1))
@@ -279,19 +251,13 @@ struct SummaryView: View {
           Spacer()
         }
 
-        ANNumberField(text: $viewModel.weight, placeholder: "", label: "Weight", suffix: "Kg").padding(.horizontal)
+        ANNumberField(text: $summaryVM.weight, placeholder: "", label: "Weight", suffix: "Kg").padding(.horizontal)
         ANButton("Save") {
-          do {
-            let newPetData = Pet(context: viewContext)
-            newPetData.id = UUID()
-            newPetData.createdAt = Date()
-            newPetData.weight = Int16(viewModel.weight) ?? 0
-            try viewContext.save()
-            viewModel.persistWeight = viewModel.weight
-            viewModel.closeWeightSheet()
-          } catch {
-            print("Failed to save")
-          }
+          let petData = Pet(weight: Int(summaryVM.weight) ?? 0)
+
+          summaryVM.createNewPetData(petData: petData)
+          summaryVM.persistWeight = summaryVM.weight
+          summaryVM.closeWeightSheet()
         }
         .buttonStyle(.fill)
         .padding(.horizontal)
@@ -299,21 +265,15 @@ struct SummaryView: View {
       .presentationDetents([.medium])
       .presentationDragIndicator(.visible)
     }
+    .onAppear {
+      activityVM.fetchActivityByDateRange(startDate: startDate, endDate: endDate)
+      activityVM.fetchAllExerciseActivitiesByDateRange(startDate: startDate, endDate: endDate)
+    }
   }
 
   // MARK: Private
-
-  @Environment(\.managedObjectContext) private var viewContext
-
-  @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)])
-  private var petData: FetchedResults<Pet>
-
-  @FetchRequest(sortDescriptors: [])
-  private var exerciseData: FetchedResults<Activity>
-
-  @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "triggerDate", ascending: true)])
-  private var events: FetchedResults<Event>
-
+  @EnvironmentObject private var activityVM: JournalViewModel
+  @EnvironmentObject private var summaryVM: SummaryViewModel
   @EnvironmentObject private var dashboardNavigation: DashboardNavigationManager
 
 }
