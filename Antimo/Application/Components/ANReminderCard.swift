@@ -109,5 +109,4 @@ struct ANReminderCard: View {
   // MARK: Private
 
   @State private var localIsOn: Bool
-
 }

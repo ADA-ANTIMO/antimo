@@ -10,8 +10,8 @@ import SwiftUI
 // MARK: - DashboardAllEventView
 
 struct DashboardAllEventView: View {
-  @EnvironmentObject private var dashboardNavigation: DashboardNavigationManager
-  @EnvironmentObject private var viewModel: ReminderViewModel
+
+  // MARK: Internal
 
   var body: some View {
     ANBaseContainer(toolbar: {
@@ -30,7 +30,7 @@ struct DashboardAllEventView: View {
       ScrollView {
         ForEach(viewModel.eventsByDate.keys, id: \.self) { key in
           Section {
-            ForEach(viewModel.eventsByDate.events[key] ?? [], id: \.self.id) { event in
+            ForEach(viewModel.eventsByDate.events[key] ?? [], id: \.id) { event in
               ANEventCard(
                 icon: viewModel.getIcon(event.activityType.rawValue),
                 title: event.title,
@@ -54,6 +54,12 @@ struct DashboardAllEventView: View {
       AddEventSheetView()
     }
   }
+
+  // MARK: Private
+
+  @EnvironmentObject private var dashboardNavigation: DashboardNavigationManager
+  @EnvironmentObject private var viewModel: ReminderViewModel
+
 }
 
 // MARK: - DashboardAllEventView_Previews

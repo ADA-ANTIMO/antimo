@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(NSRoutine)
-public class NSRoutine: NSManagedObject {
-
-}
+public class NSRoutine: NSManagedObject { }

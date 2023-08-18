@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(NSExerciseActivity)
-public class NSExerciseActivity: NSManagedObject {
-
-}
+public class NSExerciseActivity: NSManagedObject { }

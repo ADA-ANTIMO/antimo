@@ -9,7 +9,9 @@ import CoreData
 import SwiftUI
 
 struct ActivityDetailsView: View {
+
   // MARK: Internal
+
   var selectedDate: Date
 
   var startDate: Date {
@@ -48,7 +50,7 @@ struct ActivityDetailsView: View {
         VStack(spacing: 8) {
           ForEach(viewModel.activitiesByDate.keys, id: \.self) { key in
             Section {
-              ForEach(viewModel.activitiesByDate.activities[key] ?? [], id: \.self.id) { activity in
+              ForEach(viewModel.activitiesByDate.activities[key] ?? [], id: \.id) { activity in
                 let editAction = Action(type: .edit) {
                   viewModel.setState(activity: activity)
                   viewModel.openActivityForm(selectedActivityType: activity.activityType)

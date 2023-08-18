@@ -6,21 +6,20 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension NSOtherActivity {
+  @NSManaged public var id: UUID?
+  @NSManaged public var activity: NSActivity?
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<NSOtherActivity> {
-        return NSFetchRequest<NSOtherActivity>(entityName: "NSOtherActivity")
-    }
-
-    @NSManaged public var id: UUID?
-    @NSManaged public var activity: NSActivity?
-
-}
-
-extension NSOtherActivity : Identifiable {
+  @nonobjc
+  public class func fetchRequest() -> NSFetchRequest<NSOtherActivity> {
+    NSFetchRequest<NSOtherActivity>(entityName: "NSOtherActivity")
+  }
 
 }
+
+// MARK: - NSOtherActivity + Identifiable
+
+extension NSOtherActivity: Identifiable { }

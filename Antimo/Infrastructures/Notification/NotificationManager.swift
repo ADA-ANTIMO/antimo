@@ -10,9 +10,9 @@ import UserNotifications
 
 @MainActor
 class NotificationsManager: ObservableObject {
-  static let shared = NotificationsManager()
 
   // MARK: Lifecycle
+
   init() {
     Task {
       await getAuthStatus()
@@ -20,6 +20,8 @@ class NotificationsManager: ObservableObject {
   }
 
   // MARK: Internal
+
+  static let shared = NotificationsManager()
 
   // TODO: Decide whether to use a singleton or not
   @Published private(set) var hasPermission = false
@@ -108,6 +110,7 @@ class NotificationsManager: ObservableObject {
         content.sound = UNNotificationSound.default
 
         // MARK: Trigger Calendar, based on date and time values
+
         let deepLinkURL = URL(string: "antimo://\(DeepLinkURLs.addJournals.rawValue)")!
         content.userInfo = ["link": deepLinkURL.absoluteString]
 

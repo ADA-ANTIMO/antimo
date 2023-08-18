@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - ActivityTypes
+
 enum ActivityTypes: String {
   case nutrition = "Nutrition"
   case medication = "Medication"
@@ -14,6 +16,8 @@ enum ActivityTypes: String {
   case grooming = "Grooming"
   case other = "Other"
 }
+
+// MARK: - Activity
 
 protocol Activity: Identifiable {
   var id: UUID { get set }
@@ -24,6 +28,8 @@ protocol Activity: Identifiable {
   var createdAt: Date { get set }
   var updatedAt: Date { get set }
 }
+
+// MARK: - OrderedActivity
 
 struct OrderedActivity {
   var activities = [String: [any Activity]]()

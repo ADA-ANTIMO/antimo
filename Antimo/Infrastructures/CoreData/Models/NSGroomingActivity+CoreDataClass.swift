@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(NSGroomingActivity)
-public class NSGroomingActivity: NSManagedObject {
-
-}
+public class NSGroomingActivity: NSManagedObject { }

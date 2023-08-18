@@ -9,6 +9,7 @@ import Foundation
 
 protocol ReminderRepository {
   // MARK: Event
+
   func createNewEvent(newEvent: Event) -> Event?
   func getAllEvents() -> [Event]
   func getEventById(id: UUID) -> Event?
@@ -17,6 +18,7 @@ protocol ReminderRepository {
   func deleteEventById(id: UUID) -> Event?
 
   // MARK: Routine
+
   func createNewRoutine(newRoutine: Routine) -> Routine?
   func getAllRoutines() -> [Routine]
   func getRoutineById(id: UUID) -> Routine?

@@ -20,14 +20,16 @@ import PhotosUI
 
 @MainActor
 class SummaryViewModel: ObservableObject {
-  @Published var petDatas: [Pet] = []
+
+  // MARK: Lifecycle
 
   init() {
     fetchPetDatas()
   }
 
   // MARK: Internal
-  private var petService = PetService(petRepository: PetCoreDataAdapter())
+
+  @Published var petDatas: [Pet] = []
 
   // MARK: - Profile Details
 
@@ -49,20 +51,6 @@ class SummaryViewModel: ObservableObject {
   @Published var showSnackBar = false
   @Published var isExerciseSheetPresented = false
   @Published var isWeightSheetPresented = false
-
-  func fetchPetDatas() {
-    petDatas = petService.getAllPetDatas()
-  }
-
-  func createNewPetData(petData: Pet) {
-    guard let petData = petService.createNewPetData(petData: petData) else {
-      print("Failed creating pet data")
-
-      return
-    }
-
-    petDatas.append(petData)
-  }
 
   var disabledSubmit: Bool {
     dogName.isEmpty || gender.isEmpty || breed.isEmpty || weight.isEmpty
@@ -115,6 +103,20 @@ class SummaryViewModel: ObservableObject {
     let weightInKilograms = Float(persistWeight) ?? 0.0
     let formattedWeight = String(format: "%.2f KG", weightInKilograms)
     return !persistWeight.isEmpty ? formattedWeight : "-"
+  }
+
+  func fetchPetDatas() {
+    petDatas = petService.getAllPetDatas()
+  }
+
+  func createNewPetData(petData: Pet) {
+    guard let petData = petService.createNewPetData(petData: petData) else {
+      print("Failed creating pet data")
+
+      return
+    }
+
+    petDatas.append(petData)
   }
 
   // MARK: - Profile Image
@@ -170,6 +172,8 @@ class SummaryViewModel: ObservableObject {
   }
 
   // MARK: Private
+
+  private var petService = PetService(petRepository: PetCoreDataAdapter())
 
   private var persistBODData: Data? {
     get {

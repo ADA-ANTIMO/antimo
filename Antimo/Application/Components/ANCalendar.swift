@@ -8,6 +8,8 @@
 import CoreData
 import SwiftUI
 
+// MARK: - DateValue
+
 struct DateValue: Identifiable {
   var id = UUID().uuidString
   var day: Int
@@ -36,6 +38,7 @@ extension Date {
 
 struct ANCalendar: View {
   // MARK: Internal
+
   @EnvironmentObject private var viewModel: JournalViewModel
   @Binding var currentDate: Date
   @Binding var currentMonth: Int
@@ -47,7 +50,7 @@ struct ANCalendar: View {
   }
 
   var endDate: Date {
-    let startDate = self.startDate
+    let startDate = startDate
     let range = Calendar.current.range(of: .day, in: .month, for: startDate)!
     let endDate = Calendar.current.date(bySetting: .day, value: range.count, of: startDate)!
 

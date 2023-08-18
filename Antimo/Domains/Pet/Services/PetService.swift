@@ -8,11 +8,14 @@
 import Foundation
 
 class PetService {
-  private let petRepository: PetRepository
+
+  // MARK: Lifecycle
 
   init(petRepository: PetRepository) {
     self.petRepository = petRepository
   }
+
+  // MARK: Internal
 
   func createNewPetData(petData: Pet) -> Pet? {
     petRepository.createNewPetData(petData: petData)
@@ -21,4 +24,9 @@ class PetService {
   func getAllPetDatas() -> [Pet] {
     petRepository.getAllPetDatas()
   }
+
+  // MARK: Private
+
+  private let petRepository: PetRepository
+
 }

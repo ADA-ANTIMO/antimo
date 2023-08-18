@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(NSNutritionActivity)
-public class NSNutritionActivity: NSManagedObject {
-
-}
+public class NSNutritionActivity: NSManagedObject { }

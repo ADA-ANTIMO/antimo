@@ -19,11 +19,10 @@ enum NavigationTabs: String {
 // MARK: - ANTabView
 
 struct ANTabView: View {
-  @Binding var selectedTab: NavigationTabs
 
-  @EnvironmentObject private var dashboardNavigation: DashboardNavigationManager
-  @EnvironmentObject private var journalNavigation: JournalNavigationManager
-  @EnvironmentObject private var activityNavigation: ActivityNavigationManager
+  // MARK: Internal
+
+  @Binding var selectedTab: NavigationTabs
 
   var body: some View {
     TabView(selection: $selectedTab) {
@@ -118,4 +117,11 @@ struct ANTabView: View {
       }
     })
   }
+
+  // MARK: Private
+
+  @EnvironmentObject private var dashboardNavigation: DashboardNavigationManager
+  @EnvironmentObject private var journalNavigation: JournalNavigationManager
+  @EnvironmentObject private var activityNavigation: ActivityNavigationManager
+
 }

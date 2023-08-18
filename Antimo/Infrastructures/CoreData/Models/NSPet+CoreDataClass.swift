@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(NSPet)
-public class NSPet: NSManagedObject {
-
-}
+public class NSPet: NSManagedObject { }

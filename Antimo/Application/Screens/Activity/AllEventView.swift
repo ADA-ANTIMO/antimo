@@ -10,8 +10,8 @@ import SwiftUI
 // MARK: - AllEventView
 
 struct AllEventView: View {
-  @EnvironmentObject private var activityNavigation: ActivityNavigationManager
-  @EnvironmentObject private var viewModel: ReminderViewModel
+
+  // MARK: Internal
 
   var body: some View {
     ANBaseContainer(toolbar: {
@@ -35,8 +35,7 @@ struct AllEventView: View {
                 icon: viewModel.getIcon(event.activityType.rawValue),
                 title: event.title,
                 desc: event.description,
-                time: viewModel.getRenderedHourAndMinutes(event.triggerDate)
-              )
+                time: viewModel.getRenderedHourAndMinutes(event.triggerDate))
             }
           } header: {
             HStack {
@@ -55,6 +54,12 @@ struct AllEventView: View {
       AddEventSheetView()
     }
   }
+
+  // MARK: Private
+
+  @EnvironmentObject private var activityNavigation: ActivityNavigationManager
+  @EnvironmentObject private var viewModel: ReminderViewModel
+
 }
 
 // MARK: - AllEventView_Previews

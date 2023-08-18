@@ -6,22 +6,21 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension NSMedicationActivity {
+  @NSManaged public var id: UUID?
+  @NSManaged public var vet: String?
+  @NSManaged public var activity: NSActivity?
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<NSMedicationActivity> {
-        return NSFetchRequest<NSMedicationActivity>(entityName: "NSMedicationActivity")
-    }
-
-    @NSManaged public var id: UUID?
-    @NSManaged public var vet: String?
-    @NSManaged public var activity: NSActivity?
-
-}
-
-extension NSMedicationActivity : Identifiable {
+  @nonobjc
+  public class func fetchRequest() -> NSFetchRequest<NSMedicationActivity> {
+    NSFetchRequest<NSMedicationActivity>(entityName: "NSMedicationActivity")
+  }
 
 }
+
+// MARK: - NSMedicationActivity + Identifiable
+
+extension NSMedicationActivity: Identifiable { }

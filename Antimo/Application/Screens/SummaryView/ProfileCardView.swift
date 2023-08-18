@@ -11,7 +11,8 @@ import SwiftUI
 // MARK: - CircularProfileImage
 
 struct CircularProfileImage: View {
-  @EnvironmentObject private var viewModel: SummaryViewModel
+
+  // MARK: Internal
 
   var uiImage: UIImage {
     if
@@ -46,6 +47,11 @@ struct CircularProfileImage: View {
           endPoint: .bottom))
     }
   }
+
+  // MARK: Private
+
+  @EnvironmentObject private var viewModel: SummaryViewModel
+
 }
 
 // MARK: - EditableCircularProfileImage

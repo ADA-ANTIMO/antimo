@@ -5,19 +5,19 @@
 //  Created by Bisma Mahendra I Dewa Gede on 18/08/23.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class PetCoreDataAdapter: PetRepository {
-  private let coreDataContext = CoreDataConnection.shared.context
+
+  // MARK: Internal
 
   func normalizePetEntity(pet: NSPet) -> Pet {
     Pet(
       id: pet.id ?? UUID(),
       weight: pet.weight.toInt,
       updatedAt: pet.updatedAt ?? Date(),
-      createdAt: pet.createdAt ?? Date()
-    )
+      createdAt: pet.createdAt ?? Date())
   }
 
   func createNewPetData(petData: Pet) -> Pet? {
@@ -64,4 +64,9 @@ class PetCoreDataAdapter: PetRepository {
       return []
     }
   }
+
+  // MARK: Private
+
+  private let coreDataContext = CoreDataConnection.shared.context
+
 }

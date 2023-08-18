@@ -8,8 +8,8 @@
 import Foundation
 
 struct Pet: Identifiable {
-  var id: UUID = UUID()
+  var id: UUID = .init()
   var weight: Int
-  var updatedAt: Date = Date()
-  var createdAt: Date = Date()
+  var updatedAt: Date = .init()
+  var createdAt: Date = .init()
 }

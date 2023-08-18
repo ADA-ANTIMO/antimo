@@ -57,7 +57,6 @@ struct GroomingInputs: View {
 struct JournalSheetView: View {
 
   // MARK: Internal
-  @EnvironmentObject private var viewModel: JournalViewModel
 
   var body: some View {
     ANBaseContainer {
@@ -136,5 +135,8 @@ struct JournalSheetView: View {
   }
 
   // MARK: Private
+
+  @EnvironmentObject private var viewModel: JournalViewModel
+
   @FocusState private var keyboardVisible: Bool
 }

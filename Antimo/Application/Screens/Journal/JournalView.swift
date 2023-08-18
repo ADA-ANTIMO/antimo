@@ -9,8 +9,8 @@ import CoreData
 import SwiftUI
 
 struct JournalView: View {
+
   // MARK: Internal
-  @EnvironmentObject private var viewModel: JournalViewModel
 
   var startDate: Date {
     let lastWeek = Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? Date.now
@@ -56,7 +56,7 @@ struct JournalView: View {
           VStack(spacing: 8) {
             ForEach(viewModel.activitiesByDate.keys, id: \.self) { key in
               Section {
-                ForEach(viewModel.activitiesByDate.activities[key] ?? [], id: \.self.id) { activity in
+                ForEach(viewModel.activitiesByDate.activities[key] ?? [], id: \.id) { activity in
                   let editAction = Action(type: .edit) {
                     viewModel.setState(activity: activity)
                     viewModel.openActivityForm(selectedActivityType: activity.activityType)
@@ -97,5 +97,6 @@ struct JournalView: View {
 
   // MARK: Private
 
+  @EnvironmentObject private var viewModel: JournalViewModel
   @EnvironmentObject private var journalNavigation: JournalNavigationManager
 }

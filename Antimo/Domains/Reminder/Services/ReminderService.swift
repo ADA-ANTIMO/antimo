@@ -8,13 +8,17 @@
 import Foundation
 
 class ReminderService {
-  private let reminderRepository: ReminderRepository
+
+  // MARK: Lifecycle
 
   init(reminderRepository: ReminderRepository) {
     self.reminderRepository = reminderRepository
   }
 
+  // MARK: Internal
+
   // MARK: Event
+
   func createNewEvent(newEvent: Event) -> Event? {
     reminderRepository.createNewEvent(newEvent: newEvent)
   }
@@ -40,6 +44,7 @@ class ReminderService {
   }
 
   // MARK: Routine
+
   func createNewRoutine(newRoutine: Routine) -> Routine? {
     reminderRepository.createNewRoutine(newRoutine: newRoutine)
   }
@@ -63,4 +68,9 @@ class ReminderService {
   func deleteRoutineById(id: UUID) -> Routine? {
     reminderRepository.deleteRoutineById(id: id)
   }
+
+  // MARK: Private
+
+  private let reminderRepository: ReminderRepository
+
 }

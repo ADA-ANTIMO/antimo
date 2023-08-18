@@ -6,23 +6,22 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension NSPet {
+  @NSManaged public var createdAt: Date?
+  @NSManaged public var id: UUID?
+  @NSManaged public var updatedAt: Date?
+  @NSManaged public var weight: Int16
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<NSPet> {
-        return NSFetchRequest<NSPet>(entityName: "NSPet")
-    }
-
-    @NSManaged public var createdAt: Date?
-    @NSManaged public var id: UUID?
-    @NSManaged public var updatedAt: Date?
-    @NSManaged public var weight: Int16
-
-}
-
-extension NSPet : Identifiable {
+  @nonobjc
+  public class func fetchRequest() -> NSFetchRequest<NSPet> {
+    NSFetchRequest<NSPet>(entityName: "NSPet")
+  }
 
 }
+
+// MARK: - NSPet + Identifiable
+
+extension NSPet: Identifiable { }

@@ -45,13 +45,11 @@ struct ExerciseChartView: View {
         ForEach(exerciseData) { exercise in
           LineMark(
             x: .value("Date", exercise.createdAt, unit: .day),
-            y: .value("Time", exercise.duration)
-          )
+            y: .value("Time", exercise.duration))
 
           PointMark(
             x: .value("Date", exercise.createdAt, unit: .day),
-            y: .value("Weight", exercise.duration)
-          )
+            y: .value("Weight", exercise.duration))
         }
       }
       .frame(maxWidth: UIScreen.main.bounds.width)

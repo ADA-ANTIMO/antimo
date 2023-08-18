@@ -6,22 +6,21 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension NSEvent {
+  @NSManaged public var id: UUID?
+  @NSManaged public var triggerDate: Date?
+  @NSManaged public var reminder: NSReminder?
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<NSEvent> {
-        return NSFetchRequest<NSEvent>(entityName: "NSEvent")
-    }
-
-    @NSManaged public var id: UUID?
-    @NSManaged public var triggerDate: Date?
-    @NSManaged public var reminder: NSReminder?
-
-}
-
-extension NSEvent : Identifiable {
+  @nonobjc
+  public class func fetchRequest() -> NSFetchRequest<NSEvent> {
+    NSFetchRequest<NSEvent>(entityName: "NSEvent")
+  }
 
 }
+
+// MARK: - NSEvent + Identifiable
+
+extension NSEvent: Identifiable { }

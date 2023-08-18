@@ -6,39 +6,41 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension NSRoutine {
+  @NSManaged public var id: UUID?
+  @NSManaged public var reminder: NSReminder?
+  @NSManaged public var weekdays: NSSet?
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<NSRoutine> {
-        return NSFetchRequest<NSRoutine>(entityName: "NSRoutine")
-    }
-
-    @NSManaged public var id: UUID?
-    @NSManaged public var reminder: NSReminder?
-    @NSManaged public var weekdays: NSSet?
+  @nonobjc
+  public class func fetchRequest() -> NSFetchRequest<NSRoutine> {
+    NSFetchRequest<NSRoutine>(entityName: "NSRoutine")
+  }
 
 }
 
 // MARK: Generated accessors for weekdays
+
 extension NSRoutine {
+  @objc(addWeekdaysObject:)
+  @NSManaged
+  public func addToWeekdays(_ value: NSWeekday)
 
-    @objc(addWeekdaysObject:)
-    @NSManaged public func addToWeekdays(_ value: NSWeekday)
+  @objc(removeWeekdaysObject:)
+  @NSManaged
+  public func removeFromWeekdays(_ value: NSWeekday)
 
-    @objc(removeWeekdaysObject:)
-    @NSManaged public func removeFromWeekdays(_ value: NSWeekday)
+  @objc(addWeekdays:)
+  @NSManaged
+  public func addToWeekdays(_ values: NSSet)
 
-    @objc(addWeekdays:)
-    @NSManaged public func addToWeekdays(_ values: NSSet)
-
-    @objc(removeWeekdays:)
-    @NSManaged public func removeFromWeekdays(_ values: NSSet)
-
+  @objc(removeWeekdays:)
+  @NSManaged
+  public func removeFromWeekdays(_ values: NSSet)
 }
 
-extension NSRoutine : Identifiable {
+// MARK: - NSRoutine + Identifiable
 
-}
+extension NSRoutine: Identifiable { }

@@ -5,13 +5,15 @@
 //  Created by Bisma Mahendra I Dewa Gede on 16/08/23.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class ReminderCoreDataAdapter: ReminderRepository {
-  private let coreDataContext = CoreDataConnection.shared.context
+
+  // MARK: Internal
 
   // MARK: Event
+
   func normalizeNSEventEntity(event: NSEvent) -> Event {
     let reminder = event.reminder!
 
@@ -24,12 +26,12 @@ class ReminderCoreDataAdapter: ReminderRepository {
       createdAt: reminder.createdAt ?? Date(),
       updatedAt: reminder.updatedAt ?? Date(),
       eventId: event.id ?? UUID(),
-      triggerDate: event.triggerDate ?? Date()
-    )
+      triggerDate: event.triggerDate ?? Date())
   }
 
   func createNewEvent(newEvent: Event) -> Event? {
     // MARK: Creating Reminder
+
     let reminder = NSReminder(context: coreDataContext)
     reminder.id = newEvent.id
     reminder.title = newEvent.title
@@ -38,8 +40,9 @@ class ReminderCoreDataAdapter: ReminderRepository {
     reminder.isActive = newEvent.isActive
     reminder.updatedAt = newEvent.updatedAt
     reminder.createdAt = newEvent.createdAt
-    
+
     // MARK: Creating Event
+
     let event = NSEvent(context: coreDataContext)
     event.id = newEvent.eventId
     event.reminder = reminder
@@ -180,8 +183,10 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   // MARK: Routine
+
   func initializeRoutine(newRoutine: Routine) {
     // MARK: Creating Reminder
+
     let reminder = NSReminder(context: coreDataContext)
     reminder.id = newRoutine.id
     reminder.title = newRoutine.title
@@ -192,11 +197,13 @@ class ReminderCoreDataAdapter: ReminderRepository {
     reminder.createdAt = newRoutine.createdAt
 
     // MARK: Creating Routine
+
     let routine = NSRoutine(context: coreDataContext)
     routine.id = newRoutine.routineId
     routine.reminder = reminder
 
     // MARK: Adding Weekdays to Routine
+
     newRoutine.weekdays.forEach { weekday in
       let NSWeekday = NSWeekday(context: coreDataContext)
       NSWeekday.id = weekday.id
@@ -211,7 +218,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
     let reminder = routine.reminder!
 
     let weekdays = routine.getWeekdays.map { weekday in
-      return Weekday(id: weekday.id ?? UUID(), day: weekday.day.toInt, time: weekday.time ?? Date())
+      Weekday(id: weekday.id ?? UUID(), day: weekday.day.toInt, time: weekday.time ?? Date())
     }
 
     return Routine(
@@ -223,8 +230,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
       createdAt: reminder.createdAt ?? Date(),
       updatedAt: reminder.updatedAt ?? Date(),
       routineId: routine.id ?? UUID(),
-      weekdays: weekdays
-    )
+      weekdays: weekdays)
   }
 
   func createNewRoutine(newRoutine: Routine) -> Routine? {
@@ -360,4 +366,9 @@ class ReminderCoreDataAdapter: ReminderRepository {
       return nil
     }
   }
+
+  // MARK: Private
+
+  private let coreDataContext = CoreDataConnection.shared.context
+
 }

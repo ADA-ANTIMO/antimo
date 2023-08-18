@@ -7,21 +7,26 @@
 
 import Foundation
 
+// MARK: - OrderedEvent
+
 struct OrderedEvent {
   var events = [String: [Event]]()
   var keys = [String]()
 }
 
+// MARK: - Event
+
 struct Event: Reminder {
-  var id: UUID = UUID()
+  var id: UUID = .init()
   var description: String
   var isActive: Bool
   var title: String
   var activityType: ActivityTypes
-  var createdAt: Date = Date()
-  var updatedAt: Date = Date()
+  var createdAt: Date = .init()
+  var updatedAt: Date = .init()
 
   // MARK: Event
-  var eventId: UUID = UUID()
+
+  var eventId: UUID = .init()
   var triggerDate: Date
 }

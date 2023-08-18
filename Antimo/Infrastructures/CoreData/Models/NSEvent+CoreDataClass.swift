@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(NSEvent)
-public class NSEvent: NSManagedObject {
-
-}
+public class NSEvent: NSManagedObject { }

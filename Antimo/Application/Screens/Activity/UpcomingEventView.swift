@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct UpcomingEventView: View {
-  @EnvironmentObject private var activityNavigation: ActivityNavigationManager
-  @EnvironmentObject private var viewModel: ReminderViewModel
+
+  // MARK: Internal
 
   var body: some View {
     VStack(spacing: 10) {
@@ -48,8 +48,7 @@ struct UpcomingEventView: View {
                 icon: viewModel.getIcon(event.activityType.rawValue),
                 title: event.title,
                 desc: event.description,
-                time: viewModel.getRenderedHourAndMinutes(event.triggerDate)
-              )
+                time: viewModel.getRenderedHourAndMinutes(event.triggerDate))
             }
           } header: {
             HStack {
@@ -63,4 +62,10 @@ struct UpcomingEventView: View {
       }
     }
   }
+
+  // MARK: Private
+
+  @EnvironmentObject private var activityNavigation: ActivityNavigationManager
+  @EnvironmentObject private var viewModel: ReminderViewModel
+
 }

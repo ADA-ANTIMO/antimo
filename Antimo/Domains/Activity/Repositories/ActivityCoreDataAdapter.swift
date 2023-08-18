@@ -5,13 +5,14 @@
 //  Created by Bisma Mahendra I Dewa Gede on 17/08/23.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class ActivityCoreDataAdapter: ActivityRepository {
-  private let coreDataContext = CoreDataConnection.shared.context
 
-  func initializeActivity<T: Activity>(activity: T) -> NSActivity {
+  // MARK: Internal
+
+  func initializeActivity(activity: some Activity) -> NSActivity {
     let NSActivity = NSActivity(context: coreDataContext)
     NSActivity.id = activity.id
     NSActivity.title = activity.title
@@ -34,78 +35,73 @@ class ActivityCoreDataAdapter: ActivityRepository {
     let updatedAt = activity.updatedAt ?? Date()
 
     switch activityType {
-      case .exercise:
-        let exercise = activity.exercise!
+    case .exercise:
+      let exercise = activity.exercise!
 
-        return ExerciseActivity(
-          id: id,
-          title: title,
-          image: image,
-          note: note,
-          activityType: activityType,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-          exerciseId: exercise.id ?? UUID(),
-          duration: exercise.duration.toInt,
-          mood: Mood(rawValue: exercise.mood!)!
-        )
-      case .grooming:
-        let grooming = activity.grooming!
+      return ExerciseActivity(
+        id: id,
+        title: title,
+        image: image,
+        note: note,
+        activityType: activityType,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        exerciseId: exercise.id ?? UUID(),
+        duration: exercise.duration.toInt,
+        mood: Mood(rawValue: exercise.mood!)!)
+    case .grooming:
+      let grooming = activity.grooming!
 
-        return GroomingActivity(
-          id: id,
-          title: title,
-          image: image,
-          note: note,
-          activityType: activityType,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-          groomingId: grooming.id ?? UUID(),
-          salon: grooming.salon ?? "",
-          satisfaction: grooming.satisfaction ?? ""
-        )
-      case .medication:
-        let medication = activity.medication!
+      return GroomingActivity(
+        id: id,
+        title: title,
+        image: image,
+        note: note,
+        activityType: activityType,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        groomingId: grooming.id ?? UUID(),
+        salon: grooming.salon ?? "",
+        satisfaction: grooming.satisfaction ?? "")
+    case .medication:
+      let medication = activity.medication!
 
-        return MedicationActivity(
-          id: id,
-          title: title,
-          image: image,
-          note: note,
-          activityType: activityType,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-          medicationId: medication.id ?? UUID(),
-          vet: medication.vet ?? ""
-        )
-      case .nutrition:
-        let nutrition = activity.nutrition!
+      return MedicationActivity(
+        id: id,
+        title: title,
+        image: image,
+        note: note,
+        activityType: activityType,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        medicationId: medication.id ?? UUID(),
+        vet: medication.vet ?? "")
+    case .nutrition:
+      let nutrition = activity.nutrition!
 
-        return NutritionActivity(
-          id: id,
-          title: title,
-          image: image,
-          note: note,
-          activityType: activityType,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-          nutritionId: nutrition.id ?? UUID(),
-          isEatenUp: nutrition.isEatenUp,
-          menu: nutrition.menu ?? ""
-        )
-      case .other:
-        let other = activity.other!
+      return NutritionActivity(
+        id: id,
+        title: title,
+        image: image,
+        note: note,
+        activityType: activityType,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        nutritionId: nutrition.id ?? UUID(),
+        isEatenUp: nutrition.isEatenUp,
+        menu: nutrition.menu ?? "")
+    case .other:
+      let other = activity.other!
 
-        return OtherActivity(
-          id: id,
-          title: title,
-          image: image,
-          note: note,
-          activityType: activityType,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-          otherId: other.id ?? UUID()
-        )
+      return OtherActivity(
+        id: id,
+        title: title,
+        image: image,
+        note: note,
+        activityType: activityType,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        otherId: other.id ?? UUID())
     }
   }
 
@@ -412,4 +408,9 @@ class ActivityCoreDataAdapter: ActivityRepository {
       return nil
     }
   }
+
+  // MARK: Private
+
+  private let coreDataContext = CoreDataConnection.shared.context
+
 }

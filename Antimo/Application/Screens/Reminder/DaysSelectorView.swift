@@ -10,7 +10,8 @@ import SwiftUI
 // MARK: - DaysSelectorView
 
 struct DaysSelectorView: View {
-  @EnvironmentObject private var viewModel: ReminderViewModel
+
+  // MARK: Internal
 
   var body: some View {
     VStack {
@@ -39,6 +40,11 @@ struct DaysSelectorView: View {
       Spacer()
     }
   }
+
+  // MARK: Private
+
+  @EnvironmentObject private var viewModel: ReminderViewModel
+
 }
 
 // MARK: - DaysSelectorView_Previews

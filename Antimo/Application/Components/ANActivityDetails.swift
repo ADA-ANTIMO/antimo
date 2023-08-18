@@ -15,10 +15,10 @@ enum ActivityActions: String, CaseIterable {
 
   func buttonRole() -> ButtonRole? {
     switch self {
-      case .delete:
-        return ButtonRole.destructive
-      case .edit:
-        return nil
+    case .delete:
+      return ButtonRole.destructive
+    case .edit:
+      return nil
     }
   }
 }
@@ -34,7 +34,7 @@ enum ExtraIcons: String, CaseIterable {
 // MARK: - Action
 
 struct Action: Identifiable {
-  let id: UUID = UUID()
+  let id: UUID = .init()
   let type: ActivityActions
   let action: () -> Void
 }
@@ -49,28 +49,28 @@ struct ActivityMeta: View {
       VStack(alignment: .leading) {
         if activity.activityType != ActivityTypes.other {
           switch activity.activityType {
-            case ActivityTypes.nutrition:
-              let nutrition = activity as! NutritionActivity // swiftlint:disable:this force_cast
+          case ActivityTypes.nutrition:
+            let nutrition = activity as! NutritionActivity // swiftlint:disable:this force_cast
 
-              ActivityExtra(
-                icon: .forkKnife,
-                extra: "\(nutrition.menu) (\(nutrition.isEatenUp ? "Eaten Up" : "Has Leftover"))")
-            case ActivityTypes.medication:
-              let medication = activity as! MedicationActivity // swiftlint:disable:this force_cast
+            ActivityExtra(
+              icon: .forkKnife,
+              extra: "\(nutrition.menu) (\(nutrition.isEatenUp ? "Eaten Up" : "Has Leftover"))")
+          case ActivityTypes.medication:
+            let medication = activity as! MedicationActivity // swiftlint:disable:this force_cast
 
-              if !medication.vet.isEmpty {
-                ActivityExtra(icon: .mappin, extra: "\(medication.vet)")
-              }
-            case ActivityTypes.exercise:
-              let exercise = activity as! ExerciseActivity // swiftlint:disable:this force_cast
+            if !medication.vet.isEmpty {
+              ActivityExtra(icon: .mappin, extra: "\(medication.vet)")
+            }
+          case ActivityTypes.exercise:
+            let exercise = activity as! ExerciseActivity // swiftlint:disable:this force_cast
 
-              ActivityExtra(icon: .timer, extra: "\(exercise.duration) Minutes")
-            case ActivityTypes.grooming:
-              let grooming = activity as! GroomingActivity // swiftlint:disable:this force_cast
+            ActivityExtra(icon: .timer, extra: "\(exercise.duration) Minutes")
+          case ActivityTypes.grooming:
+            let grooming = activity as! GroomingActivity // swiftlint:disable:this force_cast
 
-              ActivityExtra(icon: .mappin, extra: "\(grooming.salon)")
-            default:
-              EmptyView()
+            ActivityExtra(icon: .mappin, extra: "\(grooming.salon)")
+          default:
+            EmptyView()
           }
         }
 

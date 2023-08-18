@@ -10,11 +10,8 @@ import SwiftUI
 // MARK: - ActivityView
 
 struct ActivityView: View {
-  @EnvironmentObject private var activityNavigation: ActivityNavigationManager
-  @EnvironmentObject private var viewModel: ReminderViewModel
 
-  @State private var currentDate = Date.now
-  @State private var currentMonth = 0
+  // MARK: Internal
 
   var body: some View {
     ANBaseContainer(toolbar: {
@@ -42,6 +39,15 @@ struct ActivityView: View {
       AddEventSheetView()
     }
   }
+
+  // MARK: Private
+
+  @EnvironmentObject private var activityNavigation: ActivityNavigationManager
+  @EnvironmentObject private var viewModel: ReminderViewModel
+
+  @State private var currentDate = Date.now
+  @State private var currentMonth = 0
+
 }
 
 // MARK: - ActivityView_Previews

@@ -6,23 +6,22 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension NSWeekday {
+  @NSManaged public var day: Int16
+  @NSManaged public var id: UUID?
+  @NSManaged public var time: Date?
+  @NSManaged public var routine: NSRoutine?
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<NSWeekday> {
-        return NSFetchRequest<NSWeekday>(entityName: "NSWeekday")
-    }
-
-    @NSManaged public var day: Int16
-    @NSManaged public var id: UUID?
-    @NSManaged public var time: Date?
-    @NSManaged public var routine: NSRoutine?
-
-}
-
-extension NSWeekday : Identifiable {
+  @nonobjc
+  public class func fetchRequest() -> NSFetchRequest<NSWeekday> {
+    NSFetchRequest<NSWeekday>(entityName: "NSWeekday")
+  }
 
 }
+
+// MARK: - NSWeekday + Identifiable
+
+extension NSWeekday: Identifiable { }

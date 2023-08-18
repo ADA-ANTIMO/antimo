@@ -21,31 +21,6 @@ struct ReminderDay: Identifiable, Hashable {
 
 @MainActor
 class ReminderViewModel: ObservableObject {
-  @Published var events: [Event] = []
-  @Published var routines: [Routine] = []
-
-  var eventsByDate: OrderedEvent {
-    var dictOfEvents = [String: [Event]]()
-    var keyOfDict = [String]()
-
-    for event in events {
-      let key = Utilities.formattedDate(from: event.triggerDate , format: "EEEE, d MMM yyyy")
-
-      if var dict = dictOfEvents[key] {
-        dict.append(event)
-
-        dictOfEvents[key] = dict
-      } else {
-        keyOfDict.append(key)
-        dictOfEvents[key] = [event]
-      }
-    }
-
-    return OrderedEvent(events: dictOfEvents, keys: keyOfDict)
-  }
-
-  private var reminderService = ReminderService(reminderRepository: ReminderCoreDataAdapter())
-  private var notificationManager = NotificationsManager.shared
 
   // MARK: Lifecycle
 
@@ -65,17 +40,12 @@ class ReminderViewModel: ObservableObject {
   }
 
   // MARK: Internal
-  private func fetchReminders() {
-    events = reminderService.getAllEvents().sorted {
-      $0.createdAt < $1.createdAt
-    }
 
-    routines = reminderService.getAllRoutines().sorted {
-      $0.createdAt < $1.createdAt
-    }
-  }
+  @Published var events: [Event] = []
+  @Published var routines: [Routine] = []
 
   // MARK: Routine Properties
+
   @Published var selectedActivityType: ActivityTypes = .nutrition
   @Published var title = ""
   @Published var desc = ""
@@ -85,12 +55,46 @@ class ReminderViewModel: ObservableObject {
   @Published var isDaysSelectorPresented = false
   @Published var reminderDays: [ReminderDay] = []
 
+  // MARK: Event Properties
+
+  @Published var eventActivityType: ActivityTypes = .nutrition
+  @Published var eventTitle = ""
+  @Published var eventDesc = ""
+  @Published var eventDate: Date = .init()
+  @Published var eventTime: Date = .init()
+  @Published var isEventSheetPresented = false
+  @Published var isShowSnackBar = false
+
+  var eventsByDate: OrderedEvent {
+    var dictOfEvents = [String: [Event]]()
+    var keyOfDict = [String]()
+
+    for event in events {
+      let key = Utilities.formattedDate(from: event.triggerDate, format: "EEEE, d MMM yyyy")
+
+      if var dict = dictOfEvents[key] {
+        dict.append(event)
+
+        dictOfEvents[key] = dict
+      } else {
+        keyOfDict.append(key)
+        dictOfEvents[key] = [event]
+      }
+    }
+
+    return OrderedEvent(events: dictOfEvents, keys: keyOfDict)
+  }
+
   var disabledAddRoutineSubmission: Bool {
     title.isEmpty || selectedDays().isEmpty
   }
 
   var hasNotificationPermission: Bool {
     notificationManager.hasPermission
+  }
+
+  var disableAddEventSubmission: Bool {
+    eventTitle.isEmpty
   }
 
   // MARK: Methods
@@ -157,22 +161,22 @@ class ReminderViewModel: ObservableObject {
     } else {
       let dayNames = sortedWeekdays.map { weekday -> String in
         switch weekday {
-          case 1:
-            return "Sun"
-          case 2:
-            return "Mon"
-          case 3:
-            return "Tue"
-          case 4:
-            return "Wed"
-          case 5:
-            return "Thu"
-          case 6:
-            return "Fri"
-          case 7:
-            return "Sat"
-          default:
-            return "Choose"
+        case 1:
+          return "Sun"
+        case 2:
+          return "Mon"
+        case 3:
+          return "Tue"
+        case 4:
+          return "Wed"
+        case 5:
+          return "Thu"
+        case 6:
+          return "Fri"
+        case 7:
+          return "Sat"
+        default:
+          return "Choose"
         }
       }
       return dayNames.joined(separator: ", ")
@@ -197,16 +201,16 @@ class ReminderViewModel: ObservableObject {
 
   func getIcon(_ iconName: String) -> ActivityIcons {
     switch iconName {
-      case "Nutrition":
-        return ActivityIcons.nutrition
-      case "Medication":
-        return ActivityIcons.medication
-      case "Exercise":
-        return ActivityIcons.exercise
-      case "Grooming":
-        return ActivityIcons.grooming
-      default:
-        return ActivityIcons.other
+    case "Nutrition":
+      return ActivityIcons.nutrition
+    case "Medication":
+      return ActivityIcons.medication
+    case "Exercise":
+      return ActivityIcons.exercise
+    case "Grooming":
+      return ActivityIcons.grooming
+    default:
+      return ActivityIcons.other
     }
   }
 
@@ -238,8 +242,7 @@ class ReminderViewModel: ObservableObject {
         subtitle: updatedRoutine.description,
         weekdays: selectedReminderDayInInt,
         hour: selectedHour!,
-        minute: selectedMinute!
-      )
+        minute: selectedMinute!)
     }
 
     if !newStatus {
@@ -249,6 +252,7 @@ class ReminderViewModel: ObservableObject {
 
   func createNewRoutine() {
     // MARK: Create Weekdays
+
     let dateComponentWithSelectedTime = Utilities.getTime(date: time)
 
     let selectedHour = dateComponentWithSelectedTime.hour
@@ -259,7 +263,12 @@ class ReminderViewModel: ObservableObject {
     }
 
     let weekdays = selectedReminderDayInInt.map { Weekday(day: $0, time: time) }
-    let newRoutine = Routine(description: self.desc, isActive: true, title: self.title, activityType: self.selectedActivityType, weekdays: weekdays)
+    let newRoutine = Routine(
+      description: desc,
+      isActive: true,
+      title: title,
+      activityType: selectedActivityType,
+      weekdays: weekdays)
 
     guard let routine = reminderService.createNewRoutine(newRoutine: newRoutine) else {
       print("Failed creating routine")
@@ -280,19 +289,6 @@ class ReminderViewModel: ObservableObject {
       minute: selectedMinute!)
 
     closeReminderForm()
-  }
-
-  // MARK: Event Properties
-  @Published var eventActivityType: ActivityTypes = .nutrition
-  @Published var eventTitle = ""
-  @Published var eventDesc = ""
-  @Published var eventDate: Date = .init()
-  @Published var eventTime: Date = .init()
-  @Published var isEventSheetPresented = false
-  @Published var isShowSnackBar = false
-
-  var disableAddEventSubmission: Bool {
-    eventTitle.isEmpty
   }
 
   func openEventSheet() {
@@ -320,7 +316,12 @@ class ReminderViewModel: ObservableObject {
   }
 
   func createNewEvent() {
-    let newEvent = Event(description: self.eventDesc, isActive: true, title: self.eventTitle, activityType: self.eventActivityType, triggerDate: self.eventDate)
+    let newEvent = Event(
+      description: eventDesc,
+      isActive: true,
+      title: eventTitle,
+      activityType: eventActivityType,
+      triggerDate: eventDate)
 
     guard let event = reminderService.createNewEvent(newEvent: newEvent) else {
       print("Failed creating event")
@@ -336,9 +337,24 @@ class ReminderViewModel: ObservableObject {
       identifier: event.id.uuidString,
       title: event.title,
       subtitle: event.description,
-      triggerDate: event.triggerDate
-    )
+      triggerDate: event.triggerDate)
 
     saveEvent()
   }
+
+  // MARK: Private
+
+  private var reminderService = ReminderService(reminderRepository: ReminderCoreDataAdapter())
+  private var notificationManager = NotificationsManager.shared
+
+  private func fetchReminders() {
+    events = reminderService.getAllEvents().sorted {
+      $0.createdAt < $1.createdAt
+    }
+
+    routines = reminderService.getAllRoutines().sorted {
+      $0.createdAt < $1.createdAt
+    }
+  }
+
 }

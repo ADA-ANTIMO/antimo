@@ -10,7 +10,8 @@ import SwiftUI
 // MARK: - ReminderView
 
 struct ReminderView: View {
-  @EnvironmentObject private var viewModel: ReminderViewModel
+
+  // MARK: Internal
 
   var body: some View {
     ANBaseContainer(toolbar: {
@@ -63,6 +64,11 @@ struct ReminderView: View {
       ReminderFormView()
     }
   }
+
+  // MARK: Private
+
+  @EnvironmentObject private var viewModel: ReminderViewModel
+
 }
 
 // MARK: - ReminderView_Previews

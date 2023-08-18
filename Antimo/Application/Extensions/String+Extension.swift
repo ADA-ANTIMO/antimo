@@ -18,6 +18,8 @@ extension String {
   }
 }
 
+// MARK: - String + LocalizedError
+
 extension String: LocalizedError {
-  public var errorDescription: String? { return self }
+  public var errorDescription: String? { self }
 }

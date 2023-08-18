@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(NSMedicationActivity)
-public class NSMedicationActivity: NSManagedObject {
-
-}
+public class NSMedicationActivity: NSManagedObject { }

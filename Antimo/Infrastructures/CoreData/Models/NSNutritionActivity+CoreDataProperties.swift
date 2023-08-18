@@ -6,23 +6,22 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension NSNutritionActivity {
+  @NSManaged public var id: UUID?
+  @NSManaged public var isEatenUp: Bool
+  @NSManaged public var menu: String?
+  @NSManaged public var activity: NSActivity?
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<NSNutritionActivity> {
-        return NSFetchRequest<NSNutritionActivity>(entityName: "NSNutritionActivity")
-    }
-
-    @NSManaged public var id: UUID?
-    @NSManaged public var isEatenUp: Bool
-    @NSManaged public var menu: String?
-    @NSManaged public var activity: NSActivity?
-
-}
-
-extension NSNutritionActivity : Identifiable {
+  @nonobjc
+  public class func fetchRequest() -> NSFetchRequest<NSNutritionActivity> {
+    NSFetchRequest<NSNutritionActivity>(entityName: "NSNutritionActivity")
+  }
 
 }
+
+// MARK: - NSNutritionActivity + Identifiable
+
+extension NSNutritionActivity: Identifiable { }

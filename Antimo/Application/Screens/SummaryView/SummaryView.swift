@@ -12,6 +12,7 @@ import SwiftUI
 // MARK: - SummaryView
 
 struct SummaryView: View {
+
   // MARK: Internal
 
   var startDate: Date {
@@ -29,8 +30,8 @@ struct SummaryView: View {
       ANToolbar(title: "Dashboard") {
         CircularProfileImage()
           .onTapGesture {
-          summaryVM.openProfileForm()
-        }
+            summaryVM.openProfileForm()
+          }
       }
     } children: {
       ScrollView {
@@ -106,7 +107,7 @@ struct SummaryView: View {
               VStack(spacing: 8) {
                 ForEach(activityVM.activitiesByDate.keys, id: \.self) { key in
                   Section {
-                    ForEach(activityVM.activitiesByDate.activities[key] ?? [], id: \.self.id) { activity in
+                    ForEach(activityVM.activitiesByDate.activities[key] ?? [], id: \.id) { activity in
                       let editAction = Action(type: .edit) { }
 
                       let deleteAction = Action(type: .delete) { }
@@ -272,10 +273,10 @@ struct SummaryView: View {
   }
 
   // MARK: Private
+
   @EnvironmentObject private var activityVM: JournalViewModel
   @EnvironmentObject private var summaryVM: SummaryViewModel
   @EnvironmentObject private var dashboardNavigation: DashboardNavigationManager
-
 }
 
 // MARK: - SummaryView_Previews

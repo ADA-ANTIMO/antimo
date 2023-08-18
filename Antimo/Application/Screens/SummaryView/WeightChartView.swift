@@ -101,5 +101,4 @@ struct WeightChartView: View {
 
     return out
   }
-
 }
