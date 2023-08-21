@@ -11,6 +11,9 @@ struct PersistenceController {
     static let shared = PersistenceController()
 
     let container: NSPersistentContainer
+    var context: NSManagedObjectContext {
+        container.viewContext
+      }
 
     init() {
         container = NSPersistentContainer(name: "Antimo")
