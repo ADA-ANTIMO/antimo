@@ -68,7 +68,7 @@
 		61A98B5A2A24FEA000152C87 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B592A24FEA000152C87 /* ContentView.swift */; };
 		61A98B5C2A24FEA000152C87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61A98B5B2A24FEA000152C87 /* Assets.xcassets */; };
 		61A98B5F2A24FEA000152C87 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61A98B5E2A24FEA000152C87 /* Preview Assets.xcassets */; };
-		61A98B612A24FEA000152C87 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B602A24FEA000152C87 /* Persistence.swift */; };
+		61A98B612A24FEA000152C87 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B602A24FEA000152C87 /* CoreData.swift */; };
 		61A98B642A24FEA000152C87 /* Antimo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B622A24FEA000152C87 /* Antimo.xcdatamodeld */; };
 		61A98B742A25011900152C87 /* ANButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B732A25011900152C87 /* ANButton.swift */; };
 		61A98B762A25016500152C87 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A98B752A25016500152C87 /* JournalView.swift */; };
@@ -161,7 +161,7 @@
 		61A98B592A24FEA000152C87 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		61A98B5B2A24FEA000152C87 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61A98B5E2A24FEA000152C87 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		61A98B602A24FEA000152C87 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		61A98B602A24FEA000152C87 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		61A98B632A24FEA000152C87 /* Antimo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Antimo.xcdatamodel; sourceTree = "<group>"; };
 		61A98B732A25011900152C87 /* ANButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANButton.swift; sourceTree = "<group>"; };
 		61A98B752A25016500152C87 /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
@@ -289,6 +289,69 @@
 			path = Routes;
 			sourceTree = "<group>";
 		};
+		619CC5B22A935D8F00B19B55 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		619CC5B32A935D9800B19B55 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		619CC5B42A93AC8900B19B55 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				61A98B6D2A24FFA900152C87 /* ViewModels */,
+				619CC5B82A93AD2C00B19B55 /* Views */,
+				61A98B6A2A24FF8300152C87 /* Components */,
+				61A98B592A24FEA000152C87 /* ContentView.swift */,
+				61A98B572A24FEA000152C87 /* AntimoApp.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		619CC5B52A93AC9D00B19B55 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				61A98B602A24FEA000152C87 /* CoreData.swift */,
+				61A98B622A24FEA000152C87 /* Antimo.xcdatamodeld */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		619CC5B62A93ACF500B19B55 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				61A98B5B2A24FEA000152C87 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		619CC5B72A93AD1100B19B55 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				6131A4AE2A28F687007BF2F7 /* NotificationManager.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		619CC5B82A93AD2C00B19B55 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4E69949B2A2D8994004D8D98 /* JournalView */,
+				6131A52E2A2D8D79007BF2F7 /* ReminderView */,
+				6131A5252A2D063D007BF2F7 /* SummaryView */,
+				61AD59E52A30CA7E00BC5780 /* ActivityView */,
+				61AD59E62A30CA8800BC5780 /* OnboardingView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		61A98B4B2A24FEA000152C87 = {
 			isa = PBXGroup;
 			children = (
@@ -308,21 +371,18 @@
 		61A98B562A24FEA000152C87 /* Antimo */ = {
 			isa = PBXGroup;
 			children = (
+				619CC5B32A935D9800B19B55 /* Services */,
+				619CC5B22A935D8F00B19B55 /* Repositories */,
 				4EB9EAC62A29970700777B11 /* Protocols */,
 				4E41F5BB2A26F08F003C0A25 /* Models */,
 				61A98B6F2A24FFDB00152C87 /* Utilities */,
 				61A98B6E2A24FFC800152C87 /* Extensions */,
-				61A98B6D2A24FFA900152C87 /* ViewModels */,
-				61A98B6C2A24FF9F00152C87 /* Views */,
-				61A98B6A2A24FF8300152C87 /* Components */,
 				6138BC582A28B47E0017BE63 /* Routes */,
-				61A98B572A24FEA000152C87 /* AntimoApp.swift */,
-				6131A4AE2A28F687007BF2F7 /* NotificationManager.swift */,
-				61A98B602A24FEA000152C87 /* Persistence.swift */,
-				61A98B592A24FEA000152C87 /* ContentView.swift */,
-				61A98B5B2A24FEA000152C87 /* Assets.xcassets */,
-				61A98B622A24FEA000152C87 /* Antimo.xcdatamodeld */,
+				619CC5B42A93AC8900B19B55 /* UI */,
+				619CC5B72A93AD1100B19B55 /* System */,
+				619CC5B52A93AC9D00B19B55 /* Persistence */,
 				61A98B5D2A24FEA000152C87 /* Preview Content */,
+				619CC5B62A93ACF500B19B55 /* Resources */,
 				4EB6043E2A32C3CB00905849 /* README.md */,
 			);
 			path = Antimo;
@@ -362,18 +422,6 @@
 				4EB6043C2A32C2DD00905849 /* ANActivityPicker.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		61A98B6C2A24FF9F00152C87 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				4E69949B2A2D8994004D8D98 /* JournalView */,
-				6131A52E2A2D8D79007BF2F7 /* ReminderView */,
-				6131A5252A2D063D007BF2F7 /* SummaryView */,
-				61AD59E52A30CA7E00BC5780 /* ActivityView */,
-				61AD59E62A30CA8800BC5780 /* OnboardingView */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		61A98B6D2A24FFA900152C87 /* ViewModels */ = {
@@ -525,7 +573,7 @@
 				61A98B832A25026100152C87 /* ReminderViewModel.swift in Sources */,
 				4EBB3C512A348CB000F87DBC /* ExerciseActivity+CoreDataProperties.swift in Sources */,
 				61A98B892A2502BE00152C87 /* Color+Extension.swift in Sources */,
-				61A98B612A24FEA000152C87 /* Persistence.swift in Sources */,
+				61A98B612A24FEA000152C87 /* CoreData.swift in Sources */,
 				61A98B7D2A2501E100152C87 /* SummaryView.swift in Sources */,
 				6131A4AF2A28F687007BF2F7 /* NotificationManager.swift in Sources */,
 				4EBB3C592A348CB000F87DBC /* NutritionActivity+CoreDataProperties.swift in Sources */,
