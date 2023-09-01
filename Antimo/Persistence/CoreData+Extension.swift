@@ -7,10 +7,10 @@
 
 import Foundation
 
-//extension RoutineMO {
-//  public var getWeekdays: [WeekdayMO] {
-//    let setOfWeekdays = weekdays as? Set<WeekdayMO> ?? []
-//
-//    return Array(setOfWeekdays)
-//  }
-//}
+extension RoutineMO {
+  public var getWeekdays: [WeekdayMO] {
+    let setOfWeekdays = weekdays as? Set<WeekdayMO> ?? []
+
+    return Array(setOfWeekdays)
+  }
+}

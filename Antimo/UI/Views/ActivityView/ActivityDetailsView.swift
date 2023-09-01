@@ -9,23 +9,18 @@ import SwiftUI
 import CoreData
 
 struct ActivityDetailsView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject private var activityNavigation: ActivityNavigationManager
-    @FetchRequest var activities: FetchedResults<Activity>
-    @StateObject var vm = JournalViewModel()
+    var selectedDate: Date
     
-    init (selectedDate: Date) {
-        let startDate = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: selectedDate))!
-        let endDate = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: startDate)!
-        
-        let request: NSFetchRequest<Activity> = Activity.fetchRequest()
-        request.sortDescriptors = [
-            NSSortDescriptor(key: "createdAt", ascending: false)
-        ]
-        request.predicate = NSPredicate(format: "(createdAt >= %@) AND (createdAt <= %@)", startDate as CVarArg, endDate as CVarArg)
-
-        _activities = FetchRequest(fetchRequest: request)
+    var startDate: Date {
+        Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: selectedDate))!
     }
+    
+    var endDate: Date {
+        Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: startDate)!
+    }
+    
+    @EnvironmentObject private var vm: JournalViewModel
+    @EnvironmentObject private var activityNavigation: ActivityNavigationManager
    
     var body: some View {
         ANBaseContainer(toolbar: {
@@ -53,23 +48,16 @@ struct ActivityDetailsView: View {
         }, children: {
             ScrollView {
                 VStack(spacing: 8) {
-                    ForEach(activities.byDate.keys, id: \.self) { key in
+                    ForEach(vm.activitiesByDate.keys, id: \.self) { key in
                         Section {
-                            ForEach(activities.byDate.activities[key] ?? [], id: \.self) { activity in
-                                let editAction = Action(id: UUID(), type: .Edit) {
-                                    vm.selectedActivity = activity
-                                    vm.openActivityForm(selectedActivityType: ActivityTypes.getByString(type: activity.type ?? ""))
+                            ForEach(vm.activitiesByDate.activities[key] ?? [], id: \.id) { activity in
+                                let editAction = Action(type: .edit) {
+                                    vm.setState(activity: activity)
+                                    vm.openActivityForm(selectedActivityType: activity.activityType)
                                 }
                                 
-                                let deleteAction = Action(id: UUID(), type: .Delete) {
-                                    viewContext.delete(activity)
-                                    
-                                    do {
-                                        try viewContext.save()
-                                    } catch {
-                                        let nsError = error as NSError
-                                        debugPrint("Unresolved error \(nsError), \(nsError.userInfo)")
-                                    }
+                                let deleteAction = Action(type: .delete) {
+                                    vm.deleteActivityById(id: activity.id)
                                 }
                                 
                                 ANActivityDetails(activity: activity, actions: [editAction, deleteAction])

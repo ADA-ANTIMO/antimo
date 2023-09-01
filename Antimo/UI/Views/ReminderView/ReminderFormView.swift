@@ -7,63 +7,73 @@
 
 import SwiftUI
 
+// MARK: - ReminderFormView
+
 struct ReminderFormView: View {
-    @ObservedObject var vm: ReminderViewModel
-    var onSubmit: () -> Void
-    
-    var body: some View {
-        VStack {
-            ANToolbar(leading: {
-                Text("Cancel")
-                    .font(.toolbar)
-                    .foregroundColor(Color.anNavigation)
-                    .onTapGesture { vm.closeReminderForm() }
-            }, title: "Add Reminder") {
-                Text("Save")
-                    .font(.toolbar)
-                    .foregroundColor(Color.anNavigation.opacity(vm.disabledAddRoutineSubmission ? 0.1 : 1))
-                    .onTapGesture { onSubmit() }
-                    .disabled(vm.disabledAddRoutineSubmission)
+
+  // MARK: Internal
+
+  var body: some View {
+    VStack {
+      ANToolbar(leading: {
+        Text("Cancel")
+          .font(.toolbar)
+          .foregroundColor(Color.anNavigation)
+          .onTapGesture { viewModel.closeReminderForm() }
+      }, title: "Add Reminder") {
+        Text("Save")
+          .font(.toolbar)
+          .foregroundColor(Color.anNavigation.opacity(viewModel.disabledAddRoutineSubmission ? 0.1 : 1))
+          .onTapGesture {
+            viewModel.createNewRoutine()
+          }
+          .disabled(viewModel.disabledAddRoutineSubmission)
+      }
+
+      ScrollView {
+        ANActivitySelector(selected: $viewModel.selectedActivityType)
+        ANTextField(text: $viewModel.title, placeholder: "Add reminder title...", label: "Title")
+
+        ANTextFieldArea(text: $viewModel.desc, label: "Description", placeholder: "Add description...")
+          .frame(height: 200)
+
+        ANTimePicker(time: $viewModel.time, label: "Time")
+
+        HStack {
+          Text("Repeat")
+
+          Spacer()
+
+          Group {
+            if viewModel.selectedDays().isEmpty {
+              Text("Choose Frequency")
+            } else {
+              Text(viewModel.getRenderedFrequency(viewModel.selectedDays().map { $0.value }))
             }
-            
-            ScrollView {
-                ANActivitySelector(selected: $vm.selectedActivityType)
-                ANTextField(text: $vm.title, placeholder: "Add reminder title...", label: "Title")
-                
-                ANTextFieldArea(text: $vm.desc, label: "Description", placeholder: "Add description...")
-                    .frame(height: 200)
-                
-                ANTimePicker(time: $vm.time, label: "Time")
-                
-                HStack {
-                    Text("Repeat")
-                    Spacer()
-                    Group {
-                        if vm.selectedDays().isEmpty {
-                            Text("Choose Frequency")
-                        } else {
-                            Text(vm.getRenderedFrequency(vm.selectedDays().map{ $0.value }))
-                        }
-                    }
-                    .onTapGesture { vm.openDaysSelectorForm() }
-                }
-            }
-            .scrollIndicators(.hidden)
-            .padding()
-            
-            Spacer()
+          }
+          .onTapGesture { viewModel.openDaysSelectorForm() }
         }
-        .padding(.vertical)
-        .sheet(isPresented: $vm.isDaysSelectorPresented) { DaysSelectorView(vm: vm) }
-        .onDisappear { vm.resetForm() }
+      }
+      .scrollIndicators(.hidden)
+      .padding()
+
+      Spacer()
     }
+    .padding(.vertical)
+    .sheet(isPresented: $viewModel.isDaysSelectorPresented) { DaysSelectorView() }
+    .onDisappear { viewModel.resetForm() }
+  }
+
+  // MARK: Private
+
+  @EnvironmentObject private var viewModel: ReminderViewModel
+
 }
 
-
-
+// MARK: - ReminderFormView_Previews
 
 struct ReminderFormView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReminderFormView(vm: ReminderViewModel(), onSubmit: {})
-    }
+  static var previews: some View {
+    ReminderFormView()
+  }
 }

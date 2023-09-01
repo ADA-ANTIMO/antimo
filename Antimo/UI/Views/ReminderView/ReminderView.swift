@@ -7,78 +7,74 @@
 
 import SwiftUI
 
+// MARK: - ReminderView
+
 struct ReminderView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "reminder.createdAt", ascending: false)]) private var routines: FetchedResults<Routine>
-    
-    @StateObject var vm = ReminderViewModel()
-    @StateObject var notificationManager = NotificationsManager()
-    
-    var body: some View {
-        ANBaseContainer(toolbar: {
-            ANToolbar(title: "Routine") {
-                Text("Add Routine")
-                    .font(.toolbar)
-                    .foregroundColor(Color.anNavigation)
-                    .onTapGesture { vm.openReminderForm() }
-            }
-        }, children: {
-            if routines.isEmpty {
-                Spacer()
 
-                VStack(spacing: 10) {
-                    Text("You don't have any reminders yet, Let's add some now")
-                        .font(.placeholder)
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(Color.gray)
-                    
-                    Text("Add Routine")
-                        .font(.toolbar)
-                        .foregroundColor(Color.anNavigation)
-                        .onTapGesture { vm.openReminderForm() }
-                }
+  // MARK: Internal
 
-                Spacer()
-            } else {
-                ScrollView {
-                    ForEach(routines) { routine in
-                        ANReminderCard(
-                            icon: vm.getIcon(routine.reminder?.type ?? ""),
-                            title: routine.reminder?.title ?? "",
-                            time: vm.getRenderedHourAndMinutes(routine.getWeekdays.first?.time ?? Date()),
-                            frequency: vm.getRenderedFrequency(vm.convertWeekDaysObjIntoInt(routine.getWeekdays)),
-                            isOn: routine.reminder?.isActive ?? false,
-                            onToggle: { newValue in
-                                vm.toggleActivation(
-                                    reminder: routine.reminder!,
-                                    viewContext: viewContext,
-                                    notificationManager: notificationManager,
-                                    newValue: newValue
-                                )
-                            }
-                        )
-                    }
-                }
-                .scrollIndicators(.hidden)
-                .padding(.horizontal)
-                .padding(.bottom)
-            }
-        })
-        .onAppear { notificationManager.request() }
-        .sheet(isPresented: $vm.isReminderFormPresented) {
-            ReminderFormView(
-                vm: vm,
-                onSubmit: {
-                    vm.addReminder(viewContext: viewContext, notificationManager: notificationManager)
-                }
-            )
+  var body: some View {
+    ANBaseContainer(toolbar: {
+      ANToolbar(title: "Routine") {
+        Text("Add Routine")
+          .font(.toolbar)
+          .foregroundColor(Color.anNavigation)
+          .onTapGesture { viewModel.openReminderForm() }
+      }
+    }, children: {
+      if viewModel.routines.isEmpty {
+        Spacer()
+
+        VStack(spacing: 10) {
+          Text("You don't have any reminders yet, Let's add some now")
+            .font(.placeholder)
+            .multilineTextAlignment(.center)
+            .foregroundColor(Color.gray)
+
+          Text("Add Routine")
+            .font(.toolbar)
+            .foregroundColor(Color.anNavigation)
+            .onTapGesture { viewModel.openReminderForm() }
         }
+
+        Spacer()
+      } else {
+        ScrollView {
+          ForEach(viewModel.routines) { routine in
+            ANReminderCard(
+              icon: viewModel.getIcon(routine.activityType.rawValue),
+              title: routine.title,
+              time: viewModel.getRenderedHourAndMinutes(routine.weekdays.first?.time ?? Date()),
+              frequency: viewModel.getRenderedFrequency(viewModel.convertWeekDaysObjIntoInt(routine.weekdays)),
+              isOn: routine.isActive,
+              onToggle: { newStatus in
+                viewModel.updateRoutineIsActiveStatus(id: routine.id, newStatus: newStatus)
+              })
+          }
+        }
+        .scrollIndicators(.hidden)
+        .padding(.horizontal)
+        .padding(.bottom)
+      }
+    })
+    .onAppear {
+      viewModel.requestNotificationPermission()
     }
+    .sheet(isPresented: $viewModel.isReminderFormPresented) {
+      ReminderFormView()
+    }
+  }
+
+  // MARK: Private
+
+  @EnvironmentObject private var viewModel: ReminderViewModel
+
 }
 
+// MARK: - ReminderView_Previews
+
 struct ReminderView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReminderView()
-    }
+  static var previews: some View {
+    ReminderView()
+  }
 }

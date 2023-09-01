@@ -7,29 +7,6 @@
 
 import SwiftUI
 
-enum ActivityTypes: String {
-    case nutrition = "Nutrition"
-    case medication = "Medication"
-    case exercise = "Exercise"
-    case grooming = "Grooming"
-    case other = "Other"
-    
-    static func getByString(type: String) -> Self {
-        switch type {
-        case "Nutrition":
-            return Self.nutrition
-        case "Medication":
-            return Self.medication
-        case "Exercise":
-            return Self.exercise
-        case "Grooming":
-            return Self.grooming
-        default:
-            return Self.other
-        }
-    }
-}
-
 struct ActivityIcon: View {
     let icon: ActivityIcons
     

@@ -14,7 +14,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
 
   // MARK: Event
 
-  func normalizeNSEventEntity(event: NSEvent) -> Event {
+  func normalizeNSEventEntity(event: EventMO) -> Event {
     let reminder = event.reminder!
 
     return Event(
@@ -32,7 +32,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
   func createNewEvent(newEvent: Event) -> Event? {
     // MARK: Creating Reminder
 
-    let reminder = NSReminder(context: coreDataContext)
+    let reminder = ReminderMO(context: coreDataContext)
     reminder.id = newEvent.id
     reminder.title = newEvent.title
     reminder.type = newEvent.activityType.rawValue
@@ -43,7 +43,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
 
     // MARK: Creating Event
 
-    let event = NSEvent(context: coreDataContext)
+    let event = EventMO(context: coreDataContext)
     event.id = newEvent.eventId
     event.reminder = reminder
     event.triggerDate = newEvent.triggerDate
@@ -61,14 +61,14 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   func getAllEvents() -> [Event] {
-    let request: NSFetchRequest<NSEvent> = NSEvent.fetchRequest()
+    let request: NSFetchRequest<EventMO> = EventMO.fetchRequest()
     var events: [Event] = []
 
     do {
       let NSEvents = try coreDataContext.fetch(request)
 
-      for NSEvent in NSEvents {
-        let event = normalizeNSEventEntity(event: NSEvent)
+      for EventMO in NSEvents {
+        let event = normalizeNSEventEntity(event: EventMO)
 
         events.append(event)
       }
@@ -83,7 +83,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   func getEventById(id: UUID) -> Event? {
-    let request: NSFetchRequest<NSEvent> = NSEvent.fetchRequest()
+    let request: NSFetchRequest<EventMO> = EventMO.fetchRequest()
     request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 
     do {
@@ -104,7 +104,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   func updateEventById(id: UUID, newEvent: Event) -> Event? {
-    let request: NSFetchRequest<NSEvent> = NSEvent.fetchRequest()
+    let request: NSFetchRequest<EventMO> = EventMO.fetchRequest()
     request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 
     do {
@@ -134,7 +134,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   func updateEventIsActiveStatus(id: UUID, newStatus: Bool) -> Event? {
-    let request: NSFetchRequest<NSEvent> = NSEvent.fetchRequest()
+    let request: NSFetchRequest<EventMO> = EventMO.fetchRequest()
     request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 
     do {
@@ -160,7 +160,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   func deleteEventById(id: UUID) -> Event? {
-    let request: NSFetchRequest<NSEvent> = NSEvent.fetchRequest()
+    let request: NSFetchRequest<EventMO> = EventMO.fetchRequest()
     request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 
     do {
@@ -187,7 +187,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
   func initializeRoutine(newRoutine: Routine) {
     // MARK: Creating Reminder
 
-    let reminder = NSReminder(context: coreDataContext)
+    let reminder = ReminderMO(context: coreDataContext)
     reminder.id = newRoutine.id
     reminder.title = newRoutine.title
     reminder.type = newRoutine.activityType.rawValue
@@ -198,23 +198,23 @@ class ReminderCoreDataAdapter: ReminderRepository {
 
     // MARK: Creating Routine
 
-    let routine = NSRoutine(context: coreDataContext)
+    let routine = RoutineMO(context: coreDataContext)
     routine.id = newRoutine.routineId
     routine.reminder = reminder
 
     // MARK: Adding Weekdays to Routine
 
     newRoutine.weekdays.forEach { weekday in
-      let NSWeekday = NSWeekday(context: coreDataContext)
-      NSWeekday.id = weekday.id
-      NSWeekday.day = weekday.day.toInt16
-      NSWeekday.time = weekday.time
+      let WeekdayMO = WeekdayMO(context: coreDataContext)
+      WeekdayMO.id = weekday.id
+      WeekdayMO.day = weekday.day.toInt16
+      WeekdayMO.time = weekday.time
 
-      routine.addToWeekdays(NSWeekday)
+      routine.addToWeekdays(WeekdayMO)
     }
   }
 
-  func normalizeNSRoutineEntity(routine: NSRoutine) -> Routine {
+  func normalizeNSRoutineEntity(routine: RoutineMO) -> Routine {
     let reminder = routine.reminder!
 
     let weekdays = routine.getWeekdays.map { weekday in
@@ -249,14 +249,14 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   func getAllRoutines() -> [Routine] {
-    let request: NSFetchRequest<NSRoutine> = NSRoutine.fetchRequest()
+    let request: NSFetchRequest<RoutineMO> = RoutineMO.fetchRequest()
     var routines: [Routine] = []
 
     do {
       let NSRoutines = try coreDataContext.fetch(request)
 
-      for NSRoutine in NSRoutines {
-        let routine = normalizeNSRoutineEntity(routine: NSRoutine)
+      for RoutineMO in NSRoutines {
+        let routine = normalizeNSRoutineEntity(routine: RoutineMO)
 
         routines.append(routine)
       }
@@ -271,7 +271,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   func getRoutineById(id: UUID) -> Routine? {
-    let request: NSFetchRequest<NSRoutine> = NSRoutine.fetchRequest()
+    let request: NSFetchRequest<RoutineMO> = RoutineMO.fetchRequest()
     request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 
     do {
@@ -292,7 +292,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   func updateRoutineById(id: UUID, newRoutine: Routine) -> Routine? {
-    let request: NSFetchRequest<NSRoutine> = NSRoutine.fetchRequest()
+    let request: NSFetchRequest<RoutineMO> = RoutineMO.fetchRequest()
     request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 
     do {
@@ -319,7 +319,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   func updateRoutineIsActiveStatus(id: UUID, newStatus: Bool) -> Routine? {
-    let request: NSFetchRequest<NSRoutine> = NSRoutine.fetchRequest()
+    let request: NSFetchRequest<RoutineMO> = RoutineMO.fetchRequest()
     request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 
     do {
@@ -345,7 +345,7 @@ class ReminderCoreDataAdapter: ReminderRepository {
   }
 
   func deleteRoutineById(id: UUID) -> Routine? {
-    let request: NSFetchRequest<NSRoutine> = NSRoutine.fetchRequest()
+    let request: NSFetchRequest<RoutineMO> = RoutineMO.fetchRequest()
     request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 
     do {
@@ -369,6 +369,6 @@ class ReminderCoreDataAdapter: ReminderRepository {
 
   // MARK: Private
 
-  private let coreDataContext = CoreDataConnection.shared.context
+  private let coreDataContext = PersistenceController.shared.context
 
 }

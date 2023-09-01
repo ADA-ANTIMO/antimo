@@ -19,10 +19,10 @@ protocol Reminder: Identifiable {
 
 // MARK: - OrderedEvent
 
-//struct OrderedEvent {
-//  var events = [String: [Event]]()
-//  var keys = [String]()
-//}
+struct OrderedEvent {
+ var events = [String: [Event]]()
+ var keys = [String]()
+}
 
 // MARK: - Event
 
